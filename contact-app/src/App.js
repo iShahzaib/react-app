@@ -117,10 +117,11 @@ function App() {
                     const data = await res.json();
 
                     if (data.length > 0) {
+                      const { username, email } = data[0];
                       localStorage.setItem('isAuthenticated', 'true'); // <-- Save login
                       localStorage.setItem('loggedInUser', username); // (optional)
 
-                      navigate(`/welcome/${username}`, { state: { username } });
+                      navigate(`/welcome/${username}`, { state: { username, email } });
                     } else {
                       alert('Invalid username or password.');
                     }

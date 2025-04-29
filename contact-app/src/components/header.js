@@ -1,33 +1,69 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// import { useAuth } from "../contexts/AuthContext"; // adjust path
 
+// Header Component
 const Header = () => {
+    // const { isLoggedIn } = useAuth();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     // Check login state from localStorage or any global method
+    //     const user = localStorage.getItem("loggedInUser");
+    //     setIsLoggedIn(!!user);
+    // }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('loggedInUser');
+        setIsLoggedIn(false);
+        navigate('/login');
+    };
+
+
     return (
-        <div className="ui fixed menu">
-            <div className="ui container" style={{ marginTop: "10px" }}>
-                <h2>Contact Manager</h2>
-                <div className="right menu">
-                    <Link to={'/'}>
-                        <button className="ui button blue right floated">Home</button>
-                    </Link>
+        <div className="ui fixed menu main-header">
+            <div className="center-header">
+                <h2 className="child-header">Contact Manager</h2>
+                <div style={{ flexShrink: 0 }}>
+                    {isLoggedIn ? (
+                        <div>
+                            <button className="ui button inverted" style={{ marginLeft: "1rem" }} onClick={handleLogout}                        >
+                                Sign Out
+                            </button>
+                            <Link to="/">
+                                <button className="ui button inverted" style={{ marginLeft: "1rem" }}>
+                                    Home
+                                </button>
+                            </Link>
+                        </div>
+                    ) : (
+                        <Link to="/login">
+                            <button className="ui button inverted" style={{ marginLeft: "1rem" }}>
+                                Sign In
+                            </button>
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
+// Home/Main Page Component
 export const Main = () => {
     return (
-        <div className="fixed menu">
-            <Link to={'/contacts'}>
-                <button className="ui button blue">Show Contact List</button>
+        <div className="main-page">
+            <h1 style={{ fontSize: "4rem", marginBottom: "1rem" }}>Welcome to Contact Manager</h1>
+            <p style={{ fontSize: "1.5rem" }}>Manage your contacts efficiently and securely</p>
+            <Link to="/login">
+                <button className="ui massive inverted white button" style={{ marginTop: "2rem" }}>
+                    Get Started
+                </button>
             </Link>
-            <Link to={'/login'}>
-                <button className="ui button blue right floated">Sign In</button>
-            </Link>
-            <h2 style={{textAlign: "center", margin: "10rem"}}>WELCOME</h2>
         </div>
-    )
-}
+    );
+};
 
 export default Header;

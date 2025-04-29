@@ -26,7 +26,8 @@ const UserList = (props) => {
         retrieveUsers();
     }, [username]);
 
-    const renderUserList = users.map(({ username, email }) => {
+    const UserCard = (props) => {
+        const { username, email } = props.user;
         return (
             <div className="item" style={{ marginTop: "5px" }}>
                 <img className="ui avatar image" src={user} alt="user" />
@@ -36,7 +37,9 @@ const UserList = (props) => {
                 </div>
             </div >
         )
-    })
+    };
+
+    const renderUserList = users.map((u) => <UserCard key={u.id} user={u} />);
 
     // If redirect is true, navigate to login
     if (redirect) {
