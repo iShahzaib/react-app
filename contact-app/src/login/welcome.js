@@ -1,9 +1,8 @@
 import React from "react";
 import user from '../images/nouser.jpg';
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 
 const Welcome = () => {
-    const navigate = useNavigate();
     const { state } = useLocation();  // Access location object to get state
     const username = state?.username;
     const email = state?.email;
@@ -16,25 +15,17 @@ const Welcome = () => {
         return <Navigate to="/login" replace />;  // <-- This will redirect without remount issues
     }
 
-    const handleLogout = () => {
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('loggedInUser');
-        // setIsLoggedIn(false);
-        navigate('/login');
-    };
-
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
                 <h2 style={{ margin: 0 }}>User Detail</h2>
                 <div>
-                    <Link to="/contacts" state={{ username }}>
-                        <button className="ui button green" style={{ marginLeft: "0.5rem" }}>Contact List</button>
+                    <Link to="/contacts">
+                        <button className="ui button green">Contact List</button>
                     </Link>
-                    <Link to="/users" state={{ username }}>
+                    <Link to="/users">
                         <button className="ui button blue" style={{ marginLeft: "0.5rem" }}>User List</button>
                     </Link>
-                    <button className="ui button red" onClick={handleLogout}>Sing Out</button>
                 </div>
             </div>
 

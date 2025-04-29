@@ -7,7 +7,7 @@ import AddContact from './components/add-contact';
 import UpdateContact from './components/update-contact';
 import ContactDetail from './components/contact-detail';
 import ContactList from './components/contacts-list';
-import DeletePopup from './components/delete-popup';
+// import DeletePopup from './components/delete-popup';
 import api from './api/contact'
 import LoginForm from './login/login-form';
 import RegistrationForm from './login/registration-form';
@@ -55,7 +55,13 @@ function App() {
             element={
               <ContactList
                 contacts={contacts}
-              // deleteContact={contactID => setContacts(contacts.filter(c => c.id !== contactID))}
+                // deleteContact={contactID => setContacts(contacts.filter(c => c.id !== contactID))}
+                deleteContact={async (contactID) => {
+                  const response = await api.delete(`/contact/${contactID}`);
+                  if (response?.data) {
+                    setContacts(contacts.filter(c => c.id !== response?.data.id));
+                  }
+                }}
               />
             }
           />
@@ -94,7 +100,7 @@ function App() {
               />
             }
           />
-          <Route
+          {/* <Route
             path='/delete/:id'
             element={
               <DeletePopup
@@ -106,7 +112,7 @@ function App() {
                 }}
               />
             }
-          />
+          /> */}
           <Route
             path='/login'
             element={

@@ -7,7 +7,7 @@ const ContactDetail = (props) => {
     const { id, name, email } = state.contact;
 
     return (
-        <div className="ui main">
+        <div className="ui main" style={{padding: "2rem"}}>
             <h2>Contact Detail
                 <Link to={`/contacts`}                >
                     <button className="ui button blue right floated">Back to Contact List</button>

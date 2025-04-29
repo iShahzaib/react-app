@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import api from './../api/contact'
 import user from '../images/nouser.jpg';
 
@@ -7,15 +7,13 @@ const UserList = (props) => {
     const [users, setUsers] = useState([]);
     const [redirect, setRedirect] = useState(false);
 
-    const { state } = useLocation();  // Access location object to get state
-    const username = state?.username;
+    const username = localStorage.getItem("loggedInUser");
 
     useEffect(() => {
         const isAuthenticated = localStorage.getItem('isAuthenticated');
         const authenticatedUser = localStorage.getItem('loggedInUser');
 
         if (isAuthenticated !== 'true' || authenticatedUser !== username) {
-            alert('Please login first.');
             setRedirect(true);
         }
         const retrieveUsers = async () => {
@@ -43,14 +41,14 @@ const UserList = (props) => {
 
     // If redirect is true, navigate to login
     if (redirect) {
-        return <Navigate to="/login" replace />;  // <-- This will redirect without remount issues
+        return <Navigate to="/" replace />;  // <-- This will redirect without remount issues
     }
 
     return (
-        <div className="ui main">
+        <div className="ui main" style={{padding: "2rem"}}>
             <h2>User List
                 <Link to={`/welcome/${username}`} state={{ username }}>
-                    <button className="ui button blue right floated">Back to Login</button>
+                    <button className="ui button right floated">Back to User</button>
                 </Link>
             </h2>
             <div className="ui celled list">

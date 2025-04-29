@@ -23,7 +23,7 @@ const RegistrationForm = (props) => {
         navigate('/login');
     }
     return (
-        <div className="ui main">
+        <div className="ui main" style={{padding: "2rem"}}>
             <form className="ui form" onSubmit={register}>
                 <h2>Registration</h2>
                 <div className="field">
@@ -42,7 +42,7 @@ const RegistrationForm = (props) => {
                 <button className="ui button blue" type="submit">Register</button>
 
                 <div className="register-link" style={{ marginTop: "10px" }}>
-                    <p>Already have an account? <Link to={'/login'}>Login</Link></p>
+                    <p>Already have an account? <Link to={'/login'}>Sign In</Link></p>
                 </div>
             </form>
         </div>

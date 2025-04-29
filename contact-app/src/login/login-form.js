@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const LoginForm = (props) => {
     const [username, usernameChange] = useState("");
@@ -7,7 +7,12 @@ const LoginForm = (props) => {
 
     const navigate = useNavigate();
 
-    const login = (e) => {
+    if (localStorage.getItem("loggedInUser")) {
+        const username = localStorage.getItem("loggedInUser");
+        return <Navigate to={`/welcome/${username}`} state={{ username }} replace />;
+    }
+
+    const handleLogin = (e) => {
         e.preventDefault();
 
         if (!username || !password) {
@@ -25,8 +30,8 @@ const LoginForm = (props) => {
     }
 
     return (
-        <div className="ui main">
-            <form className="ui form" onSubmit={login}>
+        <div className="ui main" style={{padding: "2rem"}}>
+            <form className="ui form" onSubmit={handleLogin}>
                 <h2>Login</h2>
                 <div className="field">
                     <label>User Name</label>
@@ -37,7 +42,7 @@ const LoginForm = (props) => {
                     <input type="password" value={password} onChange={e => passwordChange(e.target.value)} placeholder="Password" required />
                 </div>
 
-                <button className="ui button blue" type="submit">Login</button>
+                <button className="ui button blue" type="submit">Sign In</button>
 
                 <div className="register-link" style={{ marginTop: "10px" }}>
                     <p>Don't have an account? <Link to={'/registration'}>Register</Link></p>

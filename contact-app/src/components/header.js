@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // import { useAuth } from "../contexts/AuthContext"; // adjust path
 
 // Header Component
 const Header = () => {
     // const { isLoggedIn } = useAuth();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
-    // useEffect(() => {
-    //     // Check login state from localStorage or any global method
-    //     const user = localStorage.getItem("loggedInUser");
-    //     setIsLoggedIn(!!user);
-    // }, []);
+    let isLoggedIn = false;
+    let isLoginPage = false;
+    if (localStorage.getItem("loggedInUser")) isLoggedIn = true;
+    if (location.pathname === "/login") isLoginPage = true;
 
     const handleLogout = () => {
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('loggedInUser');
-        setIsLoggedIn(false);
-        navigate('/login');
+
+        isLoggedIn = false;
+        navigate('/');
     };
 
 
@@ -28,16 +28,15 @@ const Header = () => {
                 <h2 className="child-header">Contact Manager</h2>
                 <div style={{ flexShrink: 0 }}>
                     {isLoggedIn ? (
-                        <div>
-                            <button className="ui button inverted" style={{ marginLeft: "1rem" }} onClick={handleLogout}                        >
-                                Sign Out
+                        <button className="ui button inverted" style={{ marginLeft: "1rem" }} onClick={handleLogout}                        >
+                            Sign Out
+                        </button>
+                    ) : isLoginPage ? (
+                        <Link to={'/registration'}>
+                            <button className="ui button inverted" style={{ marginLeft: "1rem" }}>
+                                Register
                             </button>
-                            <Link to="/">
-                                <button className="ui button inverted" style={{ marginLeft: "1rem" }}>
-                                    Home
-                                </button>
-                            </Link>
-                        </div>
+                        </Link>
                     ) : (
                         <Link to="/login">
                             <button className="ui button inverted" style={{ marginLeft: "1rem" }}>
