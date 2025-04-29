@@ -1,0 +1,50 @@
+{
+  "contact": [
+    {
+      "name": "test 234",
+      "email": "test23@gmail.com",
+      "id": "ce25e9ef-2d3e-43be-bccc-b2e8d82fbec7"
+    },
+    {
+      "name": "max 51",
+      "email": "max51@gmail.com",
+      "id": "bcb36745-bf55-4d6c-854f-755f0429cadb"
+    },
+    {
+      "name": "server22",
+      "email": "server22@gmal.com",
+      "id": "ebd3e767-09a5-44e3-8eb1-28acfbe6f7a0"
+    },
+    {
+      "id": "ed97dd78-0eaa-4b31-9d28-e5079f030079",
+      "name": "test contact",
+      "email": "contacts@gmail.com"
+    }
+  ],
+  "user": [
+    {
+      "id": "50c580e8-e493-435b-9f8e-4c7f837abb6b",
+      "username": "reg user",
+      "password": "456789",
+      "email": "reg@user.com"
+    },
+    {
+      "id": "50c580e8-e493-435b-9f8e-4c7f837abb6a",
+      "username": "test reg",
+      "password": "12345",
+      "email": "test@reg.com"
+    },
+    {
+      "id": "04a4bd5e-28fa-4880-aa99-e4e6b1c62595",
+      "username": "Shussain",
+      "password": "12345",
+      "email": "shussain@gmail.com"
+    },
+    {
+      "id": "12aed226-1ee1-4d43-ae49-cec752f05a09",
+      "username": "New user",
+      "password": "4567",
+      "email": "newuser@gmail.com"
+    }
+  ]
+}
