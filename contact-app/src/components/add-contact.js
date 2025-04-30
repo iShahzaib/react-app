@@ -21,9 +21,10 @@ class AddContactClass extends React.Component {
         // Navigate to '/contacts' path after adding the contact
         this.props.navigate('/contacts');
     };
+
     render() {
         return (
-            <div className="ui main" style={{padding: "2rem"}}>
+            <div className="ui main" style={{ padding: "2rem" }}>
                 <h2>Add Contact</h2>
                 <form className="ui form" onSubmit={this.add}>
                     <div className="field">

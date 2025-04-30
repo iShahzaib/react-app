@@ -123,11 +123,11 @@ function App() {
                     const data = await res.json();
 
                     if (data.length > 0) {
-                      const { username, email } = data[0];
+                      const { username, email, profilepicture } = data[0];
                       localStorage.setItem('isAuthenticated', 'true'); // <-- Save login
                       localStorage.setItem('loggedInUser', username); // (optional)
 
-                      navigate(`/welcome/${username}`, { state: { username, email } });
+                      navigate(`/welcome/${username}`, { state: { username, email, profilepicture } });
                     } else {
                       alert('Invalid username or password.');
                     }
@@ -143,11 +143,11 @@ function App() {
             path='/registration'
             element={
               <RegistrationForm
-                registrationHandler={({ username, password, email }) => {
+                registrationHandler={({ username, password, email, profilepicture }) => {
                   fetch('http://localhost:3006/user', {
                     method: "POST",
                     headers: { 'content-type': 'application/json' },
-                    body: JSON.stringify({ id: uuidv4(), username, password, email })
+                    body: JSON.stringify({ id: uuidv4(), username, password, email, profilepicture })
                   }).then(res => {
                     alert('Registration successfully.');
                   }).catch(err => {

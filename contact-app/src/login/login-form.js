@@ -30,7 +30,7 @@ const LoginForm = (props) => {
     }
 
     return (
-        <div className="ui main" style={{padding: "2rem"}}>
+        <div className="ui main" style={{ padding: "2rem" }}>
             <form className="ui form" onSubmit={handleLogin}>
                 <h2>Login</h2>
                 <div className="field">

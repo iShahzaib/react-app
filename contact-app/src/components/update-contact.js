@@ -28,7 +28,7 @@ class UpdateContactClass extends React.Component {
     };
     render() {
         return (
-            <div className="ui main" style={{padding: "2rem"}}>
+            <div className="ui main" style={{ padding: "2rem" }}>
                 <h2>Update Contact</h2>
                 <form className="ui form" onSubmit={this.update}>
                     <div className="field">

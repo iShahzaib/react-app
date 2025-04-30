@@ -25,10 +25,10 @@ const UserList = (props) => {
     }, [username]);
 
     const UserCard = (props) => {
-        const { username, email } = props.user;
+        const { username, email, profilepicture } = props.user;
         return (
             <div className="item" style={{ marginTop: "5px" }}>
-                <img className="ui avatar image" src={user} alt="user" />
+                <img className="ui avatar image" src={profilepicture || user} alt="user" />
                 <div className="content">
                     <div className="header">{username}</div>
                     <div>{email}</div>
@@ -45,7 +45,7 @@ const UserList = (props) => {
     }
 
     return (
-        <div className="ui main" style={{padding: "2rem"}}>
+        <div className="ui main" style={{ padding: "2rem" }}>
             <h2>User List
                 <Link to={`/welcome/${username}`} state={{ username }}>
                     <button className="ui button right floated">Back to User</button>
