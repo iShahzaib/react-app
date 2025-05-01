@@ -53,7 +53,7 @@ const ContactList = (props) => {
         <div className="ui main" style={{ padding: "2rem" }}>
             <h2>Contact List
                 <Link to={`/welcome/${username}`} state={{ id, username, email, profilepicture }}>
-                    <button className="ui button right floated" style={{ marginLeft: "0.5rem" }}>Back to User</button>
+                    <button className="ui button right floated">Back to User</button>
                 </Link>
                 <Link to={'/add'}>
                     <button className="ui button blue right floated">Add Contact</button>

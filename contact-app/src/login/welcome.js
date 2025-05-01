@@ -27,7 +27,7 @@ const Welcome = () => {
                         <button className="ui button green">Contact List</button>
                     </Link>
                     <Link to="/users">
-                        <button className="ui button blue" style={{ marginLeft: "0.5rem" }}>User List</button>
+                        <button className="ui button blue">User List</button>
                     </Link>
                 </div>
             </div>

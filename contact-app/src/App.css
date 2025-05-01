@@ -72,3 +72,18 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 600px) {
+  .responsive-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .responsive-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .ui.button {
+    width: 100%;
+  }
+}
