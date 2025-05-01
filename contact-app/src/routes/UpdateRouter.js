@@ -14,7 +14,17 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
         const updatedtList = type === 'contact'
             ? contacts.map((c) => c.id === updatedData.id ? updatedData : c)
             : users.map((u) => u.id === updatedData.id ? updatedData : u);
-        type === 'contact' ? setContacts(updatedtList) : setUsers(updatedtList);
+
+        if (type === 'user') {
+            setUsers(updatedtList);
+
+            const { id } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+            if (id === updatedData.id) {
+                localStorage.setItem('loggedInUser', JSON.stringify(updatedData));
+            }
+        } else {
+            setContacts(updatedtList);
+        }
         Swal.fire('Success!', `${sentenceCase(type)} has been updated successfully.`, 'success');
         // api.put(`/${type}/${updatedData.id}`, updatedData);
         api.patch(`/${type}/${updatedData.id}`, updatedData);   // Only update the name field

@@ -36,8 +36,10 @@ function App() {
 
       if (data.length === 1 && data[0].password === password) {
         const { id, username, email, profilepicture } = data[0];
-        localStorage.setItem('isAuthenticated', 'true'); // (optional)
+        
+        delete data[0].password;
         localStorage.setItem('loggedInUser', JSON.stringify(data[0])); // <-- Save login
+        localStorage.setItem('isAuthenticated', 'true'); // (optional)
 
         navigate(`/welcome/${username}`, { state: { id, username, email, profilepicture } });
       } else {
