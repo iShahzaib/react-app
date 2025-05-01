@@ -16,9 +16,19 @@
       "id": "ebd3e767-09a5-44e3-8eb1-28acfbe6f7a0"
     },
     {
-      "id": "ed97dd78-0eaa-4b31-9d28-e5079f030079",
-      "name": "test contact",
-      "email": "contacts@gmail.com"
+      "name": "shaiz 2",
+      "email": "asdfasd22f@agwda.com",
+      "id": "dce4ff4c-4d78-4aba-8f45-25c67e3d18a7"
+    },
+    {
+      "name": "asdfsaf5",
+      "email": "asdfsa2sadsa@gmail.com",
+      "id": "3d17a022-e4e9-4a56-b4c2-008d28ed8f5c"
+    },
+    {
+      "id": "b5132007-f338-497b-9b96-da9af0273f7c",
+      "name": "test 4",
+      "email": "test23@gmail.com"
     }
   ],
   "user": [
@@ -38,13 +48,21 @@
       "id": "04a4bd5e-28fa-4880-aa99-e4e6b1c62595",
       "username": "Shussain",
       "password": "12345",
-      "email": "shussain@gmail.com"
+      "email": "shussain@gmail.com",
+      "profilepicture": "https://cdn.optimiser.com/prod/public/5e144d9e7989411fcc169273/62150fc9d2fdec001381dab4"
     },
     {
       "id": "12aed226-1ee1-4d43-ae49-cec752f05a09",
       "username": "New user",
       "password": "4567",
       "email": "newuser@gmail.com"
+    },
+    {
+      "id": "ab7115e6-258f-4d04-8b6e-7f674b9fcf29",
+      "username": "test shan",
+      "password": "123789",
+      "email": "test@shan.com",
+      "profilepicture": "https://cdn.optimiser.com/prod/public/5e144d9e7989411fcc169273/63f45a2dd54e1b6145f42cdb"
     }
   ]
 }
