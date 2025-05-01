@@ -9,7 +9,7 @@ const ContactList = (props) => {
     const { contacts, setContacts } = props;
     const inputSearch = useRef('');
 
-    const username = localStorage.getItem("loggedInUser");
+    const { id, username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     useEffect(() => {
         if (!username) {
@@ -54,7 +54,7 @@ const ContactList = (props) => {
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <h2>Contact List
-                <Link to={`/welcome/${username}`} state={{ username }}>
+                <Link to={`/welcome/${username}`} state={{ id, username, email, profilepicture }}>
                     <button className="ui button right floated" style={{ marginLeft: "0.5rem" }}>Back to User</button>
                 </Link>
                 <Link to={'/add'}>

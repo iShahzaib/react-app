@@ -27,7 +27,6 @@ const ContactDetail = (props) => {
                         </Link>
                         <span>{id}</span>
                     </p>
-
                 </div>
                 <div className="image">
                     <img src={user} alt="user" />

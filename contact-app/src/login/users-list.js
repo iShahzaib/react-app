@@ -7,13 +7,10 @@ const UserList = (props) => {
     const [redirect, setRedirect] = useState(false);
     const { users, setUsers } = props;
 
-    const username = localStorage.getItem("loggedInUser");
+    const { id, username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     useEffect(() => {
-        const isAuthenticated = localStorage.getItem('isAuthenticated');
-        const authenticatedUser = localStorage.getItem('loggedInUser');
-
-        if (isAuthenticated !== 'true' || authenticatedUser !== username) {
+        if (!username) {
             setRedirect(true);
         } else if (!users.length) {
             const retrieveUsers = async () => {
@@ -48,7 +45,7 @@ const UserList = (props) => {
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <h2>User List
-                <Link to={`/welcome/${username}`} state={{ username }}>
+                <Link to={`/welcome/${username}`} state={{ id, username, email, profilepicture }}>
                     <button className="ui button right floated">Back to User</button>
                 </Link>
             </h2>

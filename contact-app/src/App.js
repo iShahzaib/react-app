@@ -35,11 +35,11 @@ function App() {
       const data = await res.json();
 
       if (data.length > 0) {
-        const { username, email, profilepicture } = data[0];
-        localStorage.setItem('isAuthenticated', 'true'); // <-- Save login
-        localStorage.setItem('loggedInUser', username); // (optional)
+        const { id, username, email, profilepicture } = data[0];
+        localStorage.setItem('isAuthenticated', 'true'); // (optional)
+        localStorage.setItem('loggedInUser', JSON.stringify(data[0])); // <-- Save login
 
-        navigate(`/welcome/${username}`, { state: { username, email, profilepicture } });
+        navigate(`/welcome/${username}`, { state: { id, username, email, profilepicture } });
       } else {
         Swal.fire('Warning!', 'Invalid username or password.', 'warning');
 
