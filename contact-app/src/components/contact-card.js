@@ -56,7 +56,7 @@ const ContactCard = (props) => {
                 onClick={() => props.deleteHandler(id)}
             </Link> */}
             <Link
-                to={`/update/${id}`}
+                to={`/update/contact/${id}`}
                 state={{ contact: props.contact }}
                 style={{ color: "blue", marginTop: "7px" }}
                 className="right floated"

@@ -17,7 +17,7 @@ const ContactDetail = (props) => {
                 <div className="content">
                     <p>ID:
                         <Link
-                            to={`/update/${id}`}
+                            to={`/update/contact/${id}`}
                             state={{ contact: state.contact }}
                             style={{ color: "blue" }}
                             className="right floated"

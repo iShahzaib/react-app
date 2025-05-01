@@ -33,6 +33,17 @@ const Welcome = () => {
             </div>
 
             <div className="ui centered card" style={{ width: "320px", margin: "0 auto", boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}>
+                <div className="content">
+                    <Link
+                        to={`/update/user/${id}`}
+                        state={{ user: state }}
+                        style={{ color: "blue" }}
+                        className="right floated"
+                    >
+                        <i className="edit alternate outline icon"></i>
+                        {/* onClick={() => props.updateUserHandler(id)} */}
+                    </Link>
+                </div>
                 <div className="image" style={{ padding: "1rem", background: "#f9f9f9" }}>
                     <img src={profilepicture} alt="user" style={{ borderRadius: "50%", width: "100px", height: "100px", margin: "0 auto", display: "block" }} />
                 </div>

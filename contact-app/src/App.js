@@ -4,16 +4,16 @@ import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import Header, { Main } from './components/header';
 import AddContact from './components/add-contact';
-import UpdateContact from './components/update-contact';
 import ContactDetail from './components/contact-detail';
 import ContactList from './components/contacts-list';
 // import DeletePopup from './components/delete-popup';
-import api from './api/contact'
+import api from './api/server';
 import LoginForm from './login/login-form';
 import RegistrationForm from './login/registration-form';
 import Welcome from './login/welcome';
 import UserList from './login/users-list';
 import Swal from 'sweetalert2';
+import UpdateRouter from './routes/UpdateRouter';
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -34,7 +34,7 @@ function App() {
       const res = await fetch(`${process.env.REACT_APP_JSON_SERVER_PATH}/user?username=${username}&password=${password}`);
       const data = await res.json();
 
-      if (data.length > 0) {
+      if (data.length === 1 && data[0].password === password) {
         const { id, username, email, profilepicture } = data[0];
         localStorage.setItem('isAuthenticated', 'true'); // (optional)
         localStorage.setItem('loggedInUser', JSON.stringify(data[0])); // <-- Save login
@@ -93,17 +93,13 @@ function App() {
           <Route path='/contact/:id' element={<ContactDetail contacts={contacts} />} />
 
           <Route
-            path='/update/:id'
+            path="/update/:type/:id"
             element={
-              <UpdateContact
-                updateContactHandler={(updatedData) => {
-                  const updatedContactList = contacts.map((c) => c.id === updatedData.id ? updatedData : c);
-                  setContacts(updatedContactList);
-
-                  Swal.fire('Success!', 'Contact has been updated successfully.', 'success');
-
-                  api.put(`/contact/${updatedData.id}`, updatedData);
-                }}
+              <UpdateRouter
+                contacts={contacts}
+                setContacts={setContacts}
+                users={users}
+                setUsers={setUsers}
               />
             }
           />

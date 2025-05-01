@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import ContactCard from "./contact-card";
-import api from './../api/contact'
+import api from '../api/server'
 
 const ContactList = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -34,12 +34,10 @@ const ContactList = (props) => {
         || contact.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const deleteContact = async (contactID) => {
-        const response = await api.delete(`/contact/${contactID}`);
-        if (response?.data) {
-            setContacts(contacts.filter(c => c.id !== response?.data.id));
-            // deleteContact={contactID => setContacts(contacts.filter(c => c.id !== contactID))}
-        }
+    const deleteContact = (contactID) => {
+        setContacts(contacts.filter(c => c.id !== contactID));
+        api.delete(`/contact/${contactID}`);
+        // deleteContact = { contactID => setContacts(contacts.filter(c => c.id !== contactID))}
     }
 
     const renderContactList = filteredContacts.map(c => {
