@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import ContactCard from "./contact-card";
-import api from '../api/server'
+import api from '../api/server';
 
 const ContactList = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
