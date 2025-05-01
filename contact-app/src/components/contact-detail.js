@@ -8,11 +8,14 @@ const ContactDetail = (props) => {
 
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
-            <h2>Contact Detail
-                <Link to={`/contacts`}                >
-                    <button className="ui button blue right floated">Back to Contact List</button>
-                </Link>
-            </h2>
+            <div className="responsive-header">
+                <h2 style={{ marginBottom: "0.5rem" }}>Contact Detail</h2>
+                <div className="responsive-button">
+                    <Link to={`/contacts`}                >
+                        <button className="ui button">Back to Contact List</button>
+                    </Link>
+                </div>
+            </div>
             <div className="ui card centered">
                 <div className="content">
                     <p>ID:

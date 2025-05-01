@@ -26,7 +26,9 @@ class AddContactClass extends React.Component {
     render() {
         return (
             <div className="ui main" style={{ padding: "2rem" }}>
-                <h2>Add Contact</h2>
+                <div className="responsive-header">
+                    <h2>Add Contact</h2>
+                </div>
                 <form className="ui form" onSubmit={this.add}>
                     <div className="field">
                         <label>Name</label>

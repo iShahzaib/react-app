@@ -72,11 +72,14 @@ const UserList = (props) => {
 
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
-            <h2>User List
-                <Link to={`/welcome/${loggedInUsername}`} state={{ id, username: loggedInUsername, email, profilepicture }}>
-                    <button className="ui button right floated">Back to User</button>
-                </Link>
-            </h2>
+            <div className="responsive-header">
+                <h2 style={{ marginBottom: "0.5rem" }}>User List</h2>
+                <div className="responsive-button">
+                    <Link to={`/welcome/${loggedInUsername}`} state={{ id, username: loggedInUsername, email, profilepicture }}>
+                        <button className="ui button">Back to User</button>
+                    </Link>
+                </div>
+            </div>
             <div className="ui celled list">
                 {renderUserList.length > 0 ? renderUserList : 'No record found'}
             </div>

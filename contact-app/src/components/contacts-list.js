@@ -51,14 +51,17 @@ const ContactList = (props) => {
     })
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
-            <h2>Contact List
-                <Link to={`/welcome/${username}`} state={{ id, username, email, profilepicture }}>
-                    <button className="ui button right floated">Back to User</button>
-                </Link>
-                <Link to={'/add'}>
-                    <button className="ui button blue right floated">Add Contact</button>
-                </Link>
-            </h2>
+            <div className="responsive-header">
+                <h2 style={{ marginBottom: "0.5rem" }}>Contact List</h2>
+                <div className="responsive-button">
+                    <Link to={`/welcome/${username}`} state={{ id, username, email, profilepicture }}>
+                        <button className="ui button">Back to User</button>
+                    </Link>
+                    <Link to={'/add'}>
+                        <button className="ui button blue">Add Contact</button>
+                    </Link>
+                </div>
+            </div>
             <div className="ui search">
                 <div className="ui icon input" style={{ width: "100%" }}>
                     <input
