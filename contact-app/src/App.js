@@ -36,7 +36,7 @@ function App() {
 
       if (data.length === 1 && data[0].password === password) {
         const { id, username, email, profilepicture } = data[0];
-        
+
         delete data[0].password;
         localStorage.setItem('loggedInUser', JSON.stringify(data[0])); // <-- Save login
         localStorage.setItem('isAuthenticated', 'true'); // (optional)
@@ -58,7 +58,12 @@ function App() {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ id: uuidv4(), username, password, email, profilepicture })
     }).then(res => {
-      Swal.fire('Success!', 'Registration has been completed successfully.', 'success');
+      Swal.fire({
+        title: 'Success!',
+        text: 'Registration has been completed successfully.',
+        icon: 'success',
+        width: '75%', // makes it more responsive on small screens
+      });
     }).catch(err => {
       Swal.fire('Error!', 'Registration failed.', 'error');
       console.log(err);
@@ -84,8 +89,12 @@ function App() {
                   const newContact = { id: uuidv4(), ...contact };
                   setContacts([...contacts, newContact]);
 
-                  Swal.fire('Success!', 'Contact has been added successfully.', 'success');
-
+                  Swal.fire({
+                    title: 'Success!',
+                    text: 'Contact has been added successfully.',
+                    icon: 'success',
+                    width: '75%', // makes it more responsive on small screens
+                  });
                   api.post('/contact', newContact);
                 }}
               />

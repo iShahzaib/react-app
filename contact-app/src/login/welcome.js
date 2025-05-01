@@ -20,9 +20,9 @@ const Welcome = () => {
 
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-                <h2 style={{ margin: 0 }}>User Detail</h2>
-                <div>
+            <div className="responsive-header">
+                <h2 style={{ marginBottom: "0.5rem" }}>User Detail</h2>
+                <div className="responsive-button">
                     <Link to="/contacts">
                         <button className="ui button green">Contact List</button>
                     </Link>

@@ -25,7 +25,12 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
         } else {
             setContacts(updatedtList);
         }
-        Swal.fire('Success!', `${sentenceCase(type)} has been updated successfully.`, 'success');
+        Swal.fire({
+            title: 'Success!',
+            text: `${sentenceCase(type)} has been updated successfully.`,
+            icon: 'success',
+            width: '75%', // makes it more responsive on small screens
+        });
         // api.put(`/${type}/${updatedData.id}`, updatedData);
         api.patch(`/${type}/${updatedData.id}`, updatedData);   // Only update the name field
     };
