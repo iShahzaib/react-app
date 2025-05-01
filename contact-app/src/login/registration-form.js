@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const RegistrationForm = (props) => {
     const [username, usernameChange] = useState("");
@@ -12,7 +13,7 @@ const RegistrationForm = (props) => {
     const register = (e) => {
         e.preventDefault();
         if (username === '' || password === '' || email === '') {
-            alert('All the fields are mandatory except profile picture');
+            Swal.fire('Warning!', 'All the fields are mandatory, except profile picture.', 'warning');
             return;
         }
         props.registrationHandler({ username, password, email, profilepicture });

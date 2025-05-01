@@ -1,6 +1,7 @@
 import React from "react";
 import user from '../images/nouser.jpg';
 import { Link, Navigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Welcome = () => {
     const { state } = useLocation();  // Access location object to get state
@@ -12,7 +13,7 @@ const Welcome = () => {
     const authenticatedUser = localStorage.getItem('loggedInUser');
 
     if (isAuthenticated !== 'true' || authenticatedUser !== username) {
-        alert('Please login first.');
+        Swal.fire('Error!', 'Please login first', 'error');
         return <Navigate to="/login" replace />;  // <-- This will redirect without remount issues
     }
 

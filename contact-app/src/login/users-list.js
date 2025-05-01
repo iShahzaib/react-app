@@ -4,8 +4,8 @@ import api from './../api/contact'
 import user from '../images/nouser.jpg';
 
 const UserList = (props) => {
-    const [users, setUsers] = useState([]);
     const [redirect, setRedirect] = useState(false);
+    const { users, setUsers } = props;
 
     const username = localStorage.getItem("loggedInUser");
 
@@ -15,14 +15,15 @@ const UserList = (props) => {
 
         if (isAuthenticated !== 'true' || authenticatedUser !== username) {
             setRedirect(true);
+        } else if (!users.length) {
+            const retrieveUsers = async () => {
+                const response = await api.get('/user');
+                const getUsers = response.data;
+                if (getUsers) setUsers(getUsers);
+            };
+            retrieveUsers();
         }
-        const retrieveUsers = async () => {
-            const response = await api.get('/user');
-            const getUsers = response.data;
-            if (getUsers) setUsers(getUsers);
-        };
-        retrieveUsers();
-    }, [username]);
+    }, [username, users, setUsers]);
 
     const UserCard = (props) => {
         const { username, email, profilepicture } = props.user;
