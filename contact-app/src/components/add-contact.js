@@ -41,7 +41,7 @@ class AddContactClass extends React.Component {
                     <div className="field">
                         <label>Email</label>
                         <input
-                            type="text"
+                            type="email"
                             name="email"
                             placeholder="Email"
                             value={this.state.email}

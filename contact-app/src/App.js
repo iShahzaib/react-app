@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import Header, { Main } from './components/header';
@@ -117,6 +117,9 @@ function App() {
           <Route path='/welcome/:username' element={<Welcome />} />
 
           <Route path='/users' element={<UserList users={users} setUsers={setUsers} />} />
+
+          {/* Redirect all unmatched routes to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </div>
