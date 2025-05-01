@@ -96,13 +96,13 @@ function App() {
             path='/update/:id'
             element={
               <UpdateContact
-                updateContactHandler={(updatedContact) => {
-                  const updatedContactList = contacts.map((c) => c.id === updatedContact.id ? updatedContact : c);
+                updateContactHandler={(updatedData) => {
+                  const updatedContactList = contacts.map((c) => c.id === updatedData.id ? updatedData : c);
                   setContacts(updatedContactList);
 
                   Swal.fire('Success!', 'Contact has been updated successfully.', 'success');
 
-                  api.put(`/contact/${updatedContact.id}`, updatedContact);
+                  api.put(`/contact/${updatedData.id}`, updatedData);
                 }}
               />
             }
