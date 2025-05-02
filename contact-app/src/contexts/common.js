@@ -11,8 +11,7 @@ export const showSuccess = (detail = '', msg) => {
     Swal.fire({
         title: msg || 'Success!',
         text: detail,
-        icon: 'success',
-        width: '75%',
+        icon: 'success'
     });
 };
 
@@ -20,8 +19,7 @@ export const showWarning = (detail = '') => {
     Swal.fire({
         title: 'Warning!',
         text: detail,
-        icon: 'warning',
-        width: '75%',
+        icon: 'warning'
     });
 };
 
@@ -29,7 +27,18 @@ export const showError = (detail = '') => {
     Swal.fire({
         title: 'Error!',
         text: detail,
-        icon: 'error',
-        width: '75%',
+        icon: 'error'
     });
 };
+
+export const confirmDelete = (detail = '') => {
+    return Swal.fire({
+        title: 'Are you sure?',
+        text: detail,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Delete'
+    });
+}

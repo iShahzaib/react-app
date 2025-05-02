@@ -85,6 +85,10 @@
   .ui.button {
     width: 100%;
   }
+
+  .swal2-modal {
+    width: 75%;
+  }
 }
 
 .responsive-header {

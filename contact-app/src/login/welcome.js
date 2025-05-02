@@ -37,7 +37,6 @@ const Welcome = () => {
                     <Link
                         to={`/update/user/${id}`}
                         state={{ user: state }}
-                        style={{ color: "blue" }}
                         className="right floated"
                     >
                         <i className="edit alternate outline icon"></i>

@@ -1,23 +1,14 @@
 import React from "react";
 import user from '../images/nouser.jpg';
 import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import { showSuccess } from "../contexts/common";
+import { confirmDelete, showSuccess } from "../contexts/common";
 
 const ContactCard = (props) => {
     const { id, name, email } = props.contact;
     const navigate = useNavigate();
 
     const handleDelete = () => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to delete this contact?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Delete',
-        }).then((result) => {
+        confirmDelete('Do you want to delete this contact?').then((result) => {
             if (result.isConfirmed) {
                 props.deleteHandler(id);
 
@@ -56,7 +47,7 @@ const ContactCard = (props) => {
             <Link
                 to={`/update/contact/${id}`}
                 state={{ contact: props.contact }}
-                style={{ color: "blue", marginTop: "7px" }}
+                style={{ marginTop: "7px" }}
                 className="right floated"
             >
                 <i className="edit alternate outline icon"></i>

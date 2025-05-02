@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import api from '../api/server';
 import user from '../images/nouser.jpg';
-import Swal from "sweetalert2";
-import { showSuccess } from "../contexts/common";
+import { confirmDelete, showSuccess } from "../contexts/common";
 
 const UserList = (props) => {
     const [redirect, setRedirect] = useState(false);
@@ -29,15 +28,7 @@ const UserList = (props) => {
         const { id, username, email, profilepicture } = props.user;
 
         const handleDelete = () => {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Do you want to delete this user?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Delete',
-            }).then((result) => {
+            confirmDelete('Do you want to delete this user?').then((result) => {
                 if (result.isConfirmed) {
                     setUsers(users.filter(c => c.id !== id));
                     api.delete(`/user/${id}`);
@@ -53,7 +44,7 @@ const UserList = (props) => {
                 <img className="ui avatar image" src={profilepicture || user} alt="user" />
                 <div className="content">
                     <div className="header">{username}</div>
-                    <div>{email}</div>
+                    <div style={{ color: "#4183c4" }}>{email}</div>
                 </div>
                 {loggedInUsername !== username && (<i
                     className="trash alternate outline icon right floated"

@@ -22,7 +22,6 @@ const ContactDetail = (props) => {
                         <Link
                             to={`/update/contact/${id}`}
                             state={{ contact: state.contact }}
-                            style={{ color: "blue" }}
                             className="right floated"
                         >
                             <i className="edit alternate outline icon"></i>
