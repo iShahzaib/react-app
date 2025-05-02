@@ -8,6 +8,13 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
     const { type } = useParams();
 
     const updateHandler = (updatedData) => {
+        // const isUnique = await checkEmailUnique(updatedData.email, type);
+
+        // if (!isUnique) {
+        //     showError('This email already exists.');
+        //     return 'failed';
+        // }
+
         const updatedtList = type === 'contact'
             ? contacts.map((c) => c.id === updatedData.id ? updatedData : c)
             : users.map((u) => u.id === updatedData.id ? updatedData : u);
