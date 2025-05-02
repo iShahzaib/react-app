@@ -8,8 +8,6 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
     const { type } = useParams();
 
     const updateHandler = (updatedData) => {
-        delete updatedData.email;
-
         const updatedtList = type === 'contact'
             ? contacts.map((c) => c.id === updatedData.id ? updatedData : c)
             : users.map((u) => u.id === updatedData.id ? updatedData : u);
@@ -26,6 +24,7 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
         }
         showSuccess(`${sentenceCase(type)} has been updated successfully.`);
 
+        delete updatedData.email;
         // api.put(`/${type}/${updatedData.id}`, updatedData);
         api.patch(`/${type}/${updatedData.id}`, updatedData);   // Only update the name field
     };
