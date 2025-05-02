@@ -5,9 +5,7 @@ import UpdateUser from "../login/update-user";
 import { sentenceCase, showSuccess } from "../contexts/common";
 
 export default function UpdateRouter({ contacts, setContacts, users, setUsers }) {
-    const { type, id } = useParams();
-
-    console.log(id);
+    const { type } = useParams();
 
     const updateHandler = (updatedData) => {
         const updatedtList = type === 'contact'

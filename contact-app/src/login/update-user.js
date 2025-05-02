@@ -49,6 +49,7 @@ class UpdateUserClass extends React.Component {
                         <input
                             type="text"
                             name="username"
+                            required
                             placeholder="User Name"
                             value={this.state.username}
                             onChange={e => this.setState({ username: e.target.value })}
@@ -59,6 +60,7 @@ class UpdateUserClass extends React.Component {
                         <input
                             type="email"
                             name="email"
+                            required
                             placeholder="Email"
                             value={this.state.email}
                             onChange={e => this.setState({ email: e.target.value })}

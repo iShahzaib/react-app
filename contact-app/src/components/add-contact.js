@@ -8,19 +8,21 @@ class AddContactClass extends React.Component {
         email: ''
     };
 
-    add = (e) => {
+    add = async (e) => {
         e.preventDefault();
         if (this.state.name === '' || this.state.email === '') {
             showWarning('All the fields are mandatory.');
             return;
         }
-        this.props.addContactHandler(this.state);
-        this.setState({
-            name: '',
-            email: ''
-        });
-        // Navigate to '/contacts' path after adding the contact
-        this.props.navigate('/contacts');
+        const response = await this.props.addContactHandler(this.state);
+        if (response === 'success') {
+            this.setState({
+                name: '',
+                email: ''
+            });
+            // Navigate to '/contacts' path after adding the contact
+            this.props.navigate('/contacts');
+        }
     };
 
     render() {
@@ -35,6 +37,7 @@ class AddContactClass extends React.Component {
                         <input
                             type="text"
                             name="name"
+                            required
                             placeholder="Name"
                             value={this.state.name}
                             onChange={e => this.setState({ name: e.target.value })}
@@ -45,6 +48,7 @@ class AddContactClass extends React.Component {
                         <input
                             type="email"
                             name="email"
+                            required
                             placeholder="Email"
                             value={this.state.email}
                             onChange={e => this.setState({ email: e.target.value })}

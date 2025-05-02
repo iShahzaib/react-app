@@ -10,19 +10,19 @@ const RegistrationForm = (props) => {
 
     const navigate = useNavigate();
 
-    const register = (e) => {
+    const register = async (e) => {
         e.preventDefault();
         if (username === '' || password === '' || email === '') {
             showWarning('All the fields are mandatory, except profile picture.');
             return;
         }
-        props.registrationHandler({ username, password, email, profilepicture });
+        const response = await props.registrationHandler({ username, password, email: email?.toLowerCase(), profilepicture });
         // this.setState({
         //     name: '',
         //     email: ''
         // });
         // Navigate to '/login' path after adding the contact
-        navigate('/login');
+        if (response === 'success') navigate('/login');
     }
     return (
         <div className="ui main" style={{ padding: "2rem" }}>

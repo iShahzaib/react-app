@@ -13,7 +13,7 @@ import RegistrationForm from './login/registration-form';
 import Welcome from './login/welcome';
 import UserList from './login/users-list';
 import UpdateRouter from './routes/UpdateRouter';
-import { showError, showSuccess, showWarning } from './contexts/common';
+import { checkEmailUnique, showError, showSuccess, showWarning } from './contexts/common';
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -51,17 +51,32 @@ function App() {
     }
   }
 
-  const handleRegistration = ({ username, password, email, profilepicture }) => {
-    fetch(`${process.env.REACT_APP_JSON_SERVER_PATH}/user`, {
-      method: "POST",
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ id: uuidv4(), username, password, email, profilepicture })
-    }).then(res => {
-      showSuccess('Registration has been completed successfully.');
-    }).catch(err => {
+  const handleRegistration = async ({ username, password, email, profilepicture }) => {
+    try {
+      const isUnique = await checkEmailUnique(email, 'user');
+
+      if (!isUnique) {
+        showError('This email already exists.');
+        return 'failed';
+      }
+
+      const response = await fetch(`${process.env.REACT_APP_JSON_SERVER_PATH}/user`, {
+        method: "POST",
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ id: uuidv4(), username, password, email, profilepicture })
+      });
+
+      if (response.ok) {
+        showSuccess('Registration has been completed successfully.');
+        return 'success';
+      } else {
+        return 'failed';
+      }
+    } catch (error) {
       showError('Registration failed.');
-      console.log(err);
-    })
+      console.log(error);
+      return 'failed';
+    }
   }
 
   return (
@@ -80,11 +95,20 @@ function App() {
             element={
               <AddContact
                 addContactHandler={async (contact) => {
+                  const isUnique = await checkEmailUnique(contact.email, 'contact');
+
+                  if (!isUnique) {
+                    showError('This email already exists.');
+                    return 'failed';
+                  }
+
                   const newContact = { id: uuidv4(), ...contact };
                   setContacts([...contacts, newContact]);
 
                   showSuccess('Contact has been added successfully.');
                   api.post('/contact', newContact);
+
+                  return 'success';
                 }}
               />
             }
