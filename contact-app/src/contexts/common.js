@@ -7,9 +7,9 @@ export const sentenceCase = (str) => {
         .replace(/^\w/, c => c.toUpperCase()); // capitalize first letter
 };
 
-export const showSuccess = (detail = '') => {
+export const showSuccess = (detail = '', msg) => {
     Swal.fire({
-        title: 'Success!',
+        title: msg || 'Success!',
         text: detail,
         icon: 'success',
         width: '75%',
