@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { showWarning } from "../contexts/common";
 
 class AddContactClass extends React.Component {
     state = {
@@ -11,7 +11,7 @@ class AddContactClass extends React.Component {
     add = (e) => {
         e.preventDefault();
         if (this.state.name === '' || this.state.email === '') {
-            Swal.fire('Warning!', 'All the fields are mandatory.', 'warning');
+            showWarning('All the fields are mandatory.');
             return;
         }
         this.props.addContactHandler(this.state);

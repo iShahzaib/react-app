@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { showWarning } from "../contexts/common";
 
 const LoginForm = (props) => {
     const [username, usernameChange] = useState("");
@@ -18,7 +18,7 @@ const LoginForm = (props) => {
         e.preventDefault();
 
         if (!username || !password) {
-            Swal.fire('Warning!', 'Username and Password are required.', 'warning');
+            showWarning('Username and Password are required.');
             return;
         }
 

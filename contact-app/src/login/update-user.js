@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { showWarning } from "../contexts/common";
 
 class UpdateUserClass extends React.Component {
     state = {
@@ -17,7 +17,7 @@ class UpdateUserClass extends React.Component {
     update = (e) => {
         e.preventDefault();
         if (this.state.username === '' || this.state.email === '') {
-            Swal.fire('Warning!', 'All the fields are mandatory.', 'warning');
+            showWarning('All the fields are mandatory.');
             return;
         }
         this.props.updateUserHandler(this.state);

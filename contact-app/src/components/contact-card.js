@@ -2,6 +2,7 @@ import React from "react";
 import user from '../images/nouser.jpg';
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { showSuccess } from "../contexts/common";
 
 const ContactCard = (props) => {
     const { id, name, email } = props.contact;
@@ -19,11 +20,8 @@ const ContactCard = (props) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 props.deleteHandler(id);
-                Swal.fire(
-                    'Deleted!',
-                    'The contact has been deleted successfully.',
-                    'success'
-                );
+
+                showSuccess('The contact has been deleted successfully.', 'Deleted!');
                 navigate("/contacts");
             }
         });

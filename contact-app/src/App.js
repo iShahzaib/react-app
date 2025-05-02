@@ -12,8 +12,8 @@ import LoginForm from './login/login-form';
 import RegistrationForm from './login/registration-form';
 import Welcome from './login/welcome';
 import UserList from './login/users-list';
-import Swal from 'sweetalert2';
 import UpdateRouter from './routes/UpdateRouter';
+import { showError, showSuccess, showWarning } from './contexts/common';
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -43,11 +43,10 @@ function App() {
 
         navigate(`/welcome/${username}`, { state: { id, username, email, profilepicture } });
       } else {
-        Swal.fire('Warning!', 'Invalid username or password.', 'warning');
-
+        showWarning('Invalid username or password.');
       }
     } catch (error) {
-      Swal.fire('Error!', 'Login error. Please try again.', 'error');
+      showError('Login error. Please try again.');
       console.error('Login error:', error);
     }
   }
@@ -58,14 +57,9 @@ function App() {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ id: uuidv4(), username, password, email, profilepicture })
     }).then(res => {
-      Swal.fire({
-        title: 'Success!',
-        text: 'Registration has been completed successfully.',
-        icon: 'success',
-        width: '75%', // makes it more responsive on small screens
-      });
+      showSuccess('Registration has been completed successfully.');
     }).catch(err => {
-      Swal.fire('Error!', 'Registration failed.', 'error');
+      showError('Registration failed.');
       console.log(err);
     })
   }
@@ -89,12 +83,7 @@ function App() {
                   const newContact = { id: uuidv4(), ...contact };
                   setContacts([...contacts, newContact]);
 
-                  Swal.fire({
-                    title: 'Success!',
-                    text: 'Contact has been added successfully.',
-                    icon: 'success',
-                    width: '75%', // makes it more responsive on small screens
-                  });
+                  showSuccess('Contact has been added successfully.');
                   api.post('/contact', newContact);
                 }}
               />

@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import UpdateContact from './../components/update-contact';
 import api from '../api/server';
-import Swal from "sweetalert2";
 import UpdateUser from "../login/update-user";
-import { sentenceCase } from "../contexts/common";
+import { sentenceCase, showSuccess } from "../contexts/common";
 
 export default function UpdateRouter({ contacts, setContacts, users, setUsers }) {
     const { type, id } = useParams();
@@ -25,12 +24,8 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
         } else {
             setContacts(updatedtList);
         }
-        Swal.fire({
-            title: 'Success!',
-            text: `${sentenceCase(type)} has been updated successfully.`,
-            icon: 'success',
-            width: '75%', // makes it more responsive on small screens
-        });
+        showSuccess(`${sentenceCase(type)} has been updated successfully.`);
+
         // api.put(`/${type}/${updatedData.id}`, updatedData);
         api.patch(`/${type}/${updatedData.id}`, updatedData);   // Only update the name field
     };

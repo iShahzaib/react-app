@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import api from '../api/server';
 import user from '../images/nouser.jpg';
 import Swal from "sweetalert2";
+import { showSuccess } from "../contexts/common";
 
 const UserList = (props) => {
     const [redirect, setRedirect] = useState(false);
@@ -41,7 +42,7 @@ const UserList = (props) => {
                     setUsers(users.filter(c => c.id !== id));
                     api.delete(`/user/${id}`);
 
-                    Swal.fire('Deleted!', 'The user has been deleted successfully.', 'success');
+                    showSuccess('The user has been deleted successfully.', 'Deleted!');
                     navigate("/users");
                 }
             });
