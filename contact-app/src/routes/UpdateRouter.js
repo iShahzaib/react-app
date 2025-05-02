@@ -8,12 +8,7 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
     const { type } = useParams();
 
     const updateHandler = (updatedData) => {
-        // const isUnique = await checkEmailUnique(updatedData.email, type);
-
-        // if (!isUnique) {
-        //     showError('This email already exists.');
-        //     return 'failed';
-        // }
+        delete updatedData.email;
 
         const updatedtList = type === 'contact'
             ? contacts.map((c) => c.id === updatedData.id ? updatedData : c)
@@ -35,11 +30,14 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
         api.patch(`/${type}/${updatedData.id}`, updatedData);   // Only update the name field
     };
 
-    if (type === 'contact') {
-        return <UpdateContact updateContactHandler={updateHandler} />;
-    } else if (type === 'user') {
-        return <UpdateUser updateUserHandler={updateHandler} />;
-    } else {
-        return <p>Invalid type in URL.</p>;
+    switch (type) {
+        case 'contact':
+            return <UpdateContact updateContactHandler={updateHandler} />;
+
+        case 'user':
+            return <UpdateUser updateUserHandler={updateHandler} />;
+
+        default:
+            return <p>Invalid type in URL.</p>;
     }
 }

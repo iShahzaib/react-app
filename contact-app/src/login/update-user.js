@@ -61,6 +61,7 @@ class UpdateUserClass extends React.Component {
                             type="email"
                             name="email"
                             required
+                            disabled
                             placeholder="Email"
                             value={this.state.email}
                             onChange={e => this.setState({ email: e.target.value })}
