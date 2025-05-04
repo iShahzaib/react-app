@@ -39,12 +39,9 @@ const ChatComponent = () => {
         setMessage('');
     };
 
-    const MessageContainer = ({ text, sender, timestamp, index }) => {
+    const MessageContainer = ({ text, sender, timestamp }) => {
         return (
-            <div
-                key={index}
-                className={`message-container ${sender === username ? 'message-right' : 'message-left'}`}
-            >
+            <div className={`message-container ${sender === username ? 'message-right' : 'message-left'}`}            >
                 <div className={`message-bubble ${sender === username ? 'bubble-right' : 'bubble-left'}`}>
                     <div>{text}</div>
                     <div className="timestamp">{timestamp}</div>
@@ -69,7 +66,12 @@ const ChatComponent = () => {
             </div>
             <div className="chat-box" ref={chatBoxRef}>
                 {chat.map((msg, index) => (
-                    <MessageContainer text={msg.text} sender={msg.sender} timestamp={msg.timestamp} index={index} />
+                    <MessageContainer
+                        key={index}
+                        text={msg.text}
+                        sender={msg.sender}
+                        timestamp={msg.timestamp}
+                    />
                 ))}
             </div>
             <div className="input-container">
