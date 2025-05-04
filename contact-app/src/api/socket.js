@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
 
-const socket = io('ws://localhost:9000');
+const socket = io(process.env.REACT_APP_SERVER_PATH);
 
 export default socket;
