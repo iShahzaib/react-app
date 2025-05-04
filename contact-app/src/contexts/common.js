@@ -29,9 +29,9 @@ export const showWarning = (detail = '') => {
     });
 };
 
-export const showError = (detail = '') => {
+export const showError = (detail = '', msg) => {
     Swal.fire({
-        title: 'Error!',
+        title: msg || 'Error!',
         text: detail,
         icon: 'error'
     });

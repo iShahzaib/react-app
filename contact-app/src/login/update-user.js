@@ -29,10 +29,10 @@ class UpdateUserClass extends React.Component {
         });
 
         // Navigate to '/contacts' path after adding the user
-        const { id, username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+        const { id, username } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
         if (this.state.id === id) {
-            this.props.navigate(`/welcome/${username}`, { state: { id, username, email, profilepicture } });
+            this.props.navigate(`/welcome/${username}`);
         } else {
             this.props.navigate('/users');
         }

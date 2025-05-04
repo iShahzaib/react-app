@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import user from '../images/nouser.jpg';
-import { Link, Navigate, useLocation, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
+import socketClient from '../api/socket';
 import { showWarning } from "../contexts/common";
 
 const Welcome = () => {
-    const { state } = useLocation();  // Access location object to get state
     const { username: authenticatedUser } = useParams();
-    const id = state?.id;
-    const username = state?.username;
-    const email = state?.email;
-    const profilepicture = state?.profilepicture || user;
+    const { id, username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+    useEffect(() => {
+        console.log('loggedin', username);
+        socketClient.emit('login', username);
+    }, [username]);
+
+
+    useEffect(() => {
+        const handleReceiveMessage = (otheruser) => { console.log(`${otheruser} is active.`); };
+
+        socketClient.on('user_joined', handleReceiveMessage);
+
+        return () => { socketClient.off('user_joined', handleReceiveMessage); };
+    }, []);
 
     if (isAuthenticated !== 'true' || authenticatedUser !== username) {
         isAuthenticated !== 'true' && showWarning('Please login first');
@@ -36,7 +47,7 @@ const Welcome = () => {
                 <div className="content">
                     <Link
                         to={`/update/user/${id}`}
-                        state={{ user: state }}
+                        state={{ user: { id, username, email, profilepicture } }}
                         className="right floated"
                     >
                         <i className="edit alternate outline icon"></i>
@@ -44,7 +55,7 @@ const Welcome = () => {
                     </Link>
                 </div>
                 <div className="image" style={{ padding: "1rem", background: "#f9f9f9" }}>
-                    <img src={profilepicture} alt="user" style={{ borderRadius: "50%", width: "100px", height: "100px", margin: "0 auto", display: "block" }} />
+                    <img src={profilepicture || user} alt="user" style={{ borderRadius: "50%", width: "100px", height: "100px", margin: "0 auto", display: "block" }} />
                 </div>
                 <div className="content" style={{ textAlign: "center" }}>
                     <h3 style={{ marginBottom: "0.5rem" }}>{username}</h3>

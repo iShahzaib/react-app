@@ -5,15 +5,16 @@ import './App.css';
 import Header, { Main } from './components/header';
 import AddContact from './components/add-contact';
 import ContactDetail from './components/contact-detail';
-import ContactList from './components/contacts-list';
+import BuildList from './components/build-list';
 // import DeletePopup from './components/delete-popup';
 import api from './api/server';
 import LoginForm from './login/login-form';
 import RegistrationForm from './login/registration-form';
 import Welcome from './login/welcome';
 import UserList from './login/users-list';
-import UpdateRouter from './routes/UpdateRouter';
+import UpdateRouter from './routes/update-router';
 import { checkEmailUnique, showError, showSuccess, showWarning } from './contexts/common';
+import ChatComponent from './components/chat';
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -35,13 +36,13 @@ function App() {
       const data = await res.json();
 
       if (data.length === 1 && data[0].password === password) {
-        const { id, username, email, profilepicture } = data[0];
+        const { username } = data[0];
 
         delete data[0].password;
         localStorage.setItem('loggedInUser', JSON.stringify(data[0])); // <-- Save login
         localStorage.setItem('isAuthenticated', 'true'); // (optional)
 
-        navigate(`/welcome/${username}`, { state: { id, username, email, profilepicture } });
+        navigate(`/welcome/${username}`);
       } else {
         showWarning('Invalid username or password.');
       }
@@ -88,7 +89,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Main />} />
 
-          <Route path='/contacts' element={<ContactList contacts={contacts} setContacts={setContacts} />} />
+          <Route path='/contacts' element={<BuildList contacts={contacts} setContacts={setContacts} />} />
 
           <Route
             path='/add'
@@ -137,6 +138,8 @@ function App() {
           <Route path='/welcome/:username' element={<Welcome />} />
 
           <Route path='/users' element={<UserList users={users} setUsers={setUsers} />} />
+
+          <Route path="/chat" element={<ChatComponent />} />
 
           {/* Redirect all unmatched routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />

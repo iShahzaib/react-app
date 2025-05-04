@@ -9,9 +9,9 @@ const LoginForm = (props) => {
     const navigate = useNavigate();
 
     if (localStorage.getItem("loggedInUser")) {
-        const { id, username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+        const { username } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
-        return <Navigate to={`/welcome/${username}`} state={{ id, username, email, profilepicture }} replace />;
+        return <Navigate to={`/welcome/${username}`} replace />;
     }
 
     const handleLogin = (e) => {

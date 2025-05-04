@@ -1,28 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import api from '../api/server';
 import user from '../images/nouser.jpg';
-import { confirmDelete, showSuccess } from "../contexts/common";
+import { confirmDelete, showSuccess, showError } from "../contexts/common";
 
 const UserList = (props) => {
+    const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
     const { users, setUsers } = props;
     const navigate = useNavigate();
+    const inputSearch = useRef('');
 
-    const { id, username: loggedInUsername, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+    const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+
+    const retrieveUsers = useCallback(async () => {
+        const response = await api.get('/user');
+        const getUsers = response.data;
+        if (getUsers) setUsers(getUsers);
+    }, [setUsers]);
 
     useEffect(() => {
         if (!loggedInUsername) {
             setRedirect(true);
         } else if (!users.length) {
-            const retrieveUsers = async () => {
-                const response = await api.get('/user');
-                const getUsers = response.data;
-                if (getUsers) setUsers(getUsers);
-            };
             retrieveUsers();
         }
-    }, [loggedInUsername, users, setUsers]);
+    }, [loggedInUsername, users, retrieveUsers]);
 
     const UserCard = (props) => {
         const { id, username, email, profilepicture } = props.user;
@@ -46,11 +49,30 @@ const UserList = (props) => {
                     <div className="header">{username}</div>
                     <div style={{ color: "#4183c4" }}>{email}</div>
                 </div>
-                {loggedInUsername !== username && (<i
+                <i
                     className="trash alternate outline icon right floated"
-                    style={{ color: "red", marginLeft: "10px", marginTop: "7px" }}
-                    onClick={handleDelete}
-                ></i>)}
+                    title={loggedInUsername === username ? 'You can not delete your own user.' : 'Delete'}
+                    style={{
+                        color: "red",
+                        marginLeft: "10px",
+                        marginTop: "7px",
+                        cursor: loggedInUsername === username ? 'not-allowed' : 'pointer',
+                        opacity: loggedInUsername === username ? 0.5 : 1,
+                    }}
+                    onClick={() => {
+                        if (loggedInUsername !== username) {
+                            handleDelete();
+                        } else {
+                            showError('You cannot delete this user.', 'Access Denied!');
+                        }
+                    }}
+                />
+                {loggedInUsername !== username && (<Link to="/chat" state={{ id, username, email, profilepicture, loggedInUsername }}>
+                    <i
+                        className="comment alternate outline icon right floated"
+                        style={{ color: "green", marginLeft: "10px", marginTop: "7px" }}
+                    ></i>
+                </Link>)}
             </div >
         )
     };
@@ -67,10 +89,26 @@ const UserList = (props) => {
             <div className="responsive-header">
                 <h2 style={{ marginBottom: "0.5rem" }}>User List</h2>
                 <div className="responsive-button">
-                    <Link to={`/welcome/${loggedInUsername}`} state={{ id, username: loggedInUsername, email, profilepicture }}>
-                        <button className="ui button">Back to User</button>
+                    <Link to={`/welcome/${loggedInUsername}`}>
+                        <button className="ui button">Back</button>
                     </Link>
                 </div>
+            </div>
+            <div className="ui search search-container">
+                <div className="ui icon input search-input">
+                    <input
+                        ref={inputSearch}
+                        type="text"
+                        placeholder="Search Users"
+                        className="prompt"
+                        value={searchTerm}
+                        onChange={() => setSearchTerm(inputSearch.current.value)}
+                    />
+                    <i className="search icon"></i>
+                </div>
+                <button className="prompt refresh-button" onClick={retrieveUsers} style={{ width: "5.75%" }}>
+                    <i className="refresh icon" style={{ marginLeft: "-3px" }}></i>
+                </button>
             </div>
             <div className="ui celled list">
                 {renderUserList.length > 0 ? renderUserList : 'No record found'}

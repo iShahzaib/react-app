@@ -3,8 +3,8 @@ import user from '../images/nouser.jpg';
 import { Link, useNavigate } from "react-router-dom";
 import { confirmDelete, showSuccess } from "../contexts/common";
 
-const ContactCard = (props) => {
-    const { id, name, email } = props.contact;
+const ListCard = (props) => {
+    const { id, name, email } = props.data;
     const navigate = useNavigate();
 
     const handleDelete = () => {
@@ -24,7 +24,7 @@ const ContactCard = (props) => {
             <div className="content">
                 <Link
                     to={`/contact/${id}`}
-                    state={{ contact: props.contact }}
+                    state={{ contact: props.data }}
                 >
                     <div className="header">{name}</div>
                     <div>{email}</div>
@@ -37,7 +37,7 @@ const ContactCard = (props) => {
             ></i>
             {/* <Link
                 to={`/delete/${id}`}
-                state={{ contact: props.contact }}
+                state={{ contact: props.data }}
                 style={{ color: "red", marginTop: "7px" }}
                 className="right floated"
             >
@@ -46,7 +46,7 @@ const ContactCard = (props) => {
             </Link> */}
             <Link
                 to={`/update/contact/${id}`}
-                state={{ contact: props.contact }}
+                state={{ contact: props.data }}
                 style={{ marginTop: "7px" }}
                 className="right floated"
             >
@@ -57,4 +57,4 @@ const ContactCard = (props) => {
     );
 }
 
-export default ContactCard;
+export default ListCard;

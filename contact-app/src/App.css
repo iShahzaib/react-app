@@ -108,3 +108,155 @@
 [required] {
   border-left: 0.1rem solid red !important;
 }
+
+.search-container {
+  display: flex;
+  gap: 8px;
+}
+
+.search-input {
+  flex: 1;
+}
+
+.refresh-button {
+  cursor: pointer;
+}
+
+.refresh-button:hover {
+  background: #f0f0f0;
+}
+
+/* chat css starts */
+
+.chat-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #d1e7f7;
+  font-family: Arial, sans-serif;
+}
+
+.chat-heading {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.chat-box {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.message-container {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.message-right {
+  justify-content: flex-end;
+}
+
+.message-left {
+  justify-content: flex-start;
+}
+
+.bubble-right {
+  background-color: #bbffc2;
+  text-align: right;
+}
+
+.bubble-left {
+  background-color: #ffffff;
+  text-align: left;
+}
+
+.sender {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.3rem;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: #9f9c9c;
+}
+
+.input-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.send-button {
+  padding: 0.6rem 1.2rem;
+  background-color: #2185d0;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.chat-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.chat-username {
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #00ff00;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.online {
+  background-color: #00c853;
+}
+
+.avatar-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
