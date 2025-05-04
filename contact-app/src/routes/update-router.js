@@ -24,7 +24,7 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
         }
         showSuccess(`${sentenceCase(type)} has been updated successfully.`);
 
-        delete updatedData.email;
+        // delete updatedData.email;
         // api.put(`/${type}/${updatedData.id}`, updatedData);
         api.patch(`/${type}/${updatedData.id}`, updatedData);   // Only update the name field
     };

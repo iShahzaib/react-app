@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import ListCard from "./list-card";
 import api from '../api/server';
@@ -7,39 +7,41 @@ import { sentenceCase } from "../contexts/common";
 const BuildList = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
-    const { contacts, setContacts, type = 'contact' } = props;
+    const { listData, setListData, type } = props;
     const inputSearch = useRef('');
 
-    const { username } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+    const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const retrieveData = useCallback(async () => {
-        // const getContact = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+        // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
         const response = await api.get(`/${type}`);
-        const getContact = response.data;
-        if (getContact) setContacts(getContact);
-    }, [type, setContacts]);
+        const getData = response.data;
+        if (getData) setListData(getData);
+    }, [type, setListData]);
 
     useEffect(() => {
-        if (!username) {
+        if (!loggedInUsername) {
             setRedirect(true);
-        } else if (!contacts?.length) {
+        } else if (!listData.length) {
             retrieveData();
         }
-    }, [username, contacts, retrieveData]);
+    }, [loggedInUsername, listData, retrieveData]);
 
+    // If redirect is true, navigate to login
     if (redirect) {
         return <Navigate to="/" replace />;  // <-- This will redirect without remount issues
     }
 
-    const filteredData = contacts.filter(data =>
-        data.name.toLowerCase().includes(searchTerm.toLowerCase())
-        || data.email.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredData = listData.filter(data =>
+        data.name?.toLowerCase().includes(searchTerm.toLowerCase())
+        || data.username?.toLowerCase().includes(searchTerm.toLowerCase())
+        || data.email?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const deleteObject = (contactID) => {
-        setContacts(contacts.filter(c => c.id !== contactID));
-        api.delete(`/${type}/${contactID}`);
-        // deleteObject = { contactID => setContacts(contacts.filter(c => c.id !== contactID))}
+    const deleteObject = (id) => {
+        setListData(listData.filter(c => c.id !== id));
+        api.delete(`/${type}/${id}`);
+        // deleteObject = { id => setListData(listData.filter(c => c.id !== id))}
     }
 
     const renderList = filteredData.map(c => {
@@ -47,19 +49,24 @@ const BuildList = (props) => {
             <ListCard
                 key={c.id}
                 data={c}
+                type={type}
+                loggedInUsername={type === 'user' ? loggedInUsername : null}
                 deleteHandler={id => deleteObject(id)}
             />
         )
-    })
+    });
+
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <div className="responsive-header">
                 <h2 style={{ marginBottom: "0.5rem" }}>{sentenceCase(type)} List</h2>
                 <div className="responsive-button">
-                    <Link to={'/add'}>
-                        <button className="ui button blue">Add {sentenceCase(type)}</button>
-                    </Link>
-                    <Link to={`/welcome/${username}`}>
+                    {
+                        type === 'contact' && (<Link to={'/add'}>
+                            <button className="ui button blue">Add {sentenceCase(type)}</button>
+                        </Link>)
+                    }
+                    <Link to={`/welcome/${loggedInUsername}`}>
                         <button className="ui button">Back</button>
                     </Link>
                 </div>

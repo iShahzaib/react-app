@@ -11,7 +11,6 @@ import api from './api/server';
 import LoginForm from './login/login-form';
 import RegistrationForm from './login/registration-form';
 import Welcome from './login/welcome';
-import UserList from './login/users-list';
 import UpdateRouter from './routes/update-router';
 import { checkEmailUnique, showError, showSuccess, showWarning } from './contexts/common';
 import ChatComponent from './components/chat';
@@ -89,7 +88,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Main />} />
 
-          <Route path='/contacts' element={<BuildList contacts={contacts} setContacts={setContacts} />} />
+          <Route path='/contacts' element={<BuildList listData={contacts} setListData={setContacts} type='contact' />} />
 
           <Route
             path='/add'
@@ -137,7 +136,7 @@ function App() {
 
           <Route path='/welcome/:username' element={<Welcome />} />
 
-          <Route path='/users' element={<UserList users={users} setUsers={setUsers} />} />
+          <Route path='/users' element={<BuildList listData={users} setListData={setUsers} type='user' />} />
 
           <Route path="/chat" element={<ChatComponent />} />
 
