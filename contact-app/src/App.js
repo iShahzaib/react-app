@@ -83,7 +83,7 @@ function App() {
     <div className='ui container'>
       <BrowserRouter>
         <Header />
-        <div style={{ marginTop: "70px" }}></div>
+        <div className='extra-gap'></div>
 
         <Routes>
           <Route path='/' element={<Main />} />

@@ -84,8 +84,8 @@ const BuildList = (props) => {
                     />
                     <i className="search icon"></i>
                 </div>
-                <button className="prompt refresh-button" onClick={retrieveData} style={{ padding: ".67857143em 0.67857143em" }}>
-                    <i className="refresh icon" style={{ marginLeft: "-3px" }}></i>
+                <button className="prompt refresh-button" onClick={retrieveData} style={{ padding: ".67857143em 0.76em" }}>
+                    <i className="refresh icon" style={{ margin: 0 }}></i>
                 </button>
             </div>
             <div className="ui celled list">

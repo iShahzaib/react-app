@@ -89,6 +89,30 @@
   .swal2-modal {
     width: 75%;
   }
+
+  .tab-button-group {
+    flex-direction: column; /* Stack vertically */
+    gap: 0.5rem;
+  }
+
+  .tab-button-group li {
+    margin: 0; /* Remove horizontal margin */
+  }
+
+  .tab-button {
+    padding: 0.75rem 1rem; /* Compact padding */
+    font-size: 1rem; /* Optional: smaller font */
+  }
+}
+
+@media (max-width: 353px) {
+  .extra-gap {
+    margin-top: 92.4px !important;
+  }
+}
+
+.extra-gap {
+  margin-top: 60px;
 }
 
 .responsive-header {
@@ -124,6 +148,53 @@
 
 .refresh-button:hover {
   background: #f0f0f0;
+}
+
+.tab-button-group {
+  list-style: none;
+  display: flex;
+  justify-content: space-between; /* or space-evenly */
+  padding: 0;
+  margin: 0 0 1rem 0;
+  width: 100%;
+}
+
+.tab-button-group li {
+  flex: 1; /* Equal width */
+}
+
+.tab-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem;
+  background: #f1f1f1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-decoration: none;
+}
+
+.tab-button:hover {
+  background: #ddd;
+}
+
+.tab-button.active {
+  background: #2185d0;
+  color: white;
+  font-weight: bold;
+}
+
+.tab-button.chats {
+  background-color: #21ba45;
+  color: #fff;
+  font-weight: bold;
+}
+
+.tab-button.contacts {
+  background-color: #36b9cc;
+  color: #fff;
+  font-weight: bold;
 }
 
 /* chat css starts */
