@@ -36,10 +36,13 @@ const ListCard = (props) => {
                             <div className="header">{name}</div>
                             <div>{email}</div>
                         </Link>)
-                        : (<div>
+                        : (<Link
+                            to="/chat"
+                            state={{ id, username, email, profilepicture, loggedInUsername }}
+                        >
                             <div className="header">{username}</div>
-                            <div style={{ color: "#4183c4" }}>{email}</div>
-                        </div>)
+                            <div>{email}</div>
+                        </Link>)
                 }
             </div>
             <i
@@ -55,22 +58,15 @@ const ListCard = (props) => {
                 onClick={handleDelete}
             />
             {
-                type === 'contact'
-                    ? (<Link
-                        to={`/update/${type}/${id}`}
-                        state={{ contact: props.data }}
-                        style={{ marginTop: "7px" }}
-                        className="right floated"
-                    >
-                        <i className="edit alternate outline icon"></i>
-                        {/* onClick={() => props.updateContactHandler(id)} */}
-                    </Link>)
-                    : loggedInUsername !== username && (<Link to="/chat" state={{ id, username, email, profilepicture, loggedInUsername }}>
-                        <i
-                            className="comment alternate outline icon right floated"
-                            style={{ color: "green", marginLeft: "10px", marginTop: "7px" }}
-                        ></i>
-                    </Link>)
+                type === 'contact' && (<Link
+                    to={`/update/${type}/${id}`}
+                    state={{ contact: props.data }}
+                    style={{ marginTop: "7px" }}
+                    className="right floated"
+                >
+                    <i className="edit alternate outline icon"></i>
+                    {/* onClick={() => props.updateContactHandler(id)} */}
+                </Link>)
             }
         </div >
     )
