@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import Header, { Main } from './components/header';
 import AddContact from './components/add-contact';
@@ -12,7 +12,7 @@ import LoginForm from './login/login-form';
 import RegistrationForm from './login/registration-form';
 import Welcome from './login/welcome';
 import UpdateRouter from './routes/update-router';
-import { checkEmailUnique, showError, showSuccess, showWarning } from './contexts/common';
+import { showError, showSuccess, showWarning } from './contexts/common';
 import ChatComponent from './components/chat';
 
 function App() {
@@ -31,14 +31,19 @@ function App() {
 
   const handleLogin = async ({ username, password, navigate }) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_JSON_SERVER_PATH}/user?username=${username}&password=${password}`);
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/login`, {
+        method: "POST",
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
       const data = await res.json();
 
-      if (data.length === 1 && data[0].password === password) {
-        const { username } = data[0];
+      if (data?.password === password) {
+        const { username } = data;
 
-        delete data[0].password;
-        localStorage.setItem('loggedInUser', JSON.stringify(data[0])); // <-- Save login
+        delete data.password;
+        localStorage.setItem('loggedInUser', JSON.stringify(data)); // <-- Save login
         localStorage.setItem('isAuthenticated', 'true'); // (optional)
 
         navigate(`/welcome/${username}`);
@@ -53,23 +58,19 @@ function App() {
 
   const handleRegistration = async ({ username, password, email, profilepicture }) => {
     try {
-      const isUnique = await checkEmailUnique(email, 'user');
-
-      if (!isUnique) {
-        showError('This email already exists.');
-        return 'failed';
-      }
-
-      const response = await fetch(`${process.env.REACT_APP_JSON_SERVER_PATH}/user`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/adddocdata`, {
         method: "POST",
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ id: uuidv4(), username, password, email, profilepicture })
+        body: JSON.stringify({ data: { username, password, email, profilepicture }, collection: 'User' })
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (data?.insertedId) {
         showSuccess('Registration has been completed successfully.');
         return 'success';
       } else {
+        showError('This email already exists.');
         return 'failed';
       }
     } catch (error) {
@@ -94,30 +95,31 @@ function App() {
             path='/add'
             element={
               <AddContact
-                addContactHandler={async (contact) => {
-                  const isUnique = await checkEmailUnique(contact.email, 'contact');
+                addContactHandler={async (newContact) => {
+                  // const newContact = { id: uuidv4(), ...contact };
+                  const response = await api.post(`${process.env.REACT_APP_BACKEND_URL}/api/adddocdata`, {
+                    data: newContact,
+                    collection: 'Contact'
+                  });
 
-                  if (!isUnique) {
+                  if (response?.data?.insertedId) {
+                    setContacts([...contacts, newContact]);
+
+                    showSuccess('Contact has been added successfully.');
+                    return 'success';
+                  } else {
                     showError('This email already exists.');
                     return 'failed';
                   }
-
-                  const newContact = { id: uuidv4(), ...contact };
-                  setContacts([...contacts, newContact]);
-
-                  showSuccess('Contact has been added successfully.');
-                  api.post('/contact', newContact);
-
-                  return 'success';
                 }}
               />
             }
           />
 
-          <Route path='/contact/:id' element={<ContactDetail contacts={contacts} />} />
+          <Route path='/contact/:_id' element={<ContactDetail contacts={contacts} />} />
 
           <Route
-            path="/update/:type/:id"
+            path="/update/:type/:_id"
             element={
               <UpdateRouter
                 contacts={contacts}

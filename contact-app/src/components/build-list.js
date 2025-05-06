@@ -14,9 +14,9 @@ const BuildList = (props) => {
 
     const retrieveData = useCallback(async () => {
         // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        const response = await api.get(`/${type}`);
+        const response = await api.get(`/api/getdocdata?collection=${sentenceCase(type)}`);
         const getData = response.data;
-        if (getData) setListData(getData);
+        if (getData?.length) setListData(getData);
     }, [type, setListData]);
 
     useEffect(() => {
@@ -38,20 +38,24 @@ const BuildList = (props) => {
         || data.email?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const deleteObject = (id) => {
-        setListData(listData.filter(c => c.id !== id));
-        api.delete(`/${type}/${id}`);
-        // deleteObject = { id => setListData(listData.filter(c => c.id !== id))}
+    const deleteObject = (_id) => {
+        setListData(listData.filter(c => c._id !== _id));
+        // api.delete(`/${type}/${_id}`);
+        api.post(`${process.env.REACT_APP_BACKEND_URL}/api/deletedocdata`, {
+            data: { _id },
+            collection: sentenceCase(type)
+        });
+        // deleteObject = { _id => setListData(listData.filter(c => c._id !== _id))}
     }
 
     const renderList = filteredData.map(c => {
         return (
             <ListCard
-                key={c.id}
+                key={c._id}
                 data={c}
                 type={type}
                 loggedInUsername={type === 'user' ? loggedInUsername : null}
-                deleteHandler={id => deleteObject(id)}
+                deleteHandler={_id => deleteObject(_id)}
             />
         )
     });

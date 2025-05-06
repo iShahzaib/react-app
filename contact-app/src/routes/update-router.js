@@ -9,14 +9,14 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
 
     const updateHandler = (updatedData) => {
         const updatedtList = type === 'contact'
-            ? contacts.map((c) => c.id === updatedData.id ? updatedData : c)
-            : users.map((u) => u.id === updatedData.id ? updatedData : u);
+            ? contacts.map((c) => c._id === updatedData._id ? updatedData : c)
+            : users.map((u) => u._id === updatedData._id ? updatedData : u);
 
         if (type === 'user') {
             setUsers(updatedtList);
 
-            const { id } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
-            if (id === updatedData.id) {
+            const { _id } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+            if (_id === updatedData._id) {
                 localStorage.setItem('loggedInUser', JSON.stringify(updatedData));
             }
         } else {
@@ -25,8 +25,12 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
         showSuccess(`${sentenceCase(type)} has been updated successfully.`);
 
         // delete updatedData.email;
-        // api.put(`/${type}/${updatedData.id}`, updatedData);
-        api.patch(`/${type}/${updatedData.id}`, updatedData);   // Only update the name field
+        // api.put(`/${type}/${updatedData._id}`, updatedData);
+        // api.patch(`/${type}/${updatedData._id}`, updatedData);   // Only update the name field
+        api.post(`/api/updatedocdata`, {
+            data: updatedData,
+            collection: sentenceCase(type)
+        });
     };
 
     switch (type) {

@@ -8,7 +8,7 @@ const Welcome = () => {
     const [activeTab, setActiveTab] = useState("user");
 
     const { username: authenticatedUser } = useParams();
-    const { id, username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+    const { _id, username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const isAuthenticated = localStorage.getItem('isAuthenticated');
 
@@ -58,12 +58,12 @@ const Welcome = () => {
                         <div className="ui centered card" style={{ width: "320px", margin: "0 auto", boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}>
                             <div className="content">
                                 <Link
-                                    to={`/update/user/${id}`}
-                                    state={{ user: { id, username, email, profilepicture } }}
+                                    to={`/update/user/${_id}`}
+                                    state={{ user: { _id, username, email, profilepicture } }}
                                     className="right floated"
                                 >
                                     <i className="edit alternate outline icon"></i>
-                                    {/* onClick={() => props.updateUserHandler(id)} */}
+                                    {/* onClick={() => props.updateUserHandler(_id)} */}
                                 </Link>
                             </div>
                             <div className="image" style={{ padding: "1rem", background: "#f9f9f9" }}>

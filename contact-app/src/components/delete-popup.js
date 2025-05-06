@@ -3,10 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const DeletePopup = (props) => {
     const navigate = useNavigate();
-    const { id } = useParams();  // Get the `id` from the URL
+    const { _id } = useParams();  // Get the `_id` from the URL
 
     const handleDelete = () => {
-        props.deleteContact(id);
+        props.deleteContact(_id);
         navigate("/contacts");
     };
 

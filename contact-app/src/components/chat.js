@@ -13,6 +13,25 @@ const ChatComponent = () => {
     const chatBoxRef = useRef(null);
 
     useEffect(() => {
+        const fetchPreviousChats = async () => {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/getchats`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ participants: [username, loggedInUsername] })
+                });
+                const data = await response.json();
+                setChat(data || []);
+            } catch (err) {
+                console.error('Error fetching chat history:', err);
+            }
+        };
+
+        fetchPreviousChats();
+    }, [username, loggedInUsername]);
+
+
+    useEffect(() => {
         const handleReceiveMessage = (chats) => { setChat((prev) => [...prev, chats]); };
 
         socketClient.on('receive_message', handleReceiveMessage);
@@ -33,18 +52,25 @@ const ChatComponent = () => {
     const sendMessage = () => {
         if (message.trim() === '') return;
 
-        const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        socketClient.emit('send_message', { text: message, sender: username, timestamp });
+        socketClient.emit('send_message', {
+            text: message,
+            sender: username,
+            receiver: loggedInUsername,
+            timestamp: new Date().toISOString()
+        });
         setMessage('');
     };
 
     const MessageContainer = ({ text, sender, timestamp }) => {
+        const formattedTime = new Date(timestamp).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
         return (
             <div className={`message-container ${sender === username ? 'message-right' : 'message-left'}`}            >
                 <div className={`message-bubble ${sender === username ? 'bubble-right' : 'bubble-left'}`}>
                     <div>{text}</div>
-                    <div className="timestamp">{timestamp}</div>
+                    <div className="timestamp">{formattedTime}</div>
                 </div>
             </div>
         );
@@ -59,9 +85,9 @@ const ChatComponent = () => {
                 </div>
                 <h2 className="chat-username">{username}</h2>
                 <div className="responsive-button">
-                    <Link to={`/welcome/${loggedInUsername}`}>
+                    <Link to={`/users`}>
                         <button className="ui button">Back</button>
-                    </Link>
+                    </Link>                    
                 </div>
             </div>
             <div className="chat-box" ref={chatBoxRef}>

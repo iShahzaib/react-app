@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { confirmDelete, showError, showSuccess } from "../contexts/common";
 
 const ListCard = (props) => {
-    const { data: { id, name, username, email, profilepicture }, type, loggedInUsername } = props;
+    const { data: { _id, name, username, email, profilepicture }, type, loggedInUsername } = props;
 
     const navigate = useNavigate();
 
@@ -15,7 +15,7 @@ const ListCard = (props) => {
         }
         confirmDelete(`Do you want to delete this ${type}?`).then((result) => {
             if (result.isConfirmed) {
-                props.deleteHandler(id);
+                props.deleteHandler(_id);
 
                 showSuccess(`The ${type} has been deleted successfully.`, 'Deleted!');
                 navigate(`/${type}s`);
@@ -30,7 +30,7 @@ const ListCard = (props) => {
                 {
                     type === 'contact'
                         ? (<Link
-                            to={`/${type}/${id}`}
+                            to={`/${type}/${_id}`}
                             state={{ contact: props.data }}
                         >
                             <div className="header">{name}</div>
@@ -38,7 +38,7 @@ const ListCard = (props) => {
                         </Link>)
                         : (<Link
                             to="/chat"
-                            state={{ id, username, email, profilepicture, loggedInUsername }}
+                            state={{ _id, username, email, profilepicture, loggedInUsername }}
                         >
                             <div className="header">{username}</div>
                             <div>{email}</div>
@@ -59,13 +59,13 @@ const ListCard = (props) => {
             />
             {
                 type === 'contact' && (<Link
-                    to={`/update/${type}/${id}`}
+                    to={`/update/${type}/${_id}`}
                     state={{ contact: props.data }}
                     style={{ marginTop: "7px" }}
                     className="right floated"
                 >
                     <i className="edit alternate outline icon"></i>
-                    {/* onClick={() => props.updateContactHandler(id)} */}
+                    {/* onClick={() => props.updateContactHandler(_id)} */}
                 </Link>)
             }
         </div >

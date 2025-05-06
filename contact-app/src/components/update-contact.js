@@ -9,8 +9,8 @@ class UpdateContactClass extends React.Component {
     };
 
     componentDidMount() {
-        const { id, name, email } = this.props.state.contact;
-        this.setState({ id, name, email });
+        const { _id, name, email } = this.props.state.contact;
+        this.setState({ _id, name, email });
     }
 
     update = (e) => {
