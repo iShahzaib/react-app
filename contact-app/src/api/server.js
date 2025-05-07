@@ -26,9 +26,7 @@ api.interceptors.response.use(
         const status = error?.response?.status;
 
         if (status === 401 || status === 403) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('isAuthenticated');
-            localStorage.removeItem('loggedInUser');
+            localStorage.clear();
 
             window.location.href = '/login';
             return;

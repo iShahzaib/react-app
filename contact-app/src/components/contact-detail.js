@@ -12,7 +12,7 @@ const ContactDetail = (props) => {
                 <h2 style={{ marginBottom: "0.5rem" }}>Contact Detail</h2>
                 <div className="responsive-button">
                     <Link to={`/contacts`}                >
-                        <button className="ui button">Back to Contact List</button>
+                        <button className="ui button">Back</button>
                     </Link>
                 </div>
             </div>
