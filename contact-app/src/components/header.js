@@ -8,33 +8,32 @@ const Header = () => {
     // const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-
-    let isLoggedIn = false;
-    let isLoginPage = false;
+    const isLoginPage = location.pathname === "/login";
 
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
-    if (username) isLoggedIn = true;
-    if (location.pathname === "/login") isLoginPage = true;
+    const isLoggedIn = !!username;
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const handleLogout = () => {
         localStorage.clear();
-        setHovered(false);
+        setDropdownOpen(false);
         navigate('/');
     };
 
-    const [hovered, setHovered] = useState(false);
+    // const toggleDropdown = () => setDropdownOpen(prev => !prev);
+    // const closeDropdown = () => setDropdownOpen(false);
 
     return (
         <div className="ui fixed menu main-header">
             <div className="center-header">
                 <h2 className="child-header">Contact Manager</h2>
-                <div style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
+                <div style={{ flexShrink: 0, display: "flex", alignItems: "center", position: "relative" }}>
                     {isLoggedIn ? (
                         <div
                             style={{ position: "relative", marginRight: "1rem", cursor: "pointer" }}
-                            onMouseEnter={() => setHovered(true)}
-                            onMouseLeave={() => setHovered(false)}
+                            onMouseEnter={() => setDropdownOpen(true)}
+                            onMouseLeave={() => setDropdownOpen(false)}
                         >
                             <img
                                 src={profilepicture || user}
@@ -46,11 +45,12 @@ const Header = () => {
                                     boxShadow: "0 0 0 0.2rem rgba(255, 255, 255, 0.75)",
                                     objectFit: "cover"
                                 }}
+                            // onClick={toggleDropdown}
                             />
-                            {hovered && <UserDropdown username={username} email={email} onLogout={handleLogout} />}
+                            {dropdownOpen && <UserDropdown username={username} email={email} onLogout={handleLogout} />}
                         </div>
                     ) : isLoginPage ? (
-                        <Link to={'/register'}>
+                        <Link to='/register'>
                             <button className="ui button inverted" style={{ marginLeft: "1rem" }}>
                                 Register
                             </button>
@@ -68,7 +68,7 @@ const Header = () => {
     );
 };
 
-const UserDropdown = ({ username, email, onLogout }) => {
+const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
     return (
         <div
             style={{
@@ -82,14 +82,28 @@ const UserDropdown = ({ username, email, onLogout }) => {
                 whiteSpace: "nowrap",
                 zIndex: 10
             }}
+        // onMouseLeave={closeDropdown}
         >
-            <strong>{username}</strong><br />
-            <small>{email}</small>
-            <div>
-                <Link to={`/welcome/${username}`}>
+            <div
+                style={{
+                    paddingBottom: "0.5rem",
+                    borderBottom: "1px solid #eee",
+                    marginBottom: "0.5rem"
+                }}
+            >
+                <div style={{ fontWeight: "600", fontSize: "1rem", color: "#333" }}>{username}</div>
+                <div style={{ fontSize: "0.875rem", color: "#666" }}>{email}</div>
+            </div>
+            {/* <strong>{username}</strong><br />
+            <small>{email}</small> */}
+            <div style={{ marginTop: "0.5rem" }}>
+                <Link
+                    to={`/welcome/${username}`}
+                // onClick={closeDropdown}
+                >
                     <i className="user alternate outline icon"></i> My Profile
                 </Link>
-                <div className="divider"></div>
+                <br />
                 <Link to='/' onClick={onLogout}>
                     <i className="logout icon"></i> Sign Out
                 </Link>
