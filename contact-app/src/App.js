@@ -31,24 +31,26 @@ function App() {
 
   const handleLogin = async ({ username, password, navigate }) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/login`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/noauth/login`, {
         method: "POST",
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ username, password })
       });
 
-      const data = await res.json();
+      const res = await response.json();
 
-      if (data?.password === password) {
-        const { username } = data;
+      if (res?.message === 'success' && res.user) {
+        const { username } = res.user;
 
-        delete data.password;
-        localStorage.setItem('loggedInUser', JSON.stringify(data)); // <-- Save login
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('loggedInUser', JSON.stringify(res.user)); // <-- Save login
         localStorage.setItem('isAuthenticated', 'true'); // (optional)
+
+        showSuccess(`Login successful!`);
 
         navigate(`/welcome/${username}`);
       } else {
-        showWarning('Invalid username or password.');
+        showWarning(res.message || 'Invalid username or password.');
       }
     } catch (error) {
       showError('Login error. Please try again.');
@@ -58,19 +60,19 @@ function App() {
 
   const handleRegistration = async ({ username, password, email, profilepicture }) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/adddocdata`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/noauth/register`, {
         method: "POST",
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ data: { username, password, email, profilepicture }, collection: 'User' })
+        body: JSON.stringify({ username, password, email, profilepicture })
       });
 
-      const data = await response.json();
+      const res = await response.json();
 
-      if (data?.insertedId) {
+      if (res?.message === 'success') {
         showSuccess('Registration has been completed successfully.');
         return 'success';
       } else {
-        showError('This email already exists.');
+        showError(res?.message || 'This email already exists.');
         return 'failed';
       }
     } catch (error) {
@@ -97,7 +99,7 @@ function App() {
               <AddContact
                 addContactHandler={async (newContact) => {
                   // const newContact = { id: uuidv4(), ...contact };
-                  const response = await api.post(`${process.env.REACT_APP_BACKEND_URL}/api/adddocdata`, {
+                  const response = await api.post(`/api/adddocdata`, {
                     data: newContact,
                     collection: 'Contact'
                   });
@@ -134,7 +136,7 @@ function App() {
 
           <Route path='/login' element={<LoginForm loginHandler={handleLogin} />} />
 
-          <Route path='/registration' element={<RegistrationForm registrationHandler={handleRegistration} />} />
+          <Route path='/register' element={<RegistrationForm registrationHandler={handleRegistration} />} />
 
           <Route path='/welcome/:username' element={<Welcome />} />
 

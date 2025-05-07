@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { showWarning } from "../contexts/common";
 
 class AddContactClass extends React.Component {
@@ -63,7 +63,9 @@ class AddContactClass extends React.Component {
 
 // Functional wrapper that uses `useNavigate`
 const AddContact = (props) => {
-    return <AddContactClass {...props} navigate={useNavigate()} />;
+    const { state } = useLocation();  // Access location object to get state
+
+    return <AddContactClass {...props} navigate={useNavigate()} state={{ username: state.user }} />;
 };
 
 export default AddContact;

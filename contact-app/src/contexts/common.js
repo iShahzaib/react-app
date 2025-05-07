@@ -13,11 +13,12 @@ export const sentenceCase = (str) => {
         .replace(/^\w/, c => c.toUpperCase()); // capitalize first letter
 };
 
-export const showSuccess = (detail = '', msg) => {
+export const showSuccess = (detail = '', msg, timer) => {
     Swal.fire({
         title: msg || 'Success!',
         text: detail,
-        icon: 'success'
+        icon: 'success',
+        timer: timer || 2000
     });
 };
 

@@ -41,7 +41,7 @@ const BuildList = (props) => {
     const deleteObject = (_id) => {
         setListData(listData.filter(c => c._id !== _id));
         // api.delete(`/${type}/${_id}`);
-        api.post(`${process.env.REACT_APP_BACKEND_URL}/api/deletedocdata`, {
+        api.post(`/api/deletedocdata`, {
             data: { _id },
             collection: sentenceCase(type)
         });
@@ -66,7 +66,7 @@ const BuildList = (props) => {
                 <h2 style={{ marginBottom: "0.5rem" }}>{sentenceCase(type)} List</h2>
                 <div className="responsive-button">
                     {
-                        type === 'contact' && (<Link to={'/add'}>
+                        type === 'contact' && (<Link to={'/add'} state={{ user: { loggedInUsername } }}>
                             <button className="ui button blue">Add {sentenceCase(type)}</button>
                         </Link>)
                     }

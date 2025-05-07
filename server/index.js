@@ -1,10 +1,11 @@
 import 'dotenv/config';
 import express from 'express';
-import mongodb from 'mongodb';
 import http from 'http';
-import getDBConnection from './src/database.js';
 import cors from 'cors';
+import jwt from 'jsonwebtoken';
 import initializeSocket from './src/socket.js';
+import noauthRouter from './src/noauth.js';
+import router from './src/route.js';
 
 const PORT = 9000;
 
@@ -14,113 +15,28 @@ app.use(express.json()); // <-- This parses JSON request bodies
 
 const server = http.createServer(app);
 
-app.use('/api/login', async (req, res) => {
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader?.split(' ')[1];
+
+    if (!token) return res.status(401).json({ message: 'Token required' });
+
     try {
-        const { username, password } = req.body;
-
-        const db = await getDBConnection('MSH_CONTACTAPP');
-
-        const users = await db.collection('User').findOne({ username, password, IsAccessible: true });
-
-        res.status(201).json(users);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        next();
     } catch (err) {
-        console.error("Error in user registration:", err);
-        res.status(500).json({ message: 'Server error during registration.' });
+        return res.status(403).json({ message: 'Invalid or expired token' });
     }
-});
+};
 
-app.use('/api/getdocdata', async (req, res) => {
-    try {
-        const collectionName = req.query.collection;
+// app.use('/', (req, res) => {
+//     console.log('Hello world!');
+//     res.send('Hello from route.js!');
+// })
+app.use('/api/noauth', noauthRouter);
 
-        const db = await getDBConnection('MSH_CONTACTAPP');
-
-        const data = await db.collection(collectionName).find({ IsAccessible: true }).toArray();
-
-        res.status(201).json(data);
-    } catch (err) {
-        console.error("Error in get api:", err);
-        res.status(500).json({ message: 'Server error during registration.' });
-    }
-});
-
-app.use('/api/adddocdata', async (req, res) => {
-    try {
-        const { collection, data } = req.body;
-
-        const db = await getDBConnection('MSH_CONTACTAPP');
-
-        const existingUser = await db.collection(collection).findOne({ email: data.email, IsAccessible: true });
-        if (existingUser) {
-            return res.status(201).json({ message: 'Email already exists.' });
-        }
-
-        data['IsAccessible'] = true;
-        const result = await db.collection(collection).insertOne(data);
-
-        res.status(201).json(result);
-    } catch (err) {
-        console.error("Error in add api:", err);
-        res.status(500).json({ message: 'Server error during registration.' });
-    }
-});
-
-app.use('/api/updatedocdata', async (req, res) => {
-    try {
-        const { collection, data } = req.body;
-
-        const db = await getDBConnection('MSH_CONTACTAPP');
-
-        const documentID = mongodb.ObjectId.createFromHexString(data._id);
-        delete data._id;
-
-        const result = await db.collection(collection).updateOne({ _id: documentID }, { $set: data });
-
-        res.status(201).json(result);
-    } catch (err) {
-        console.error("Error in update api:", err);
-        res.status(500).json({ message: 'Server error during registration.' });
-    }
-});
-
-app.use('/api/deletedocdata', async (req, res) => {
-    try {
-        const { collection, data } = req.body;
-
-        const db = await getDBConnection('MSH_CONTACTAPP');
-
-        const documentID = mongodb.ObjectId.createFromHexString(data._id);
-
-        const result = await db.collection(collection).updateOne({ _id: documentID }, { $set: { IsAccessible: false } });
-
-        res.status(201).json(result);
-    } catch (err) {
-        console.error("Error in delete api:", err);
-        res.status(500).json({ message: 'Server error during registration.' });
-    }
-});
-
-app.use('/api/getchats', async (req, res) => {
-    try {
-        const { participants } = req.body;
-
-        const db = await getDBConnection('MSH_CONTACTAPP');
-
-        // const messages = await db.collection('Chat').find({ sender: { $in: participants } }).toArray();
-        const messages = await db.collection('Chat').find({
-            $or: [
-                { sender: participants[0], receiver: participants[1] },
-                { sender: participants[1], receiver: participants[0] }
-            ],
-            IsAccessible: true
-        }).sort({ timestamp: 1 }).toArray();
-
-        res.json(messages);
-    } catch (error) {
-        console.error('Failed to get chats:', error);
-        res.status(500).json({ error: 'Failed to retrieve messages' });
-    }
-});
+app.use('/api', authenticateToken, router);
 
 initializeSocket(server);
 

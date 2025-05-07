@@ -49,7 +49,7 @@ const LoginForm = (props) => {
                 <button className="ui button blue" type="submit">Sign In</button>
 
                 <div className="register-link" style={{ marginTop: "10px" }}>
-                    <p>Don't have an account? <Link to={'/registration'}>Register</Link></p>
+                    <p>Don't have an account? <Link to={'/register'}>Register</Link></p>
                 </div>
             </form>
         </div>

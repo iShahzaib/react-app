@@ -14,6 +14,7 @@ const Header = () => {
     if (location.pathname === "/login") isLoginPage = true;
 
     const handleLogout = () => {
+        localStorage.removeItem('token');
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('loggedInUser');
 
@@ -32,7 +33,7 @@ const Header = () => {
                             Sign Out
                         </button>
                     ) : isLoginPage ? (
-                        <Link to={'/registration'}>
+                        <Link to={'/register'}>
                             <button className="ui button inverted" style={{ marginLeft: "1rem" }}>
                                 Register
                             </button>

@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import user from './../images/nouser.jpg';
 import socketClient from '../api/socket';
+import api from '../api/server';
 
 const ChatComponent = () => {
     const { state } = useLocation();
@@ -15,13 +16,13 @@ const ChatComponent = () => {
     useEffect(() => {
         const fetchPreviousChats = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/getchats`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ participants: [username, loggedInUsername] })
+                const response = await api.get(`/api/getchats`, {
+                    params: { participants: [username, loggedInUsername] }
                 });
-                const data = await response.json();
-                setChat(data || []);
+
+                const getData = response.data;
+                if (getData?.length) setChat(getData);
+
             } catch (err) {
                 console.error('Error fetching chat history:', err);
             }
@@ -87,7 +88,7 @@ const ChatComponent = () => {
                 <div className="responsive-button">
                     <Link to={`/users`}>
                         <button className="ui button">Back</button>
-                    </Link>                    
+                    </Link>
                 </div>
             </div>
             <div className="chat-box" ref={chatBoxRef}>
