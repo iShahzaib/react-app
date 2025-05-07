@@ -332,3 +332,38 @@
   width: 40px;
   height: 40px;
 }
+
+.custom-context-menu {
+  position: fixed;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  border-radius: 6px;
+}
+
+.custom-context-menu button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: red;
+}
+
+.delete-popup {
+  position: fixed;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 9999;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-popup button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+}

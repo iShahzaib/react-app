@@ -13,7 +13,7 @@ import RegistrationForm from './login/registration-form';
 import Welcome from './login/welcome';
 import UpdateRouter from './routes/update-router';
 import { showError, showSuccess, showWarning } from './contexts/common';
-import ChatComponent from './components/chat';
+import ChatComponent from './components/messaging/chat';
 
 function App() {
   const [contacts, setContacts] = useState([]);

@@ -1,3 +1,4 @@
+import mongodb from 'mongodb';
 import { Server } from 'socket.io';
 import getDBConnection from './database.js';
 
@@ -27,13 +28,32 @@ export default async function initializeSocket(server) {
         });
 
         socket.on('send_message', async (data) => {
-            io.emit('receive_message', data);
-
             try {
                 const { text, sender, receiver, timestamp } = data;
-                await db.collection('Chat').insertOne({ text, sender, receiver, timestamp: new Date(timestamp), IsAccessible: true });
+                const result = await db.collection('Chat').insertOne({ text, sender, receiver, timestamp: new Date(timestamp), IsAccessible: true });
+
+                if (result?.insertedId) data._id = result.insertedId;
+
+                io.emit('receive_message', data);
+
             } catch (err) {
                 console.error('Failed to save chat:', err);
+            }
+        });
+
+        socket.on('delete_message', async ({ _id }) => {
+            try {
+                const documentID = mongodb.ObjectId.createFromHexString(_id);
+
+                const result = await db.collection('Chat').updateOne({ _id: documentID }, { $set: { IsAccessible: false } });
+
+                if (result.matchedCount === 0) {
+                    io.emit('delete_message', { message: 'Message not found.' });
+                } else {
+                    io.emit('delete_message', _id);
+                }
+            } catch (error) {
+                console.error('Error deleting message:', error);
             }
         });
 

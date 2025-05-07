@@ -21,17 +21,28 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-    (response) => response,
-    (error) => {
+    response => response,
+    async error => {
         const status = error?.response?.status;
 
-        if (status === 401) {
+        if (status === 401 || status === 403) {
             localStorage.removeItem('token');
             localStorage.removeItem('isAuthenticated');
             localStorage.removeItem('loggedInUser');
 
             window.location.href = '/login';
             return;
+
+        } else if (status === 403) {
+            // // Refresh the token logic
+            // const refreshToken = localStorage.getItem('refresh_token');
+            // // Assume we have a function to refresh the token here
+            // const newToken = await refreshAuthToken(refreshToken);
+            // localStorage.setItem('token', newToken);
+
+            // // Retry the request with the new token
+            // error.config.headers['Authorization'] = `Bearer ${newToken}`;
+            // return api(error.config);  // Retry the request
         }
         return Promise.reject(error);
     }

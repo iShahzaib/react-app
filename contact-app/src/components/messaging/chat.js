@@ -1,8 +1,10 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link, Navigate, useLocation } from 'react-router-dom';
-import user from './../images/nouser.jpg';
-import socketClient from '../api/socket';
-import api from '../api/server';
+import user from '../../images/nouser.jpg';
+import socketClient from '../../api/socket';
+import api from '../../api/server';
+import MessageContainer, { ChatInput } from './message-container';
+import { showError, showSuccess } from '../../contexts/common';
 
 const ChatComponent = () => {
     const { state } = useLocation();
@@ -41,10 +43,35 @@ const ChatComponent = () => {
     }, []);
 
     useEffect(() => {
+        const handleDeleteMessage = (res) => {
+            if (res.message) {
+                showError(res.message || 'Something went wrong.');
+            } else {
+                setChat((prev) => prev.filter(chat => chat._id !== res));
+                showSuccess(`The message has been deleted successfully.`, 'Deleted!');
+            }
+        };
+
+        socketClient.on('delete_message', handleDeleteMessage);
+
+        return () => {
+            socketClient.off('delete_message', handleDeleteMessage);
+        };
+    }, []);
+
+    useEffect(() => {
         if (chatBoxRef.current) {
             chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
         }
     }, [chat]);
+
+    const deleteMessage = useCallback((_id) => {
+        if (_id) {
+            socketClient.emit('delete_message', { _id });
+        } else {
+            showError(`Something wen wrong, message id is missing.`);
+        }
+    }, []);
 
     if (!username) {
         return <Navigate to="/users" replace />;
@@ -53,29 +80,11 @@ const ChatComponent = () => {
     const sendMessage = () => {
         if (message.trim() === '') return;
 
-        socketClient.emit('send_message', {
-            text: message,
-            sender: username,
-            receiver: loggedInUsername,
-            timestamp: new Date().toISOString()
-        });
+        const params = { 'text': message, 'sender': username, 'receiver': loggedInUsername, 'timestamp': new Date().toISOString() };
+        socketClient.emit('send_message', params);
+
         setMessage('');
     };
-
-    const MessageContainer = ({ text, sender, timestamp }) => {
-        const formattedTime = new Date(timestamp).toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-        return (
-            <div className={`message-container ${sender === username ? 'message-right' : 'message-left'}`}            >
-                <div className={`message-bubble ${sender === username ? 'bubble-right' : 'bubble-left'}`}>
-                    <div>{text}</div>
-                    <div className="timestamp">{formattedTime}</div>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="chat-container">
@@ -92,25 +101,16 @@ const ChatComponent = () => {
                 </div>
             </div>
             <div className="chat-box" ref={chatBoxRef}>
-                {chat.map((msg, index) => (
+                {chat.map((msg) => (
                     <MessageContainer
-                        key={index}
-                        text={msg.text}
-                        sender={msg.sender}
-                        timestamp={msg.timestamp}
+                        key={msg._id}
+                        message={msg}
+                        username={username}
+                        onDelete={deleteMessage}
                     />
                 ))}
             </div>
-            <div className="input-container">
-                <input
-                    className="chat-input"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                    placeholder="Type your message..."
-                />
-                <button className="send-button" onClick={sendMessage}>Send</button>
-            </div>
+            <ChatInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
     );
 };
