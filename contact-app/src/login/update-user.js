@@ -88,7 +88,7 @@ class UpdateUserClass extends React.Component {
 const UpdateUser = (props) => {
     const { state } = useLocation();  // Access location object to get state
 
-    return <UpdateUserClass {...props} navigate={useNavigate()} state={{ user: state.user }} />;
+    return <UpdateUserClass {...props} navigate={useNavigate()} state={{ data: state.data, username: state.loggedInUsername, type: state.type }} />;
 };
 
 export default UpdateUser;

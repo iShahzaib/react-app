@@ -62,7 +62,7 @@ const BuildList = React.memo(({ type }) => {
             key={c._id}
             data={c}
             type={type}
-            loggedInUsername={type === 'user' ? loggedInUsername : null}
+            loggedInUsername={loggedInUsername}
             deleteHandler={_id => deleteObject(_id)}
         />
     ));

@@ -21,7 +21,7 @@ const ListCard = (props) => {
                 props.deleteHandler(_id);
 
                 showSuccess(`The ${type} has been deleted successfully.`, 'Deleted!');
-                navigate(`/${type}s`);
+                navigate(`/${type ? `welcome/${loggedInUsername}` : `${type}s`}`, { state: { ...props.data, loggedInUsername, type } });
             }
         });
     };
@@ -38,6 +38,7 @@ const ListCard = (props) => {
                     <div className="header">{headerName}</div>
                     <div>{email}</div>
                 </div>
+                {/* Delete Button */}
                 <i
                     className="trash red alternate outline icon right floated"
                     title={type === 'user' && loggedInUsername === username ? `You can not delete your own ${type}.` : 'Delete'}
@@ -48,6 +49,8 @@ const ListCard = (props) => {
                     }}
                     onClick={handleDelete}
                 />
+
+                {/* Edit Button */}
                 {type !== 'user' && (
                     <i
                         className="edit alternate outline icon right floated"
@@ -55,7 +58,7 @@ const ListCard = (props) => {
                         style={{ marginTop: "7px", color: "unset" }}
                         onClick={(e) => {
                             e.preventDefault(); e.stopPropagation();
-                            navigate(`/update/${type}/${_id}`, { state: { ...state, type } });
+                            navigate(`/update/${type}/${_id}`, { state: { ...state, loggedInUsername, type } });
                         }}
                     // onClick={() => props.updateDataHandler(_id)}
                     />

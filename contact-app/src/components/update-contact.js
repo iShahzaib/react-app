@@ -24,8 +24,7 @@ class UpdateDataClass extends React.Component {
             name: '',
             email: ''
         });
-        // Navigate to '/contacts' path after adding the contact
-        this.props.navigate(`/${this.props.state.type ? `welcome/${this.props.state.username}` : 'contacts'}`);
+        this.props.navigate(`/${this.props.state.type ? `welcome/${this.props.state.username}` : 'contacts'}`, { state: { type: this.props.state.type } });
     };
     render() {
         return (
@@ -68,7 +67,7 @@ class UpdateDataClass extends React.Component {
 const UpdateData = (props) => {
     const { state } = useLocation();  // Access location object to get state
 
-    return <UpdateDataClass {...props} navigate={useNavigate()} state={{ data: state.data, type: state.type }} />;
+    return <UpdateDataClass {...props} navigate={useNavigate()} state={{ data: state.data, username: state.loggedInUsername, type: state.type }} />;
 };
 
 export default UpdateData;

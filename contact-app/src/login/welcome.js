@@ -60,7 +60,7 @@ const Welcome = () => {
                         <div className="content">
                             <Link
                                 to={`/update/user/${_id}`}
-                                state={{ user: { _id, username, email, profilepicture } }}
+                                state={{ data: { _id, username, email, profilepicture }, loggedInUsername: authenticatedUser, type: state?.type }}
                                 className="right floated"
                             >
                                 <i className="edit alternate outline icon"></i>
