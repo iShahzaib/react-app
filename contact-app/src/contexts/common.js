@@ -38,8 +38,8 @@ export const showError = (detail = '', msg) => {
     });
 };
 
-export const confirmDelete = (detail = '') => {
-    return Swal.fire({
+export const confirmDelete = (detail = '', extraParam) => {
+    let params = {
         title: 'Are you sure?',
         text: detail,
         icon: 'warning',
@@ -47,5 +47,9 @@ export const confirmDelete = (detail = '') => {
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
         confirmButtonText: 'Delete'
-    });
+    }
+    if (extraParam) {
+        params = { ...params, ...extraParam };
+    }
+    return Swal.fire(params);
 }

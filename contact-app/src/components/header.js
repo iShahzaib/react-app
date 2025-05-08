@@ -70,32 +70,13 @@ const Header = () => {
 
 const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
     return (
-        <div
-            style={{
-                position: "absolute",
-                top: "45px",
-                left: 0,
-                backgroundColor: "white",
-                padding: "0.5rem 1rem",
-                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
-                borderRadius: "6px",
-                whiteSpace: "nowrap",
-                zIndex: 10
-            }}
+        <div className="dropdown-popup-header" 
         // onMouseLeave={closeDropdown}
         >
-            <div
-                style={{
-                    paddingBottom: "0.5rem",
-                    borderBottom: "1px solid #eee",
-                    marginBottom: "0.5rem"
-                }}
-            >
+            <div className="dropdown-popup">
                 <div style={{ fontWeight: "600", fontSize: "1rem", color: "#333" }}>{username}</div>
                 <div style={{ fontSize: "0.875rem", color: "#666" }}>{email}</div>
             </div>
-            {/* <strong>{username}</strong><br />
-            <small>{email}</small> */}
             <div style={{ marginTop: "0.5rem" }}>
                 <Link
                     to={`/welcome/${username}`}
@@ -103,7 +84,7 @@ const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
                 >
                     <i className="user alternate outline icon"></i> My Profile
                 </Link>
-                <br />
+                <div style={{ marginTop: "0.5rem" }}></div>
                 <Link to='/' onClick={onLogout}>
                     <i className="logout icon"></i> Sign Out
                 </Link>
