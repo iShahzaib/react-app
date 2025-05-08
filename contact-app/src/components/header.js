@@ -21,8 +21,8 @@ const Header = () => {
         navigate('/');
     };
 
-    // const toggleDropdown = () => setDropdownOpen(prev => !prev);
-    // const closeDropdown = () => setDropdownOpen(false);
+    const toggleDropdown = () => setDropdownOpen(prev => !prev);
+    const closeDropdown = () => setDropdownOpen(false);
 
     return (
         <div className="ui fixed menu main-header">
@@ -30,11 +30,7 @@ const Header = () => {
                 <h2 className="child-header">Contact Manager</h2>
                 <div style={{ flexShrink: 0, display: "flex", alignItems: "center", position: "relative" }}>
                     {isLoggedIn ? (
-                        <div
-                            style={{ position: "relative", marginRight: "1rem", cursor: "pointer" }}
-                            onMouseEnter={() => setDropdownOpen(true)}
-                            onMouseLeave={() => setDropdownOpen(false)}
-                        >
+                        <div style={{ position: "relative", marginRight: "1rem", cursor: "pointer" }}>
                             <img
                                 src={profilepicture || user}
                                 alt="User"
@@ -45,9 +41,9 @@ const Header = () => {
                                     boxShadow: "0 0 0 0.2rem rgba(255, 255, 255, 0.75)",
                                     objectFit: "cover"
                                 }}
-                            // onClick={toggleDropdown}
+                                onClick={toggleDropdown}
                             />
-                            {dropdownOpen && <UserDropdown username={username} email={email} onLogout={handleLogout} />}
+                            {dropdownOpen && (<UserDropdown username={username} email={email} onLogout={handleLogout} closeDropdown={closeDropdown} />)}
                         </div>
                     ) : isLoginPage ? (
                         <Link to='/register'>
@@ -70,18 +66,13 @@ const Header = () => {
 
 const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
     return (
-        <div className="dropdown-popup-header" 
-        // onMouseLeave={closeDropdown}
-        >
+        <div className="dropdown-popup-header" onMouseLeave={closeDropdown}>
             <div className="dropdown-popup">
                 <div style={{ fontWeight: "600", fontSize: "1rem", color: "#333" }}>{username}</div>
                 <div style={{ fontSize: "0.875rem", color: "#666" }}>{email}</div>
             </div>
             <div style={{ marginTop: "0.5rem" }}>
-                <Link
-                    to={`/welcome/${username}`}
-                // onClick={closeDropdown}
-                >
+                <Link to={`/welcome/${username}`} onClick={closeDropdown}>
                     <i className="user alternate outline icon"></i> My Profile
                 </Link>
                 <div style={{ marginTop: "0.5rem" }}></div>
