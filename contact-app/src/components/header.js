@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import user from '../images/nouser.jpg';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 // import { useAuth } from "../contexts/AuthContext"; // adjust path
@@ -14,15 +14,30 @@ const Header = () => {
 
     const isLoggedIn = !!username;
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
     const handleLogout = () => {
         localStorage.clear();
-        setDropdownOpen(false);
+        closeDropdown();
         navigate('/');
     };
 
     const toggleDropdown = () => setDropdownOpen(prev => !prev);
     const closeDropdown = () => setDropdownOpen(false);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <div className="ui fixed menu main-header">
@@ -30,7 +45,7 @@ const Header = () => {
                 <h2 className="child-header">Contact Manager</h2>
                 <div style={{ flexShrink: 0, display: "flex", alignItems: "center", position: "relative" }}>
                     {isLoggedIn ? (
-                        <div style={{ position: "relative", marginRight: "1rem", cursor: "pointer" }}>
+                        <div ref={dropdownRef} style={{ position: "relative", marginRight: "1rem", cursor: "pointer" }}>
                             <img
                                 src={profilepicture || user}
                                 alt="User"
@@ -66,7 +81,7 @@ const Header = () => {
 
 const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
     return (
-        <div className="dropdown-popup-header" onMouseLeave={closeDropdown}>
+        <div className="dropdown-popup-header">
             <div className="dropdown-popup">
                 <div style={{ fontWeight: "600", fontSize: "1rem", color: "#333" }}>{username}</div>
                 <div style={{ fontSize: "0.875rem", color: "#666" }}>{email}</div>
