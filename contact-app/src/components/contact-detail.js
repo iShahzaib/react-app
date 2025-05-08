@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const ContactDetail = (props) => {
     const { state } = useLocation();  // Access location object to get state
-    const { _id, name, email } = state.contact;
+    const { _id, name, email } = state.data;
 
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
@@ -21,11 +21,11 @@ const ContactDetail = (props) => {
                     <p>ID:
                         <Link
                             to={`/update/contact/${_id}`}
-                            state={{ contact: state.contact }}
+                            state={{ data: state.data }}
                             className="right floated"
                         >
                             <i className="edit alternate outline icon"></i>
-                            {/* onClick={() => props.updateContactHandler(_id)} */}
+                            {/* onClick={() => props.updateDataHandler(_id)} */}
                         </Link>
                         <span>{_id}</span>
                     </p>

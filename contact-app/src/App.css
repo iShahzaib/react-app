@@ -196,18 +196,24 @@
   font-weight: bold;
 }
 
-.tab-button.contacts {
+.tab-button.contact {
   background-color: #36b9cc;
   color: #fff;
   font-weight: bold;
 }
 
-.tab-button.students {
+.tab-button.student {
+  background-color: #cb634a;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* .tab-button.student {
   background-color: white;
   border: 2px solid #2185d0;
   color: #2185d0;
   font-weight: bold;
-}
+} */
 
 /* chat css starts */
 

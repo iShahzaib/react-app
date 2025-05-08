@@ -4,28 +4,35 @@ import ListCard from "./list-card";
 import api from '../api/server';
 import { sentenceCase } from "../contexts/common";
 
-const BuildList = (props) => {
+const BuildList = React.memo(({ type }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
-    const { listData, setListData, type } = props;
+    const [listData, setListData] = useState([]);
     const inputSearch = useRef('');
 
     const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const retrieveData = useCallback(async () => {
-        // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        const response = await api.get(`/api/getdocdata?collection=${sentenceCase(type)}`);
-        const getData = response.data;
-        if (getData?.length) setListData(getData);
+        try {
+            // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+            const response = await api.get(`/api/getdocdata?collection=${sentenceCase(type)}`);
+            const getData = response.data;
+
+            if (getData?.length) {
+                setListData(getData);
+            }
+        } catch (err) {
+            console.error("Error fetching data:", err);
+        }
     }, [type, setListData]);
 
     useEffect(() => {
         if (!loggedInUsername) {
             setRedirect(true);
-        } else if (!listData.length) {
+        } else {
             retrieveData();
         }
-    }, [loggedInUsername, listData, retrieveData]);
+    }, [loggedInUsername, retrieveData]);
 
     // If redirect is true, navigate to login
     if (redirect) {
@@ -38,41 +45,41 @@ const BuildList = (props) => {
         || data.email?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const deleteObject = (_id) => {
+    const deleteObject = async (_id) => {
         setListData(listData.filter(c => c._id !== _id));
-        // api.delete(`/${type}/${_id}`);
-        api.post(`/api/deletedocdata`, {
-            data: { _id },
-            collection: sentenceCase(type)
-        });
-        // deleteObject = { _id => setListData(listData.filter(c => c._id !== _id))}
-    }
+        try {
+            await api.post(`/api/deletedocdata`, {
+                data: { _id },
+                collection: sentenceCase(type)
+            });
+        } catch (err) {
+            console.error("Error deleting object:", err);
+        }
+    };
 
-    const renderList = filteredData.map(c => {
-        return (
-            <ListCard
-                key={c._id}
-                data={c}
-                type={type}
-                loggedInUsername={type === 'user' ? loggedInUsername : null}
-                deleteHandler={_id => deleteObject(_id)}
-            />
-        )
-    });
+    const renderList = filteredData.map(c => (
+        <ListCard
+            key={c._id}
+            data={c}
+            type={type}
+            loggedInUsername={type === 'user' ? loggedInUsername : null}
+            deleteHandler={_id => deleteObject(_id)}
+        />
+    ));
 
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <div className="responsive-header">
                 <h2 style={{ marginBottom: "0.5rem" }}>{sentenceCase(type)} List</h2>
                 <div className="responsive-button">
-                    {
-                        type === 'contact' && (<Link to={'/add'} state={{ user: { loggedInUsername } }}>
+                    {type !== 'user'
+                        ? (<Link to="/add" state={{ loggedInUsername, type }}>
                             <button className="ui button blue">Add {sentenceCase(type)}</button>
                         </Link>)
+                        : (<Link to={`/welcome/${loggedInUsername}`}>
+                            <button className="ui button">Back</button>
+                        </Link>)
                     }
-                    <Link to={`/welcome/${loggedInUsername}`}>
-                        <button className="ui button">Back</button>
-                    </Link>
                 </div>
             </div>
             <div className="ui search search-container">
@@ -97,6 +104,6 @@ const BuildList = (props) => {
             </div>
         </div>
     );
-}
+});
 
 export default BuildList;

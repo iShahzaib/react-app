@@ -26,9 +26,9 @@ const ListCard = (props) => {
         });
     };
 
-    const state = type === 'contact' ? { contact: props.data } : { _id, username, email, profilepicture, loggedInUsername };
-    const linkPath = type === 'contact' ? `/${type}/${_id}` : '/chat';
-    const headerName = type === 'contact' ? name : username;
+    const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
+    const linkPath = type !== 'user' ? `/${type}/${_id}` : '/chat';
+    const headerName = type !== 'user' ? name : username;
 
     return (
         <Link to={linkPath} state={state} className="item">
@@ -48,16 +48,16 @@ const ListCard = (props) => {
                     }}
                     onClick={handleDelete}
                 />
-                {type === 'contact' && (
+                {type !== 'user' && (
                     <i
                         className="edit alternate outline icon right floated"
                         title='Edit'
                         style={{ marginTop: "7px", color: "unset" }}
                         onClick={(e) => {
                             e.preventDefault(); e.stopPropagation();
-                            navigate(`/update/${type}/${_id}`, { state });
+                            navigate(`/update/${type}/${_id}`, { state: { ...state, type } });
                         }}
-                    // onClick={() => props.updateContactHandler(_id)}
+                    // onClick={() => props.updateDataHandler(_id)}
                     />
                 )}
             </div >

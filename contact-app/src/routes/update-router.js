@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import UpdateContact from '../components/update-contact';
+import UpdateData from '../components/update-contact';
 import api from '../api/server';
 import UpdateUser from "../login/update-user";
 import { sentenceCase, showSuccess } from "../contexts/common";
@@ -8,7 +8,7 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
     const { type } = useParams();
 
     const updateHandler = (updatedData) => {
-        const updatedtList = type === 'contact'
+        const updatedtList = type !== 'user'
             ? contacts.map((c) => c._id === updatedData._id ? updatedData : c)
             : users.map((u) => u._id === updatedData._id ? updatedData : u);
 
@@ -34,13 +34,10 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
     };
 
     switch (type) {
-        case 'contact':
-            return <UpdateContact updateContactHandler={updateHandler} />;
-
         case 'user':
             return <UpdateUser updateUserHandler={updateHandler} />;
 
         default:
-            return <p>Invalid type in URL.</p>;
+            return <UpdateData updateDataHandler={updateHandler} />;
     }
 }

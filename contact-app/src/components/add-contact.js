@@ -1,8 +1,8 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { showWarning } from "../contexts/common";
+import { sentenceCase, showWarning } from "../contexts/common";
 
-class AddContactClass extends React.Component {
+class AddDataClass extends React.Component {
     state = {
         name: '',
         email: ''
@@ -14,14 +14,13 @@ class AddContactClass extends React.Component {
             showWarning('All the fields are mandatory.');
             return;
         }
-        const response = await this.props.addContactHandler(this.state);
+        const response = await this.props.addContactHandler(this.state, sentenceCase(this.props.state.type));
         if (response === 'success') {
             this.setState({
                 name: '',
                 email: ''
             });
-            // Navigate to '/contacts' path after adding the contact
-            this.props.navigate('/contacts');
+            this.props.navigate(`/${this.props.state.type ? `welcome/${this.props.state.username}` : 'contacts'}`, { state: { type: this.props.state.type } });
         }
     };
 
@@ -29,7 +28,7 @@ class AddContactClass extends React.Component {
         return (
             <div className="ui main" style={{ padding: "2rem" }}>
                 <div className="responsive-header">
-                    <h2>Add Contact</h2>
+                    <h2>Add {sentenceCase(this.props.state.type)}</h2>
                 </div>
                 <form className="ui form" onSubmit={this.add}>
                     <div className="field">
@@ -62,10 +61,10 @@ class AddContactClass extends React.Component {
 }
 
 // Functional wrapper that uses `useNavigate`
-const AddContact = (props) => {
+const AddData = (props) => {
     const { state } = useLocation();  // Access location object to get state
 
-    return <AddContactClass {...props} navigate={useNavigate()} state={{ username: state.user }} />;
+    return <AddDataClass {...props} navigate={useNavigate()} state={{ username: state.loggedInUsername, type: state.type }} />;
 };
 
-export default AddContact;
+export default AddData;

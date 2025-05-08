@@ -2,14 +2,14 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { showWarning } from "../contexts/common";
 
-class UpdateContactClass extends React.Component {
+class UpdateDataClass extends React.Component {
     state = {
         name: '',
         email: ''
     };
 
     componentDidMount() {
-        const { _id, name, email } = this.props.state.contact;
+        const { _id, name, email } = this.props.state.data;
         this.setState({ _id, name, email });
     }
 
@@ -19,19 +19,19 @@ class UpdateContactClass extends React.Component {
             showWarning('All the fields are mandatory.');
             return;
         }
-        this.props.updateContactHandler(this.state);
+        this.props.updateDataHandler(this.state);
         this.setState({
             name: '',
             email: ''
         });
         // Navigate to '/contacts' path after adding the contact
-        this.props.navigate('/contacts');
+        this.props.navigate(`/${this.props.state.type ? `welcome/${this.props.state.username}` : 'contacts'}`);
     };
     render() {
         return (
             <div className="ui main" style={{ padding: "2rem" }}>
                 <div className="responsive-header">
-                    <h2>Update Contact</h2>
+                    <h2>Update {this.state.name}</h2>
                 </div>
                 <form className="ui form" onSubmit={this.update}>
                     <div className="field">
@@ -65,10 +65,10 @@ class UpdateContactClass extends React.Component {
 }
 
 // Functional wrapper that uses `useNavigate`
-const UpdateContact = (props) => {
+const UpdateData = (props) => {
     const { state } = useLocation();  // Access location object to get state
 
-    return <UpdateContactClass {...props} navigate={useNavigate()} state={{ contact: state.contact }} />;
+    return <UpdateDataClass {...props} navigate={useNavigate()} state={{ data: state.data, type: state.type }} />;
 };
 
-export default UpdateContact;
+export default UpdateData;

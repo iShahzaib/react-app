@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import Header, { Main } from './components/header';
-import AddContact from './components/add-contact';
+import AddData from './components/add-contact';
 import ContactDetail from './components/contact-detail';
 import BuildList from './components/build-list';
 // import DeletePopup from './components/delete-popup';
@@ -96,18 +96,18 @@ function App() {
           <Route
             path='/add'
             element={
-              <AddContact
-                addContactHandler={async (newContact) => {
+              <AddData
+                addContactHandler={async (newContact, type) => {
                   // const newContact = { id: uuidv4(), ...contact };
                   const response = await api.post(`/api/adddocdata`, {
                     data: newContact,
-                    collection: 'Contact'
+                    collection: type
                   });
 
                   if (response?.data?.insertedId) {
                     setContacts([...contacts, newContact]);
 
-                    showSuccess('Contact has been added successfully.');
+                    showSuccess(`${type} has been added successfully.`);
                     return 'success';
                   } else {
                     showError('This email already exists.');
