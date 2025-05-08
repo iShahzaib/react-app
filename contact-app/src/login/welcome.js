@@ -46,6 +46,9 @@ const Welcome = () => {
                     {/* <button className={`tab-button ${activeTab === "contacts" ? "active" : ""}`} onClick={() => setActiveTab("contacts")}>Contacts</button> */}
                     <Link to="/contacts" className={`tab-button contacts ${activeTab === "contacts" ? "active" : ""}`} onClick={() => setActiveTab("contacts")}>Contacts</Link>
                 </li>
+                <li>
+                    <button className={`tab-button students ${activeTab === "students" ? "active" : ""}`} onClick={() => setActiveTab("students")}>Students</button>
+                </li>
             </ul>
             <div className="tab-content">
                 {activeTab === "user" && (
@@ -78,6 +81,7 @@ const Welcome = () => {
                 )}
                 {activeTab === "chats" && <p>Chats content goes here.</p>}
                 {activeTab === "contacts" && <p>Contacts content goes here.</p>}
+                {activeTab === "students" && <p>Students content goes here.</p>}
             </div>
         </div>
     );
