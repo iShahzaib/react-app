@@ -70,7 +70,13 @@ const BuildList = React.memo(({ type }) => {
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <div className="responsive-header">
-                <h2 style={{ marginBottom: "0.5rem" }}>{sentenceCase(type)} List</h2>
+                {/* <h2 style={{ marginBottom: "0.5rem" }}>{sentenceCase(type)} List</h2> */}
+                <h2 style={{ marginBottom: "0.5rem", flexWrap: "wrap", alignItems: "center", gap: "0.5rem" }}>
+                    {sentenceCase(type)} List
+                    <div style={{ fontSize: "0.9rem", color: "#555" }}>
+                        {filteredData.length > 0 ? `${filteredData.length} Item${filteredData.length > 1 ? "s" : ""}` : "No record found"}
+                    </div>
+                </h2>
                 <div className="responsive-button">
                     {type !== 'user'
                         ? (<Link to="/add" state={{ loggedInUsername, type }}>
