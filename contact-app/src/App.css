@@ -368,6 +368,14 @@
   cursor: pointer;
 }
 
+.user-profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.75);
+  object-fit: cover;
+}
+
 .dropdown-popup-header {
   position: absolute;
   top: 45px;
@@ -384,4 +392,12 @@
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #eee;
   margin-bottom: 0.5rem;
+}
+
+.ui.list .item .image {
+  vertical-align: top;
+}
+
+.ui.list .item .content {
+  display: inline-block;
 }

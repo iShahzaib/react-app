@@ -45,19 +45,12 @@ const Header = () => {
                 <h2 className="child-header">Contact Manager</h2>
                 <div style={{ flexShrink: 0, display: "flex", alignItems: "center", position: "relative" }}>
                     {isLoggedIn ? (
-                        <div ref={dropdownRef} style={{ position: "relative", marginRight: "1rem", cursor: "pointer" }}>
-                            <img
-                                src={profilepicture || user}
-                                alt="User"
-                                style={{
-                                    width: "40px",
-                                    height: "40px",
-                                    borderRadius: "50%",
-                                    boxShadow: "0 0 0 0.2rem rgba(255, 255, 255, 0.75)",
-                                    objectFit: "cover"
-                                }}
-                                onClick={toggleDropdown}
-                            />
+                        <div
+                            ref={dropdownRef}
+                            style={{ position: "relative", marginRight: "1rem", cursor: "pointer" }}
+                            title={username}
+                        >
+                            <img src={profilepicture || user} alt="User" className="user-profile" onClick={toggleDropdown} />
                             {dropdownOpen && (<UserDropdown username={username} email={email} onLogout={handleLogout} closeDropdown={closeDropdown} />)}
                         </div>
                     ) : isLoginPage ? (

@@ -38,7 +38,7 @@ const ContactDetail = (props) => {
                     <div className="description">{email}</div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 

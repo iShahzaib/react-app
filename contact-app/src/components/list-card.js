@@ -8,7 +8,10 @@ const ListCard = (props) => {
 
     const navigate = useNavigate();
 
-    const handleDelete = () => {
+    const handleDelete = (e) => {
+        e.preventDefault(); // prevent link
+        e.stopPropagation(); // prevent navigation
+
         if (type === 'user' && loggedInUsername === username) {
             showError(`You cannot delete this ${type}.`, 'Access Denied!');
             return;
@@ -23,52 +26,42 @@ const ListCard = (props) => {
         });
     };
 
+    const state = type === 'contact' ? { contact: props.data } : { _id, username, email, profilepicture, loggedInUsername };
+    const linkPath = type === 'contact' ? `/${type}/${_id}` : '/chat';
+    const headerName = type === 'contact' ? name : username;
+
     return (
-        <div className="item" style={{ marginTop: "5px" }}>
-            <img className="ui avatar image" src={profilepicture || user} alt="user" />
-            <div className="content">
-                {
-                    type === 'contact'
-                        ? (<Link
-                            to={`/${type}/${_id}`}
-                            state={{ contact: props.data }}
-                        >
-                            <div className="header">{name}</div>
-                            <div>{email}</div>
-                        </Link>)
-                        : (<Link
-                            to="/chat"
-                            state={{ _id, username, email, profilepicture, loggedInUsername }}
-                        >
-                            <div className="header">{username}</div>
-                            <div>{email}</div>
-                        </Link>)
-                }
-            </div>
-            <i
-                className="trash alternate outline icon right floated"
-                title={type === 'user' && loggedInUsername === username ? `You can not delete your own ${type}.` : 'Delete'}
-                style={{
-                    color: "red",
-                    marginLeft: "10px",
-                    marginTop: "7px",
-                    cursor: type === 'user' && loggedInUsername === username ? 'not-allowed' : 'pointer',
-                    opacity: type === 'user' && loggedInUsername === username ? 0.5 : 1,
-                }}
-                onClick={handleDelete}
-            />
-            {
-                type === 'contact' && (<Link
-                    to={`/update/${type}/${_id}`}
-                    state={{ contact: props.data }}
-                    style={{ marginTop: "7px" }}
-                    className="right floated"
-                >
-                    <i className="edit alternate outline icon"></i>
-                    {/* onClick={() => props.updateContactHandler(_id)} */}
-                </Link>)
-            }
-        </div >
+        <Link to={linkPath} state={state} className="item">
+            <div style={{ margin: "5px 0px 5px 0" }}>
+                <img className="ui avatar image" src={profilepicture || user} alt="user" />
+                <div className="content">
+                    <div className="header">{headerName}</div>
+                    <div>{email}</div>
+                </div>
+                <i
+                    className="trash red alternate outline icon right floated"
+                    title={type === 'user' && loggedInUsername === username ? `You can not delete your own ${type}.` : 'Delete'}
+                    style={{
+                        margin: "7px 0 0 15px",
+                        cursor: type === 'user' && loggedInUsername === username ? 'not-allowed' : 'pointer',
+                        opacity: type === 'user' && loggedInUsername === username ? 0.5 : 1,
+                    }}
+                    onClick={handleDelete}
+                />
+                {type === 'contact' && (
+                    <i
+                        className="edit alternate outline icon right floated"
+                        title='Edit'
+                        style={{ marginTop: "7px", color: "unset" }}
+                        onClick={(e) => {
+                            e.preventDefault(); e.stopPropagation();
+                            navigate(`/update/${type}/${_id}`, { state });
+                        }}
+                    // onClick={() => props.updateContactHandler(_id)}
+                    />
+                )}
+            </div >
+        </Link>
     )
 };
 
