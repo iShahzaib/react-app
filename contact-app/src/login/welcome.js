@@ -26,6 +26,7 @@ const Welcome = () => {
     }, []);
 
     if (isAuthenticated !== 'true' || authenticatedUser !== username) {
+        console.log('Something went wrong!');
         isAuthenticated !== 'true' && showWarning('Please login first');
         return <Navigate to="/login" replace />;  // <-- This will redirect without remount issues
     }

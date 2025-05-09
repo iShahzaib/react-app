@@ -46,11 +46,11 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
         const db = await getDBConnection('MSH_CONTACTAPP');
 
-        const user = await db.collection('User').findOne({ username, IsAccessible: true });
+        const user = await db.collection('User').findOne({ email, IsAccessible: true });
 
         if (!user) {
             return res.status(401).json({ message: 'Invalid username' });
@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
 
         // Generate JWT token (expires in 1 hour)
         const token = jwt.sign(
-            { userId: user._id, username: user.username },
+            { userId: user._id, email: user.email },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
         );

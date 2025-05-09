@@ -26,7 +26,7 @@ const ListCard = (props) => {
         });
     };
 
-    const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
+    const state = type !== 'user' ? { data: props.data, loggedInUsername } : { _id, username, email, profilepicture, loggedInUsername };
     const linkPath = type !== 'user' ? `/detail/${type}/${_id}` : '/chat';
     const headerName = type !== 'user' ? name : username;
 

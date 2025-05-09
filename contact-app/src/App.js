@@ -17,12 +17,12 @@ function App() {
   //   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
   // }, [contacts]);
 
-  const handleLogin = async ({ username, password, navigate }) => {
+  const handleLogin = async ({ email, password, navigate }) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/noauth/login`, {
         method: "POST",
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
       });
 
       const res = await response.json();

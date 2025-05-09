@@ -5,10 +5,11 @@ import { Link, useLocation, useParams } from "react-router-dom";
 const Detail = (props) => {
     const { type } = useParams();
     const { state } = useLocation();  // Access location object to get state
-    const { _id, name, username, email } = state.data;
+    const { data: { _id, name, username, email, profilepicture }, loggedInUsername } = state;
 
     // const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
-    // const linkPath = type !== 'user' ? `/detail/${type}/${_id}` : '/chat';
+    // const linkPath = type !== 'user' ? `/welcome/${loggedInUsername}` : `/contacts`;
+    const backPath = type !== 'contact' ? `/welcome/${loggedInUsername}` : `/contacts`;
     const headerName = type !== 'user' ? name : username;
 
     return (
@@ -16,7 +17,7 @@ const Detail = (props) => {
             <div className="responsive-header">
                 <h2 style={{ marginBottom: "0.5rem" }}>{headerName}</h2>
                 <div className="responsive-button">
-                    <Link to={`/contacts`}                >
+                    <Link to={backPath} state={{ type }} >
                         <button className="ui button">Back</button>
                     </Link>
                 </div>
@@ -36,7 +37,7 @@ const Detail = (props) => {
                     </p>
                 </div>
                 <div className="image">
-                    <img src={user} alt="user" />
+                    <img src={profilepicture || user} alt="user" />
                 </div>
                 <div className="content">
                     <div className="header">{name}</div>

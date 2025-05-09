@@ -22,7 +22,7 @@ const LoginForm = (props) => {
             return;
         }
 
-        props.loginHandler({ username, password, navigate });
+        props.loginHandler({ email: username?.toLowerCase(), password, navigate });
         // this.setState({
         //     name: '',
         //     email: ''
