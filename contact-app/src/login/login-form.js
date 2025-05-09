@@ -32,7 +32,7 @@ const LoginForm = (props) => {
     }
 
     return (
-        <div className="ui main" style={{ padding: "2rem" }}>
+        <div className="ui main" style={{ padding: "1rem" }}>
             <form className="ui form" onSubmit={handleLogin}>
                 <div className="responsive-header">
                     <h2>Login</h2>

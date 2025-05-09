@@ -52,11 +52,11 @@ class AddDataClass extends React.Component {
 
     render() {
         return (
-            <div className="ui main" style={{ padding: "2rem" }}>
+            <div className="ui main" style={{ padding: "1rem" }}>
                 <div className="responsive-header">
                     <h2>Add {sentenceCase(this.props.state.type)}</h2>
                 </div>
-                <form className="ui form" onSubmit={this.add}>
+                <form className="ui form" style={{ marginTop: "0.5rem" }} onSubmit={this.add}>
                     {this.fields.map(field => (
                         <div className="field" key={field.name}>
                             <label>{field.label}</label>

@@ -17,7 +17,7 @@ const Detail = (props) => {
     const backPath = type !== 'contact' ? `/welcome/${loggedInUsername}` : `/contacts`;
 
     return (
-        <div className="ui main" style={{ padding: "2rem" }}>
+        <div className="ui main" style={{ padding: "1rem" }}>
             <div className="responsive-header">
                 {/* Image Card */}
                 <div className="ui card" style={{ padding: '1rem', width: "100%", backgroundColor: "#f3f7ff" }}>
@@ -45,7 +45,7 @@ const Detail = (props) => {
             </div>
 
             {/* Information Section */}
-            <div className="ui segment">
+            <div className="ui segment" style={{ minHeight: "450px", overflowX: "auto" }}>
                 <div className="ui two column grid">
                     {fields.map(field => (
                         <div key={field.name} className="column" style={{ marginBottom: "1rem" }}>

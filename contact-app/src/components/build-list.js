@@ -57,7 +57,7 @@ const BuildList = React.memo(({ type }) => {
     };
 
     return (
-        <div className="ui main" style={{ padding: "2rem" }}>
+        <div className="ui main" style={{ padding: "1rem" }}>
             <div className="responsive-header">
                 <h2 style={{ marginBottom: "0.5rem" }}>
                     {sentenceCase(type)} List
@@ -93,7 +93,7 @@ const BuildList = React.memo(({ type }) => {
                     <i className="refresh icon" style={{ margin: 0 }}></i>
                 </button>
             </div>
-            <div className="ui celled list">
+            <div className="ui celled list" style={{ overflowX: "auto"}}>
                 {filteredData.length > 0
                     ? filteredData.map(c => (
                         <ListCard

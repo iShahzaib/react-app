@@ -25,7 +25,7 @@ const RegistrationForm = (props) => {
         if (response === 'success') navigate('/login');
     }
     return (
-        <div className="ui main" style={{ padding: "2rem" }}>
+        <div className="ui main" style={{ padding: "1rem" }}>
             <form className="ui form" onSubmit={register}>
                 <div className="responsive-header">
                     <h2>Registration</h2>

@@ -39,7 +39,7 @@ const Welcome = () => {
     };
 
     return (
-        <div className="ui main" style={{ padding: "2rem" }}>
+        <div className="ui main" style={{ padding: "1rem" }}>
             <ul className="tab-button-group responsive-button">
                 {tabItems.map(({ key, label, className, link, bgcolor }) => (
                     <li key={key}>

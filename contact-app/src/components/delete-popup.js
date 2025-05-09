@@ -11,7 +11,7 @@ const DeletePopup = (props) => {
     };
 
     return (
-        <div className="ui main" style={{ padding: "2rem", textAlign: "center" }}>
+        <div className="ui main" style={{ padding: "1rem", textAlign: "center" }}>
             <div className="ui raised very padded text container segment">
                 <h2>Confirm Deletion</h2>
                 <p>Are you sure you want to delete this contact?</p>

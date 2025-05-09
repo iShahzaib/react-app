@@ -40,11 +40,11 @@ class UpdateUserClass extends React.Component {
     };
     render() {
         return (
-            <div className="ui main" style={{ padding: "2rem" }}>
+            <div className="ui main" style={{ padding: "1rem" }}>
                 <div className="responsive-header">
                     <h2>Edit {this.state.username}</h2>
                 </div>
-                <form className="ui form" onSubmit={this.update}>
+                <form className="ui form" style={{ marginTop: "0.5rem" }} onSubmit={this.update}>
                     <div className="field">
                         <label>Name</label>
                         <input
