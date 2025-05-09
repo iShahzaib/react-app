@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import ListCard from "./list-card";
-import api from '../api/server';
 import { sentenceCase } from "../contexts/common";
 
-const BuildList = React.memo(({ type }) => {
+const BuildList = React.memo(({ api, type }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
     const [listData, setListData] = useState([]);
@@ -23,7 +22,7 @@ const BuildList = React.memo(({ type }) => {
         } catch (err) {
             console.error("Error fetching data:", err);
         }
-    }, [type, setListData]);
+    }, [api, type, setListData]);
 
     useEffect(() => {
         if (!loggedInUsername) {
