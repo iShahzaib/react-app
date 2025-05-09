@@ -1,11 +1,12 @@
 import React from "react";
-import user from '../images/nouser.jpg';
 import { Link, useNavigate } from "react-router-dom";
+import user from '../images/nouser.jpg';
 import { confirmDelete, showError, showSuccess } from "../contexts/common";
+import { defaultFields, tabItems } from "../constant";
 
 const ListCard = (props) => {
-    const { data: { _id, name, username, email, profilepicture }, type, loggedInUsername } = props;
-
+    const { data, type, loggedInUsername } = props;
+    const { _id, username, email, profilepicture } = data;
     const navigate = useNavigate();
 
     const handleDelete = (e) => {
@@ -16,56 +17,65 @@ const ListCard = (props) => {
             showError(`You cannot delete this ${type}.`, 'Access Denied!');
             return;
         }
+
         confirmDelete(`Do you want to delete this ${type}?`).then((result) => {
             if (result.isConfirmed) {
                 props.deleteHandler(_id);
 
                 showSuccess(`The ${type} has been deleted successfully.`, 'Deleted!');
-                navigate(`/${type ? `welcome/${loggedInUsername}` : `${type}s`}`, { state: { ...props.data, loggedInUsername, type } });
+                navigate(
+                    `/${type ? `welcome/${loggedInUsername}` : `${type}s`}`,
+                    { state: { ...props.data, loggedInUsername, type } }
+                );
             }
         });
     };
 
     const state = type !== 'user' ? { data: props.data, loggedInUsername } : { _id, username, email, profilepicture, loggedInUsername };
     const linkPath = type !== 'user' ? `/detail/${type}/${_id}` : '/chat';
-    const headerName = type !== 'user' ? name : username;
+
+    // Get field config based on type
+    const tab = tabItems.find(tab => tab.key === type);
+    const fields = tab?.fields || defaultFields;
 
     return (
         <Link to={linkPath} state={state} className="item">
-            <div style={{ margin: "5px 0px 5px 0" }}>
+            <div className="grid-row">
                 <img className="ui avatar image" src={profilepicture || user} alt="user" />
-                <div className="content">
-                    <div className="header">{headerName}</div>
-                    <div>{email}</div>
-                </div>
-                {/* Delete Button */}
-                <i
-                    className="trash red alternate outline icon right floated"
-                    title={type === 'user' && loggedInUsername === username ? `You can not delete your own ${type}.` : 'Delete'}
-                    style={{
-                        margin: "7px 0 0 15px",
-                        cursor: type === 'user' && loggedInUsername === username ? 'not-allowed' : 'pointer',
-                        opacity: type === 'user' && loggedInUsername === username ? 0.5 : 1,
-                    }}
-                    onClick={handleDelete}
-                />
 
-                {/* Edit Button */}
-                {type !== 'user' && (
+                {fields.filter(field => !field.ispicture).map(field => (
+                    <div key={field.name} className="grid-cell">
+                        <strong>{field.label}:</strong> <span title={`${data[field.name] || ''}`}>{data[field.name] || '—'}</span>
+                    </div>
+                ))}
+
+                <div className="grid-row-action-buttons">
+                    {type !== 'user' && (
+                        <i
+                            className="edit blue alternate outline icon"
+                            title="Edit"
+                            style={{ cursor: "pointer", fontSize: "1.2rem" }}
+                            onClick={(e) => {
+                                e.preventDefault(); e.stopPropagation();
+                                navigate(`/update/${type}/${_id}`, { state: { ...state, loggedInUsername, type } });
+                            }}
+                        // onClick={() => props.updateDataHandler(_id)}
+                        />
+                    )}
                     <i
-                        className="edit alternate outline icon right floated"
-                        title='Edit'
-                        style={{ marginTop: "7px", color: "unset" }}
-                        onClick={(e) => {
-                            e.preventDefault(); e.stopPropagation();
-                            navigate(`/update/${type}/${_id}`, { state: { ...state, loggedInUsername, type } });
+                        className="trash red alternate outline icon"
+                        title={type === 'user' && loggedInUsername === username ? `You can not delete your own ${type}.` : 'Delete'}
+                        style={{
+                            cursor: type === 'user' && loggedInUsername === username ? 'not-allowed' : 'pointer',
+                            opacity: type === 'user' && loggedInUsername === username ? 0.5 : 1,
+                            fontSize: "1.2rem"
                         }}
-                    // onClick={() => props.updateDataHandler(_id)}
+                        onClick={handleDelete}
                     />
-                )}
-            </div >
+                </div>
+            </div>
         </Link>
-    )
+    );
 };
 
 export default ListCard;

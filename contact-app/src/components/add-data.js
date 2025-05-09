@@ -1,27 +1,52 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { sentenceCase, showError, showSuccess, showWarning } from "../contexts/common";
+import { defaultFields, tabItems } from "../constant";
 import api from "../api/server";
 
 class AddDataClass extends React.Component {
-    state = {
-        name: '',
-        email: ''
+    constructor(props) {
+        super(props);
+
+        // Find current tab's field config
+        const tabItem = tabItems.find(item => item.key === props.state.type);
+        const fields = tabItem?.fields || defaultFields;
+
+        // Initialize state based on field names
+        const initialState = {};
+        fields.forEach(f => { initialState[f.name] = ''; });
+
+        this.state = initialState;
+        this.fields = fields;
+    }
+
+    handleChange = (e) => {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
     };
 
     add = async (e) => {
         e.preventDefault();
-        if (this.state.name === '' || this.state.email === '') {
-            showWarning('All the fields are mandatory.');
-            return;
+
+        // Check for any empty required fields
+        for (let field of this.fields) {
+            if (field.required && !this.state[field.name]) {
+                showWarning('All the fields are mandatory.');
+                return;
+            }
         }
+
         const response = await this.props.addContactHandler(this.state, sentenceCase(this.props.state.type));
         if (response === 'success') {
-            this.setState({
-                name: '',
-                email: ''
-            });
-            this.props.navigate(`/${this.props.state.type ? `welcome/${this.props.state.username}` : 'contacts'}`, { state: { type: this.props.state.type } });
+            // Reset all fields
+            const clearedState = {};
+            this.fields.forEach(f => clearedState[f.name] = '');
+            this.setState(clearedState);
+
+            this.props.navigate(
+                `/${this.props.state.type ? `welcome/${this.props.state.username}` : 'contacts'}`,
+                { state: { type: this.props.state.type } }
+            );
         }
     };
 
@@ -32,40 +57,31 @@ class AddDataClass extends React.Component {
                     <h2>Add {sentenceCase(this.props.state.type)}</h2>
                 </div>
                 <form className="ui form" onSubmit={this.add}>
-                    <div className="field">
-                        <label>Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            required
-                            placeholder="Name"
-                            value={this.state.name}
-                            onChange={e => this.setState({ name: e.target.value })}
-                        />
-                    </div>
-                    <div className="field">
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            required
-                            placeholder="Email"
-                            value={this.state.email}
-                            onChange={e => this.setState({ email: e.target.value })}
-                        />
-                    </div>
+                    {this.fields.map(field => (
+                        <div className="field" key={field.name}>
+                            <label>{field.label}</label>
+                            <input
+                                type={field.type}
+                                name={field.name}
+                                required={field.required}
+                                placeholder={field.placeholder}
+                                value={this.state[field.name]}
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                    ))}
                     <button className="ui button blue">Add</button>
                 </form>
             </div>
-        )
-    };
+        );
+    }
 }
 
-// Functional wrapper that uses `useNavigate`
+// Wrapper to use hooks with class component
 const AddData = (props) => {
     const { state } = useLocation();  // Access location object to get state
     const { contacts, setContacts } = props;
-    const { location, loggedInUsername: username, type } = state ? state : {};
+    const { location, loggedInUsername: username, type } = state ?? {};
 
     const addContactHandler = async (newContact, type) => {
         // const newContact = { id: uuidv4(), ...contact };

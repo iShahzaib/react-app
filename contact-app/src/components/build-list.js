@@ -56,16 +56,6 @@ const BuildList = React.memo(({ type }) => {
         }
     };
 
-    const renderList = filteredData.map(c => (
-        <ListCard
-            key={c._id}
-            data={c}
-            type={type}
-            loggedInUsername={loggedInUsername}
-            deleteHandler={_id => deleteObject(_id)}
-        />
-    ));
-
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <div className="responsive-header">
@@ -104,7 +94,18 @@ const BuildList = React.memo(({ type }) => {
                 </button>
             </div>
             <div className="ui celled list">
-                {renderList.length > 0 ? renderList : 'No record found'}
+                {filteredData.length > 0
+                    ? filteredData.map(c => (
+                        <ListCard
+                            key={c._id}
+                            data={c}
+                            type={type}
+                            loggedInUsername={loggedInUsername}
+                            deleteHandler={_id => deleteObject(_id)}
+                        />
+                    ))
+                    : 'No record found'
+                }
             </div>
         </div>
     );

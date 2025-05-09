@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import user from '../images/nouser.jpg';
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import user from '../images/nouser.jpg';
 // import { useAuth } from "../contexts/AuthContext"; // adjust path
 
 // Header Component

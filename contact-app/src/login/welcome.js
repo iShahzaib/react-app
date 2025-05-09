@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import user from '../images/nouser.jpg';
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
+import user from '../images/nouser.jpg';
 import socketClient from '../api/socket';
 import { showWarning } from "../contexts/common";
 import BuildList from "../components/build-list";
+import { tabItems } from "../constant";
 
 const Welcome = () => {
     const { state } = useLocation();
@@ -40,20 +41,19 @@ const Welcome = () => {
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <ul className="tab-button-group responsive-button">
-                <li>
-                    {/* <button className={`tab-button ${activeTab === "user" ? "active" : ""}`} onClick={() => setDataInParams("user")}>User Detail</button> */}
-                    <Link className={`tab-button user ${activeTab === "user" ? "active" : ""}`} onClick={() => setDataInParams("user")}>User Detail</Link>
-                </li>
-                <li>
-                    {/* <button className={`tab-button ${activeTab === "chats" ? "active" : ""}`} onClick={() => setDataInParams("chats")}>Chats</button> */}
-                    <Link to="/users" className={`tab-button chats ${activeTab === "chats" ? "active" : ""}`} onClick={() => setDataInParams("chats")}>Chats</Link>
-                </li>
-                <li>
-                    <Link className={`tab-button contact ${activeTab === "contact" ? "active" : ""}`} onClick={() => setDataInParams("contact")}>Contacts</Link>
-                </li>
-                <li>
-                    <Link className={`tab-button student ${activeTab === "student" ? "active" : ""}`} onClick={() => setDataInParams("student")}>Students</Link>
-                </li>
+                {tabItems.map(({ key, label, className, link, bgcolor }) => (
+                    <li key={key}>
+                        {/* <button className={`tab-button ${activeTab === "user" ? "active" : ""}`} onClick={() => setDataInParams("user")}>User Detail</button> */}
+                        <Link
+                            to={link || "#"}
+                            className={`tab-button ${className} ${activeTab === key ? "active" : ""}`}
+                            style={{ backgroundColor: bgcolor || '#2185d0' }}
+                            onClick={() => setDataInParams(key)}
+                        >
+                            {label}
+                        </Link>
+                    </li>
+                ))}
             </ul>
             <div className="tab-content">
                 {activeTab === "user"

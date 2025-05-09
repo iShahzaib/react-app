@@ -125,7 +125,7 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-  margin-left: auto;
+  margin: 0 0 auto auto;
 }
 
 [required] {
@@ -170,50 +170,24 @@
   background: #f1f1f1;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
   text-decoration: none;
+  font-weight: bold;
+  color: #fff !important;
 }
 
-.tab-button:hover {
-  background: #ddd;
-}
+/* .tab-button.user:hover {
+  background: #c1c1c1 !important;
+} */
 
 .tab-button.active {
   background: #2185d0 !important;
-  color: white !important;
-  font-weight: bold;
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 20px;
 }
 
-.tab-button.user {
-  color: #3a3b45;
-  font-weight: bold;
+.tab-button.user:not(.active) {
+  color: #3a3b45 !important;
 }
-
-.tab-button.chats {
-  background-color: #21ba45;
-  color: #fff;
-  font-weight: bold;
-}
-
-.tab-button.contact {
-  background-color: #36b9cc;
-  color: #fff;
-  font-weight: bold;
-}
-
-.tab-button.student {
-  background-color: #cb634a;
-  color: #fff;
-  font-weight: bold;
-}
-
-/* .tab-button.student {
-  background-color: white;
-  border: 2px solid #2185d0;
-  color: #2185d0;
-  font-weight: bold;
-} */
 
 /* chat css starts */
 
@@ -418,4 +392,28 @@
 
 .ui.list .item .content {
   display: inline-block;
+}
+
+/* chat css starts */
+
+.grid-row {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: #fff;
+  gap: 10px;
+}
+
+.grid-cell {
+  flex: 0 0 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #555555;
+}
+
+.grid-row-action-buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
 }
