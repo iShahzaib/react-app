@@ -46,13 +46,4 @@ api.interceptors.response.use(
     }
 );
 
-const fetchTabItems = async () => {
-    const response = await api.get(`/api/getdocdata?collection=Schema`);
-    return response.data;
-};
-
-// After login success:
-const tabs = await fetchTabItems();
-localStorage.setItem("tabItems", JSON.stringify(tabs));
-
 export default api;

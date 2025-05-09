@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import ListCard from "./list-card";
 import { sentenceCase } from "../contexts/common";
+import api from "../api/server";
 
-const BuildList = React.memo(({ api, type }) => {
+const BuildList = React.memo(({ type }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
     const [listData, setListData] = useState([]);
@@ -22,7 +23,7 @@ const BuildList = React.memo(({ api, type }) => {
         } catch (err) {
             console.error("Error fetching data:", err);
         }
-    }, [api, type, setListData]);
+    }, [type, setListData]);
 
     useEffect(() => {
         if (!loggedInUsername) {
@@ -92,7 +93,7 @@ const BuildList = React.memo(({ api, type }) => {
                     <i className="refresh icon" style={{ margin: 0 }}></i>
                 </button>
             </div>
-            <div className="ui celled list" style={{ overflowX: "auto"}}>
+            <div className="ui celled list" style={{ overflowX: "auto" }}>
                 {filteredData.length > 0
                     ? filteredData.map(c => (
                         <ListCard

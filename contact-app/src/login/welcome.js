@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
-import api from '../api/server';
 import socketClient from '../api/socket';
 import { showWarning } from "../contexts/common";
 import BuildList from "../components/build-list";
@@ -77,7 +76,7 @@ const Welcome = () => {
                             <div className="description" style={{ color: "gray" }}>{email}</div>
                         </div>
                     </div>)
-                    : activeTab === "chats" ? <p>Chats content goes here.</p> : <BuildList api={api} type={activeTab} />
+                    : activeTab === "chats" ? <p>Chats content goes here.</p> : <BuildList type={activeTab} />
                 }
             </div>
         </div>

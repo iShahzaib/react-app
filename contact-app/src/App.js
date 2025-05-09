@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 // import { v4 as uuidv4 } from 'uuid';
 import './App.css';
+import api from './api/server';
 import Header from './components/header';
 import { showError, showSuccess, showWarning } from './contexts/common';
 import AppRoutes from './routes/app-route';
@@ -34,8 +35,10 @@ function App() {
         localStorage.setItem('loggedInUser', JSON.stringify(res.user)); // <-- Save login
         localStorage.setItem('isAuthenticated', 'true'); // (optional)
 
-        showSuccess(`Login successful!`);
+        const response = await api.get(`/api/getdocdata?collection=Schema`);
+        localStorage.setItem("tabItems", JSON.stringify(response.data));
 
+        showSuccess(`Login successful!`);
         navigate(`/welcome/${username}`);
       } else {
         showWarning(res.message || 'Invalid username or password.');
