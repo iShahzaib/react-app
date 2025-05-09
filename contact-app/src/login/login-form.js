@@ -33,10 +33,10 @@ const LoginForm = (props) => {
 
     return (
         <div className="ui main" style={{ padding: "1rem" }}>
-            <form className="ui form" onSubmit={handleLogin}>
-                <div className="responsive-header">
-                    <h2>Login</h2>
-                </div>
+            <div className="responsive-header">
+                <h2>Login</h2>
+            </div>
+            <form className="ui form" style={{ marginTop: "0.5rem" }} onSubmit={handleLogin}>
                 <div className="field">
                     <label>User Name</label>
                     <input type="text" value={username} onChange={e => usernameChange(e.target.value)} placeholder="Username" required />

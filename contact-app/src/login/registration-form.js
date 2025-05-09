@@ -26,10 +26,10 @@ const RegistrationForm = (props) => {
     }
     return (
         <div className="ui main" style={{ padding: "1rem" }}>
-            <form className="ui form" onSubmit={register}>
-                <div className="responsive-header">
-                    <h2>Registration</h2>
-                </div>
+            <div className="responsive-header">
+                <h2>Registration</h2>
+            </div>
+            <form className="ui form" style={{ marginTop: "0.5rem" }} onSubmit={register}>
                 <div className="field">
                     <label>User Name</label>
                     <input type="text" value={username} onChange={e => usernameChange(e.target.value)} placeholder="Username" required />
