@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 // import { v4 as uuidv4 } from 'uuid';
 import './App.css';
+import api from './api/server';
 import Header from './components/header';
 import { showError, showSuccess, showWarning } from './contexts/common';
 import AppRoutes from './routes/app-route';
@@ -75,7 +76,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <div className='extra-gap'></div>
-        <AppRoutes handleLogin={handleLogin} handleRegistration={handleRegistration} />
+        <AppRoutes api={api} handleLogin={handleLogin} handleRegistration={handleRegistration} />
       </BrowserRouter>
     </div>
   );
