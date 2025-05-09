@@ -48,7 +48,7 @@ const Detail = (props) => {
             <div className="ui segment" style={{ minHeight: "450px", overflowX: "auto" }}>
                 <div className="ui two column grid">
                     {fields.map(field => (
-                        <div key={field.name} className="column" style={{ marginBottom: "1rem" }}>
+                        <div key={field.name} className="column" style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
                             <strong>{field.label}:</strong> {data?.[field.name] || '—'}
                         </div>
                     ))}
