@@ -16,32 +16,33 @@ class UpdateUserClass extends React.Component {
 
     update = (e) => {
         e.preventDefault();
-        if (this.state.username === '' || this.state.email === '') {
+
+        const { _id, username, email } = this.state;
+        const { updateUserHandler, state, navigate } = this.props;
+
+        if (!username || !email) {
             showWarning('All the fields are mandatory.');
             return;
         }
-        this.props.updateUserHandler(this.state);
+        
+        const updatedData = { ...state.data, username, email };
+        updateUserHandler(updatedData);
 
-        this.setState({
-            username: '',
-            email: '',
-            profilepicture: ''
-        });
+        this.setState({ username: '', email: '', profilepicture: '' });
 
-        // Navigate to '/contacts' path after adding the user
-        const { _id, username } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+        const { _id: loggedInUserID, username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
-        if (this.state._id === _id) {
-            this.props.navigate(`/welcome/${username}`);
+        if (_id === loggedInUserID) {
+            navigate(`/welcome/${loggedInUsername}`);
         } else {
-            this.props.navigate('/users');
+            navigate('/users');
         }
     };
     render() {
         return (
             <div className="ui main" style={{ padding: "2rem" }}>
                 <div className="responsive-header">
-                    <h2>Update User</h2>
+                    <h2>Edit {this.state.username}</h2>
                 </div>
                 <form className="ui form" onSubmit={this.update}>
                     <div className="field">

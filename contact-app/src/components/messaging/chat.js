@@ -18,12 +18,10 @@ const ChatComponent = () => {
     useEffect(() => {
         const fetchPreviousChats = async () => {
             try {
-                const response = await api.get(`/api/getchats`, {
-                    params: { participants: [username, loggedInUsername] }
-                });
+                const response = await api.get(`/api/getchats`, { params: { participants: [username, loggedInUsername] } });
 
-                const getData = response.data;
-                if (getData?.length) setChat(getData);
+                const getData = response.data || [];
+                setChat(getData);
 
             } catch (err) {
                 console.error('Error fetching chat history:', err);

@@ -16,11 +16,10 @@ const BuildList = React.memo(({ type }) => {
         try {
             // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
             const response = await api.get(`/api/getdocdata?collection=${sentenceCase(type)}`);
-            const getData = response.data;
 
-            if (getData?.length) {
-                setListData(getData);
-            }
+            const getData = response.data || [];
+            setListData(getData);
+
         } catch (err) {
             console.error("Error fetching data:", err);
         }
@@ -70,10 +69,9 @@ const BuildList = React.memo(({ type }) => {
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <div className="responsive-header">
-                {/* <h2 style={{ marginBottom: "0.5rem" }}>{sentenceCase(type)} List</h2> */}
-                <h2 style={{ marginBottom: "0.5rem", flexWrap: "wrap", alignItems: "center", gap: "0.5rem" }}>
+                <h2 style={{ marginBottom: "0.5rem" }}>
                     {sentenceCase(type)} List
-                    <div style={{ fontSize: "0.9rem", color: "#555" }}>
+                    <div style={{ fontSize: "0.9rem", color: "#555", fontWeight: "500" }}>
                         {filteredData.length > 0 ? `${filteredData.length} Item${filteredData.length > 1 ? "s" : ""}` : "No record found"}
                     </div>
                 </h2>

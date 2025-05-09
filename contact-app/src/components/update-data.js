@@ -15,22 +15,38 @@ class UpdateDataClass extends React.Component {
 
     update = (e) => {
         e.preventDefault();
-        if (this.state.name === '' || this.state.email === '') {
+
+        const { name, email } = this.state;
+        const { updateDataHandler, state, navigate } = this.props;
+
+        if (!name || !email) {
             showWarning('All the fields are mandatory.');
             return;
         }
-        this.props.updateDataHandler(this.state);
-        this.setState({
-            name: '',
-            email: ''
-        });
-        this.props.navigate(`/${this.props.state.type ? `welcome/${this.props.state.username}` : 'contacts'}`, { state: { type: this.props.state.type } });
+
+        const updatedData = { ...state.data, name, email };
+
+        updateDataHandler(updatedData);
+
+        this.setState({ name: '', email: '' });
+
+        let url = '/contacts';
+        const navState = { type: state?.type, data: updatedData };
+
+        if (state?.location) {
+            url = `/detail/${state.type}/${state.data._id}`;
+        } else if (state?.type) {
+            url = `/welcome/${state.username}`;
+        }
+
+        navigate(url, { state: navState });
     };
+
     render() {
         return (
             <div className="ui main" style={{ padding: "2rem" }}>
                 <div className="responsive-header">
-                    <h2>Update {this.state.name}</h2>
+                    <h2>Edit {this.state.name}</h2>
                 </div>
                 <form className="ui form" onSubmit={this.update}>
                     <div className="field">
@@ -66,8 +82,9 @@ class UpdateDataClass extends React.Component {
 // Functional wrapper that uses `useNavigate`
 const UpdateData = (props) => {
     const { state } = useLocation();  // Access location object to get state
+    const { data, location, loggedInUsername: username, type } = state ? state : {};
 
-    return <UpdateDataClass {...props} navigate={useNavigate()} state={{ data: state.data, username: state.loggedInUsername, type: state.type }} />;
+    return <UpdateDataClass {...props} navigate={useNavigate()} state={{ data, location, username, type }} />;
 };
 
 export default UpdateData;

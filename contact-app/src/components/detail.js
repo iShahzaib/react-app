@@ -1,15 +1,20 @@
 import React from "react";
 import user from '../images/nouser.jpg';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
-const ContactDetail = (props) => {
+const Detail = (props) => {
+    const { type } = useParams();
     const { state } = useLocation();  // Access location object to get state
-    const { _id, name, email } = state.data;
+    const { _id, name, username, email } = state.data;
+
+    // const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
+    // const linkPath = type !== 'user' ? `/detail/${type}/${_id}` : '/chat';
+    const headerName = type !== 'user' ? name : username;
 
     return (
         <div className="ui main" style={{ padding: "2rem" }}>
             <div className="responsive-header">
-                <h2 style={{ marginBottom: "0.5rem" }}>Contact Detail</h2>
+                <h2 style={{ marginBottom: "0.5rem" }}>{headerName}</h2>
                 <div className="responsive-button">
                     <Link to={`/contacts`}                >
                         <button className="ui button">Back</button>
@@ -20,8 +25,8 @@ const ContactDetail = (props) => {
                 <div className="content">
                     <p>ID:
                         <Link
-                            to={`/update/contact/${_id}`}
-                            state={{ data: state.data }}
+                            to={`/update/${type}/${_id}`}
+                            state={{ data: state.data, location: 'detail', type }}
                             className="right floated"
                         >
                             <i className="edit alternate outline icon"></i>
@@ -42,4 +47,4 @@ const ContactDetail = (props) => {
     );
 }
 
-export default ContactDetail;
+export default Detail;

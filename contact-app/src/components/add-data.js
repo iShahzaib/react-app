@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { sentenceCase, showWarning } from "../contexts/common";
+import { sentenceCase, showError, showSuccess, showWarning } from "../contexts/common";
+import api from "../api/server";
 
 class AddDataClass extends React.Component {
     state = {
@@ -63,8 +64,28 @@ class AddDataClass extends React.Component {
 // Functional wrapper that uses `useNavigate`
 const AddData = (props) => {
     const { state } = useLocation();  // Access location object to get state
+    const { contacts, setContacts } = props;
+    const { location, loggedInUsername: username, type } = state ? state : {};
 
-    return <AddDataClass {...props} navigate={useNavigate()} state={{ username: state.loggedInUsername, type: state.type }} />;
+    const addContactHandler = async (newContact, type) => {
+        // const newContact = { id: uuidv4(), ...contact };
+        const response = await api.post(`/api/adddocdata`, {
+            data: newContact,
+            collection: type
+        });
+
+        if (response?.data?.insertedId) {
+            setContacts([...contacts, newContact]);
+
+            showSuccess(`${type} has been added successfully.`);
+            return 'success';
+        } else {
+            showError('This email already exists.');
+            return 'failed';
+        }
+    };
+
+    return <AddDataClass addContactHandler={addContactHandler} navigate={useNavigate()} state={{ username, location, type }} />;
 };
 
 export default AddData;

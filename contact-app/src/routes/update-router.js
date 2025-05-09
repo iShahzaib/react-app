@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import UpdateData from '../components/update-contact';
+import UpdateData from '../components/update-data';
 import api from '../api/server';
 import UpdateUser from "../login/update-user";
 import { sentenceCase, showSuccess } from "../contexts/common";
