@@ -10,7 +10,7 @@ class UpdateUserClass extends React.Component {
     };
 
     componentDidMount() {
-        const { _id, username, email, profilepicture } = this.props.state.user;
+        const { _id, username, email, profilepicture } = this.props.state.data;
         this.setState({ _id, username, email, profilepicture });
     }
 
