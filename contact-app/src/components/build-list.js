@@ -89,7 +89,7 @@ const BuildList = React.memo(({ type }) => {
                     />
                     <i className="search icon"></i>
                 </div>
-                <button className="prompt refresh-button" onClick={retrieveData} style={{ padding: ".67857143em 0.76em" }}>
+                <button className="prompt refresh-button" onClick={retrieveData} style={{ padding: ".67857143em 0.76em", color: "#555555" }}>
                     <i className="refresh icon" style={{ margin: 0 }}></i>
                 </button>
             </div>
