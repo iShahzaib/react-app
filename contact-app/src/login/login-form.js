@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { showWarning } from "../contexts/common";
 
-const LoginForm = (props) => {
+const LoginForm = React.memo((props) => {
+    console.log('LoginForm', props);
     const [username, usernameChange] = useState("");
     const [password, passwordChange] = useState("");
 
@@ -54,6 +55,6 @@ const LoginForm = (props) => {
             </form>
         </div>
     )
-}
+});
 
 export default LoginForm;

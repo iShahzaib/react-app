@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import user from '../images/nouser.jpg';
 // import { useAuth } from "../contexts/AuthContext"; // adjust path
 
 // Header Component
 const Header = () => {
     // const { isLoggedIn } = useAuth();
-    const navigate = useNavigate();
     const location = useLocation();
     const isLoginPage = location.pathname === "/login";
 
@@ -19,7 +18,7 @@ const Header = () => {
     const handleLogout = () => {
         localStorage.clear();
         closeDropdown();
-        navigate('/');
+        window.location.href = '/';
     };
 
     const toggleDropdown = () => setDropdownOpen(prev => !prev);

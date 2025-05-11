@@ -1,13 +1,13 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import api from './api/server';
-import Header from './components/header';
+import Header, { Main } from './components/header';
 import { showError, showSuccess, showWarning } from './contexts/common';
-import AppRoutes from './routes/app-route';
+import NoauthRoutes from './routes/noauth-route';
 
-function App() {
+const App = () => {
   // const LOCAL_STORAGE_KEY = 'contacts';
   // const [contacts, setContacts] = useState(() => {
   //   const savedContacts = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -39,7 +39,9 @@ function App() {
         localStorage.setItem("tabItems", JSON.stringify(response.data));
 
         showSuccess(`Login successful!`);
-        navigate(`/welcome/${username}`);
+        setTimeout(() => {
+          window.location.href = `/welcome/${username}`;
+        }, 100);
       } else {
         showWarning(res.message || 'Invalid username or password.');
       }
@@ -75,13 +77,22 @@ function App() {
 
   return (
     <div className='ui container'>
-      <BrowserRouter>
+      <Router>
         <Header />
+
         <div className='extra-gap'></div>
-        <AppRoutes handleLogin={handleLogin} handleRegistration={handleRegistration} />
-      </BrowserRouter>
+
+        <Suspense fallback={<div>Loading...</div>}>
+
+          <Routes>
+            <Route path='/' element={<Main />} />
+            <Route path="*" element={<NoauthRoutes handleLogin={handleLogin} handleRegistration={handleRegistration} />} />
+          </Routes>
+
+        </Suspense>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;

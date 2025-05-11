@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { showWarning } from "../contexts/common";
 
-const RegistrationForm = (props) => {
+const RegistrationForm = React.memo((props) => {
     const [username, usernameChange] = useState("");
     const [password, passwordChange] = useState("");
     const [email, emailChange] = useState("");
@@ -55,6 +55,6 @@ const RegistrationForm = (props) => {
             </form>
         </div>
     )
-}
+});
 
 export default RegistrationForm;

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import UpdateData from '../components/update-data';
 import api from '../api/server';
-import UpdateUser from "../login/update-user";
+import UpdateUser from "../components/update-user";
 import { sentenceCase, showSuccess } from "../contexts/common";
 
 export default function UpdateRouter({ contacts, setContacts, users, setUsers }) {
