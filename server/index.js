@@ -34,6 +34,13 @@ const authenticateToken = (req, res, next) => {
 //     console.log('Hello world!');
 //     res.send('Hello from route.js!');
 // })
+
+// const insertDoc = async (data) => {
+//     const db = await getDBConnection('MSH_CONTACTAPP');
+//     db.collection('Schema').insertMany(data);
+// };
+// insertDoc();
+
 app.use('/api/noauth', noauthRouter);
 
 app.use('/api', authenticateToken, router);

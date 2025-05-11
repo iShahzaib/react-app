@@ -21,9 +21,28 @@ class UpdateDataClass extends React.Component {
         };
     }
 
+    redirectToPreviousPage = (data) => {
+        const { state, navigate } = this.props;
+
+        let url = '/contacts';
+        const navState = { type: state?.type, data };
+
+        if (state?.location) {
+            url = `/detail/${state.type}/${state.data._id}`;
+        } else if (state?.type) {
+            url = `/welcome/${state.username}`;
+        }
+
+        navigate(url, { state: navState });
+    };
+
     handleChange = (e) => {
         const { name, value } = e.target;
         this.setState({ [name]: value });
+    };
+
+    handleCancel = () => {
+        this.redirectToPreviousPage(this.updatedData || this.state);
     };
 
     update = (e) => {
@@ -36,25 +55,16 @@ class UpdateDataClass extends React.Component {
             }
         }
 
-        const { updateDataHandler, state, navigate } = this.props;
-        const updatedData = { ...state.data };
+        const { updateDataHandler, state } = this.props;
+        this.updatedData = { ...state.data };
 
         this.fields.forEach(f => {
-            updatedData[f.name] = this.state[f.name];
+            this.updatedData[f.name] = this.state[f.name];
         });
 
-        updateDataHandler(updatedData);
+        updateDataHandler(this.updatedData);
 
-        let url = '/contacts';
-        const navState = { type: state?.type, data: updatedData };
-
-        if (state?.location) {
-            url = `/detail/${state.type}/${state.data._id}`;
-        } else if (state?.type) {
-            url = `/welcome/${state.username}`;
-        }
-
-        navigate(url, { state: navState });
+        this.redirectToPreviousPage();
     };
 
     render() {
@@ -78,7 +88,8 @@ class UpdateDataClass extends React.Component {
                             />
                         </div>
                     ))}
-                    <button className="ui button blue">Update</button>
+                    <button className="ui button blue" type="submit">Update</button>
+                    <button className="ui button" type="button" onClick={this.handleCancel}>Cancel</button>
                 </form>
             </div>
         );

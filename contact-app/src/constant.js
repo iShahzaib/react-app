@@ -4,21 +4,29 @@
 //         "label": "User Detail",
 //         "className": "user",
 //         "link": null,
-//         "bgcolor": "#ddd"
+//         "bgcolor": "#ddd",
+//         "fields": [
+//             { "name": "username", "label": "User Name", "type": "text", "placeholder": "User Name", "required": true },
+//             { "name": "email", "label": "Email", "type": "email", "placeholder": "Email", "required": true, "disabled": true },
+//             { "name": "profilepicture", "label": "Profile Picture", "type": "text", "placeholder": "Link", "ispicture": true }
+//         ],
+//         "IsAccessible": true
 //     },
 //     {
 //         "key": "chats",
 //         "label": "Chats",
 //         "className": "chats",
 //         "link": "/users",
-//         "bgcolor": "#21ba45"
+//         "bgcolor": "#21ba45",
+//         "IsAccessible": true
 //     },
 //     {
 //         "key": "contact",
 //         "label": "Contacts",
 //         "className": "contact",
 //         "link": null,
-//         "bgcolor": "#74a9b1"
+//         "bgcolor": "#74a9b1",
+//         "IsAccessible": true
 //     },
 //     {
 //         "key": "student",
@@ -32,7 +40,8 @@
 //             { "name": "lastname", "label": "Last Name", "type": "text", "placeholder": "Last Name" },
 //             { "name": "email", "label": "Email", "type": "email", "placeholder": "Email", "required": true, "disabled": true },
 //             { "name": "profilepicture", "label": "Profile Picture", "type": "text", "placeholder": "Link", "ispicture": true }
-//         ]
+//         ],
+//         "IsAccessible": true
 //     },
 //     {
 //         "key": "employee",
@@ -44,7 +53,8 @@
 //             { "name": "employeeid", "label": "Employee ID", "type": "number", "placeholder": "Employee ID", "required": true, "disabled": true },
 //             { "name": "name", "label": "Name", "type": "text", "placeholder": "Name", "required": true },
 //             { "name": "email", "label": "Email", "type": "email", "placeholder": "Email", "required": true, "disabled": true }
-//         ]
+//         ],
+//         "IsAccessible": true
 //     }
 // ];
 

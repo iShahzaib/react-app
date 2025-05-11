@@ -20,9 +20,21 @@ class AddDataClass extends React.Component {
         this.fields = fields;
     }
 
+    redirectToPreviousPage = () => {
+        const { state, navigate } = this.props;
+        navigate(
+            `/${state.type ? `welcome/${state.username}` : 'contacts'}`,
+            { state: { type: state.type } }
+        );
+    };
+
     handleChange = (e) => {
         const { name, value } = e.target;
         this.setState({ [name]: value });
+    };
+
+    handleCancel = () => {
+        this.redirectToPreviousPage();
     };
 
     add = async (e) => {
@@ -43,10 +55,7 @@ class AddDataClass extends React.Component {
             this.fields.forEach(f => clearedState[f.name] = '');
             this.setState(clearedState);
 
-            this.props.navigate(
-                `/${this.props.state.type ? `welcome/${this.props.state.username}` : 'contacts'}`,
-                { state: { type: this.props.state.type } }
-            );
+            this.redirectToPreviousPage()
         }
     };
 
@@ -70,7 +79,8 @@ class AddDataClass extends React.Component {
                             />
                         </div>
                     ))}
-                    <button className="ui button blue">Add</button>
+                    <button className="ui button blue" type="submit">Add</button>
+                    <button className="ui button" type="button" onClick={this.handleCancel}>Cancel</button>
                 </form>
             </div>
         );
