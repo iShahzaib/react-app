@@ -6,10 +6,7 @@ import RegistrationForm from '../login/registration-form';
 
 const AuthRoutes = lazy(() => import('../routes/app-route'));  // Lazy load
 
-// const ProtectedRoute = ({ children }) => {
-//     const isAuthenticated = localStorage.getItem('token');
-//     return isAuthenticated ? children : <Navigate to="/login" />;
-// };
+// const ProtectedRoute = ({ children }) => localStorage.getItem('token') ? children : <Navigate to="/login" />;
 
 const NoauthRoutes = ({ handleLogin, handleRegistration }) => (
     <Routes>
@@ -20,11 +17,7 @@ const NoauthRoutes = ({ handleLogin, handleRegistration }) => (
             ? (<Route path="/*" element={<AuthRoutes />} />)
             : (<Route path="*" element={<Navigate to="/" replace />} />)    // Redirect all unmatched routes to home
         }
-        {/* <Route path='/welcome/:username' element={
-            <ProtectedRoute>
-                <Welcome />
-            </ProtectedRoute>
-        } /> */}
+        {/* <Route path='/welcome/:username' element={<ProtectedRoute> <Welcome /> </ProtectedRoute>} /> */}
     </Routes>
 );
 
