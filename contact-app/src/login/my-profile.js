@@ -3,12 +3,14 @@ import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import socketClient from '../api/socket';
 import { showWarning } from "../contexts/common";
+import { defaultFields, tabItems } from "../constant";
 
 const MyProfile = () => {
     const { state } = useLocation();
     const { username: authenticatedUser } = useParams();
-    const { _id, username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+    const data = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
+    const { _id, username, email, profilepicture } = data || {};
     const isAuthenticated = localStorage.getItem('isAuthenticated');
 
     useEffect(() => {
@@ -28,27 +30,38 @@ const MyProfile = () => {
         return <Navigate to="/login" replace />;  // <-- This will redirect without remount issues
     }
 
+    const tab = tabItems.find(tab => tab.key === 'user');
+    const fields = tab?.fields || defaultFields;
+
     return (
         <div className="ui main" style={{ padding: "1rem" }}>
-            <div className="tab-content">
-                <div className="ui centered card" style={{ width: "320px", margin: "0 auto", boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}>
-                    <div className="content">
-                        <Link
-                            to={`/update/user/${_id}`}
-                            state={{ data: { _id, username, email, profilepicture }, loggedInUsername: authenticatedUser, type: state?.type }}
-                            className="right floated"
-                        >
-                            <i className="edit alternate outline icon"></i>
-                            {/* onClick={() => props.updateUserHandler(_id)} */}
-                        </Link>
-                    </div>
-                    <div className="image" style={{ padding: "1rem", background: "#f9f9f9" }}>
-                        <img src={profilepicture || user} alt="user" style={{ borderRadius: "50%", width: "100px", height: "100px", margin: "0 auto", display: "block" }} />
-                    </div>
-                    <div className="content" style={{ textAlign: "center" }}>
-                        <h3 style={{ marginBottom: "0.5rem" }}>{username}</h3>
-                        <div className="description" style={{ color: "gray" }}>{email}</div>
-                    </div>
+            <div className="ui centered card" style={{ width: "320px", margin: "0 auto", boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}>
+                <div className="content">
+                    <Link
+                        to={`/update/user/${_id}`}
+                        state={{ data: { _id, username, email, profilepicture }, loggedInUsername: authenticatedUser, type: state?.type }}
+                        className="right floated"
+                    >
+                        <i className="edit alternate outline icon"></i>
+                        {/* onClick={() => props.updateUserHandler(_id)} */}
+                    </Link>
+                </div>
+                <div className="image" style={{ padding: "1rem", background: "#f9f9f9" }}>
+                    <img src={profilepicture || user} alt="user" style={{ borderRadius: "50%", width: "100px", height: "100px", margin: "0 auto", display: "block" }} />
+                </div>
+                <div className="content" style={{ textAlign: "center" }}>
+                    <h3 style={{ marginBottom: "0.5rem" }}>{username}</h3>
+                    <div className="description" style={{ color: "gray" }}>{email}</div>
+                </div>
+            </div>
+
+            <div className="ui segment" style={{ minHeight: "320px", overflowX: "auto" }}>
+                <div className="ui two column grid">
+                    {fields.map(field => (
+                        <div key={field.name} className="column" style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
+                            <strong>{field.label}:</strong> {data?.[field.name] || '—'}
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
