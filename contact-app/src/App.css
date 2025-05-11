@@ -109,6 +109,11 @@
   .responsive-button {
     flex-direction: column;
   }
+
+  .grid-table {
+    width: max-content !important;
+    min-width: 600px !important;
+  }
 }
 
 .extra-gap {
@@ -395,6 +400,26 @@
 }
 
 /* grid css starts */
+
+.grid-table-wrapper {
+  overflow-x: auto;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+
+.grid-table {
+  margin: 1em 0;
+  overflow-x: auto;
+  max-height: calc(-250px + 100vh);
+  min-width: 1000px;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ui.celled.list {
+  width: 100%;
+  table-layout: fixed; /* Optional for uniform column widths */
+}
 
 .grid-row-head {
   border-top: 3px solid rgba(34, 36, 38, 0.15) !important;

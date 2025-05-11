@@ -93,20 +93,24 @@ const BuildList = React.memo(({ type }) => {
                     <i className="refresh icon" style={{ margin: 0 }}></i>
                 </button>
             </div>
-            <div className="ui celled list" style={{ overflowX: "auto" }}>
-                <ListCardHead type={type} />
-                {filteredData.length > 0
-                    ? filteredData.map(c => (
-                        <ListCard
-                            key={c._id}
-                            data={c}
-                            type={type}
-                            loggedInUsername={loggedInUsername}
-                            deleteHandler={_id => deleteObject(_id)}
-                        />
-                    ))
-                    : 'No record found'
-                }
+            <div className="grid-table-wrapper">
+                <div className="grid-table">
+                    <div className="ui celled list">
+                        <ListCardHead type={type} />
+                        {filteredData.length > 0
+                            ? filteredData.map(c => (
+                                <ListCard
+                                    key={c._id}
+                                    data={c}
+                                    type={type}
+                                    loggedInUsername={loggedInUsername}
+                                    deleteHandler={_id => deleteObject(_id)}
+                                />
+                            ))
+                            : 'No record found'
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     );
