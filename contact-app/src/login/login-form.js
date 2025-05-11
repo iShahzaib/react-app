@@ -3,7 +3,6 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { showWarning } from "../contexts/common";
 
 const LoginForm = React.memo((props) => {
-    console.log('LoginForm', props);
     const [username, usernameChange] = useState("");
     const [password, passwordChange] = useState("");
 

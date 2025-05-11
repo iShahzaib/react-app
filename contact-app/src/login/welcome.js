@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
-import user from '../images/nouser.jpg';
 import socketClient from '../api/socket';
 import { showWarning } from "../contexts/common";
 import BuildList from "../components/build-list";
@@ -11,7 +10,7 @@ const Welcome = () => {
     const [activeTab, setActiveTab] = useState(() => state?.type || "user");
 
     const { username: authenticatedUser } = useParams();
-    const { _id, username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+    const { username } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const isAuthenticated = localStorage.getItem('isAuthenticated');
 
@@ -56,28 +55,7 @@ const Welcome = () => {
                 ))}
             </ul>
             <div className="tab-content">
-                {activeTab === "user"
-                    ? (<div className="ui centered card" style={{ width: "320px", margin: "0 auto", boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}>
-                        <div className="content">
-                            <Link
-                                to={`/update/user/${_id}`}
-                                state={{ data: { _id, username, email, profilepicture }, loggedInUsername: authenticatedUser, type: state?.type }}
-                                className="right floated"
-                            >
-                                <i className="edit alternate outline icon"></i>
-                                {/* onClick={() => props.updateUserHandler(_id)} */}
-                            </Link>
-                        </div>
-                        <div className="image" style={{ padding: "1rem", background: "#f9f9f9" }}>
-                            <img src={profilepicture || user} alt="user" style={{ borderRadius: "50%", width: "100px", height: "100px", margin: "0 auto", display: "block" }} />
-                        </div>
-                        <div className="content" style={{ textAlign: "center" }}>
-                            <h3 style={{ marginBottom: "0.5rem" }}>{username}</h3>
-                            <div className="description" style={{ color: "gray" }}>{email}</div>
-                        </div>
-                    </div>)
-                    : activeTab === "chats" ? <p>Chats content goes here.</p> : <BuildList type={activeTab} />
-                }
+                <BuildList type={activeTab} />
             </div>
         </div>
     );

@@ -7,6 +7,7 @@ import BuildList from '../components/build-list';
 // import DeletePopup from '../components/delete-popup';
 import UpdateRouter from './update-router';
 import ChatComponent from '../components/messaging/chat';
+import MyProfile from '../login/my-profile';
 
 const AuthRoutes = () => {
     const [contacts, setContacts] = useState([]);
@@ -14,6 +15,7 @@ const AuthRoutes = () => {
 
     return (
         <Routes>
+            <Route path='/myprofile/:username' element={<MyProfile />} />
             <Route path='/welcome/:username' element={<Welcome />} />
             <Route path='/users' element={<BuildList type='user' />} />
             <Route path="/chat" element={<ChatComponent />} />

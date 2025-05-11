@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import ListCard from "./list-card";
+import ListCard, { ListCardHead } from "./list-card";
 import { sentenceCase } from "../contexts/common";
 import api from "../api/server";
 
@@ -94,6 +94,7 @@ const BuildList = React.memo(({ type }) => {
                 </button>
             </div>
             <div className="ui celled list" style={{ overflowX: "auto" }}>
+                <ListCardHead type={type} />
                 {filteredData.length > 0
                     ? filteredData.map(c => (
                         <ListCard

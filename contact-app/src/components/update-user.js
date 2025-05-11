@@ -33,7 +33,7 @@ class UpdateUserClass extends React.Component {
         const { _id: loggedInUserID, username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
         if (_id === loggedInUserID) {
-            navigate(`/welcome/${loggedInUsername}`);
+            navigate(`/myprofile/${loggedInUsername}`);
         } else {
             navigate('/users');
         }

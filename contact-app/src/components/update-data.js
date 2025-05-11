@@ -42,7 +42,7 @@ class UpdateDataClass extends React.Component {
     };
 
     handleCancel = () => {
-        this.redirectToPreviousPage(this.updatedData || this.state);
+        this.redirectToPreviousPage(this.state);
     };
 
     update = (e) => {
@@ -64,7 +64,7 @@ class UpdateDataClass extends React.Component {
 
         updateDataHandler(this.updatedData);
 
-        this.redirectToPreviousPage();
+        this.redirectToPreviousPage(this.updatedData);
     };
 
     render() {

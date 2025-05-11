@@ -394,7 +394,18 @@
   display: inline-block;
 }
 
-/* chat css starts */
+/* grid css starts */
+
+.grid-row-head {
+  border-top: 3px solid rgba(34, 36, 38, 0.15) !important;
+  border-bottom: 3px solid rgba(34, 36, 38, 0.15) !important;
+}
+
+.grid-row-head .grid-row {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  align-items: center; /* Ensure vertical alignment */
+}
 
 .grid-row {
   display: flex;

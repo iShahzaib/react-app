@@ -45,7 +45,7 @@ const ListCard = (props) => {
 
                 {fields.filter(field => !field.ispicture).map(field => (
                     <div key={field.name} className="grid-cell">
-                        <strong>{field.label}:</strong> <span title={`${data[field.name] || ''}`}>{data[field.name] || '—'}</span>
+                        <span title={`${data[field.name] || ''}`}>{data[field.name] || '—'}</span>
                     </div>
                 ))}
 
@@ -73,6 +73,25 @@ const ListCard = (props) => {
                         onClick={handleDelete}
                     />
                 </div>
+            </div>
+        </Link>
+    );
+};
+
+export const ListCardHead = ({ type }) => {
+    const tab = tabItems.find(tab => tab.key === type);
+    const fields = tab?.fields || defaultFields;
+
+    return (
+        <Link className="item grid-row-head">
+            <div className="grid-row">
+                <div className="ui avatar image"></div>
+
+                {fields.filter(field => !field.ispicture).map(field => (
+                    <div key={field.name} className="grid-cell">
+                        <strong style={{ color: "#075DA8" }}>{field.label}</strong>
+                    </div>
+                ))}
             </div>
         </Link>
     );

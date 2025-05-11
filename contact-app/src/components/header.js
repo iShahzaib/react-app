@@ -75,11 +75,15 @@ const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
     return (
         <div className="dropdown-popup-header">
             <div className="dropdown-popup">
-                <div style={{ fontWeight: "600", fontSize: "1rem", color: "#333" }}>{username}</div>
-                <div style={{ fontSize: "0.875rem", color: "#666" }}>{email}</div>
+                <div style={{ fontWeight: "600", fontSize: "1.25rem", color: "#333" }}>{username}</div>
+                <div style={{ fontSize: "1rem", color: "#666" }}>{email}</div>
             </div>
             <div style={{ marginTop: "0.5rem" }}>
                 <Link to={`/welcome/${username}`} onClick={closeDropdown}>
+                    <i className="home icon"></i> Home
+                </Link>
+                <div style={{ marginTop: "0.5rem" }}></div>
+                <Link to={`/myprofile/${username}`} onClick={closeDropdown}>
                     <i className="user alternate outline icon"></i> My Profile
                 </Link>
                 <div style={{ marginTop: "0.5rem" }}></div>
