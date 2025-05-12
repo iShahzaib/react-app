@@ -120,6 +120,21 @@
   .grid-table {
     min-width: 600px !important;
   }
+
+  .ui.table:not(.unstackable) tbody,
+  .ui.table:not(.unstackable) tr,
+  .ui.table:not(.unstackable) tr > td,
+  .ui.table:not(.unstackable) tr > th {
+    display: revert !important;
+  }
+
+  .ui.table:not(.unstackable) thead {
+    display: revert !important;
+  }
+
+  .ui.table:not(.unstackable) tr > th {
+    background: #f9fafb !important;
+  }
 }
 
 .extra-gap {
