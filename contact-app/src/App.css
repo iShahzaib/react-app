@@ -443,7 +443,6 @@
 .grid-body {
   margin-top: 0 !important;
   overflow-y: auto;
-  overflow-x: hidden;
   max-height: calc(-250px + 100vh);
   -webkit-overflow-scrolling: touch;
 }

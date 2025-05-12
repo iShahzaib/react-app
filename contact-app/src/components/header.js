@@ -54,11 +54,11 @@ const Header = () => {
                         </div>
                     ) : isLoginPage ? (
                         <Link to='/register'>
-                            <button className="ui button inverted">Register</button>
+                            <button className="ui button inverted" style={{ marginBottom: "0" }}>Register</button>
                         </Link>
                     ) : (
                         <Link to="/login">
-                            <button className="ui button inverted">Sign In</button>
+                            <button className="ui button inverted" style={{ marginBottom: "0" }}>Sign In</button>
                         </Link>
                     )}
                 </div>
