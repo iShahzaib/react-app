@@ -95,8 +95,10 @@ const BuildList = React.memo(({ type }) => {
             </div>
             <div className="grid-table-wrapper">
                 <div className="grid-table">
-                    <div className="ui celled list">
+                    <div className="ui celled list grid-header">
                         <ListCardHead type={type} />
+                    </div>
+                    <div className="ui celled list grid-body">
                         {filteredData.length > 0
                             ? filteredData.map(c => (
                                 <ListCard

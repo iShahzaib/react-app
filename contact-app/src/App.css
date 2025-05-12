@@ -415,7 +415,6 @@
 
 .grid-table {
   margin: 1em 0;
-  max-height: calc(-250px + 100vh);
   min-width: 1000px;
   width: 100%;
   -webkit-overflow-scrolling: touch;
@@ -428,13 +427,24 @@
 
 .grid-row-head {
   border-top: 3px solid rgba(34, 36, 38, 0.15) !important;
-  border-bottom: 3px solid rgba(34, 36, 38, 0.15) !important;
+  border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
 }
 
 .grid-row-head .grid-row {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
   align-items: center; /* Ensure vertical alignment */
+}
+
+.grid-header {
+  margin-bottom: 0 !important;
+}
+
+.grid-body {
+  margin-top: 0 !important;
+  overflow-y: auto;
+  max-height: calc(-250px + 100vh);
+  -webkit-overflow-scrolling: touch;
 }
 
 .grid-row {
