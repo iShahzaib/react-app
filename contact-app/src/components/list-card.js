@@ -49,7 +49,7 @@ const ListCard = (props) => {
                     </div>
                 ))}
 
-                <div className="grid-row-action-buttons">
+                <div className="grid-cell grid-row-action-buttons">
                     {type !== 'user' && (
                         <i
                             className="edit blue alternate outline icon"
@@ -92,6 +92,10 @@ export const ListCardHead = ({ type }) => {
                         <strong style={{ color: "#075DA8" }}>{field.label}</strong>
                     </div>
                 ))}
+
+                <div className="grid-cell grid-row-action-buttons">
+                    <strong style={{ color: "#075DA8" }}>Action Buttons</strong>
+                </div>
             </div>
         </Link>
     );
