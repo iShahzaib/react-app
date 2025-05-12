@@ -82,7 +82,7 @@ const App = () => {
 
         <div className='extra-gap'></div>
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className='fallback-loader'>Loading...</div>}>
 
           <Routes>
             <Route path='/' element={<Main />} />
