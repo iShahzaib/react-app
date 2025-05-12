@@ -47,11 +47,18 @@ const ListCard = (props) => {
                 <img className="ui avatar image" src={profilepicture || user} alt="user" />
             </td>
 
-            {fields.filter(field => !field.ispicture).map(field => (
-                <td key={field.name}>
-                    <span title={data[field.name] || ''}>{data[field.name] || '—'}</span>
-                </td>
-            ))}
+            {fields.map(field => {
+                if (field.ispicture) return null;
+
+                const fieldValue = field.type === 'select'
+                    ? field.options.find(opt => opt.value === data?.[field.name])?.label
+                    : data?.[field.name];
+                return (
+                    <td key={field.name}>
+                        <span title={fieldValue || ''}>{fieldValue || '—'}</span>
+                    </td>
+                )
+            })}
 
             <td className="grid-row-action-buttons">
                 {type !== 'user' && (

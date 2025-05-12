@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { sentenceCase, showError, showSuccess, showWarning } from "../contexts/common";
+import { FieldCard, sentenceCase, showError, showSuccess, showWarning } from "../contexts/common";
 import { defaultFields, tabItems } from "../constant";
 import api from "../api/server";
 
@@ -69,14 +69,7 @@ class AddDataClass extends React.Component {
                     {this.fields.map(field => (
                         <div className="field" key={field.name}>
                             <label>{field.label}</label>
-                            <input
-                                type={field.type}
-                                name={field.name}
-                                required={field.required}
-                                placeholder={field.placeholder}
-                                value={this.state[field.name]}
-                                onChange={this.handleChange}
-                            />
+                            <FieldCard self={this} field={field} />
                         </div>
                     ))}
                     <button className="ui button blue" type="submit">Add</button>

@@ -53,3 +53,51 @@ export const confirmDelete = (detail = '', extraParam) => {
     }
     return Swal.fire(params);
 }
+
+export const FieldCard = ({ self, field }) => {
+    switch (field.type) {
+        case 'select':
+            return (
+                <select
+                    id={field.name}
+                    className="ui dropdown"
+                    name={field.name}
+                    required={field.required}
+                    value={self.state[field.name]}
+                    onChange={self.handleChange}
+                >
+                    <option value="" disabled>{field.placeholder || 'Select...'}</option>
+                    {field.options?.map(opt => (
+                        <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                        </option>
+                    ))}
+                </select>
+            );
+        case 'textarea':
+            return (
+                <textarea
+                    id={field.name}
+                    name={field.name}
+                    required={field.required}
+                    placeholder={field.placeholder}
+                    value={self.state[field.name]}
+                    onChange={self.handleChange}
+                    style={{ height: "8em" }}
+                />
+            );
+        default:
+            return (
+                <input
+                    id={field.name}
+                    type={field.type}
+                    name={field.name}
+                    required={field.required}
+                    placeholder={field.placeholder}
+                    value={self.state[field.name]}
+                    onChange={self.handleChange}
+                />
+            );
+    }
+};
+

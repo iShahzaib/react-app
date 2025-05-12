@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { showWarning } from "../contexts/common";
+import { FieldCard, showWarning } from "../contexts/common";
 import { defaultFields, tabItems } from "../constant";
 
 class UpdateDataClass extends React.Component {
@@ -77,15 +77,7 @@ class UpdateDataClass extends React.Component {
                     {this.fields.map(field => (
                         <div className="field" key={field.name}>
                             <label>{field.label}</label>
-                            <input
-                                type={field.type}
-                                name={field.name}
-                                placeholder={field.placeholder}
-                                required={field.required}
-                                disabled={field.disabled}
-                                value={this.state[field.name]}
-                                onChange={this.handleChange}
-                            />
+                            <FieldCard self={this} field={field} />
                         </div>
                     ))}
                     <button className="ui button blue" type="submit">Update</button>

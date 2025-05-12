@@ -47,11 +47,16 @@ const Detail = (props) => {
             {/* Information Section */}
             <div className="ui segment" style={{ minHeight: "450px", overflowX: "auto" }}>
                 <div className="ui two column grid">
-                    {fields.map(field => (
-                        <div key={field.name} className="column" style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
-                            <strong>{field.label}:</strong> {data?.[field.name] || '—'}
-                        </div>
-                    ))}
+                    {fields.map(field => {
+                        const fieldValue = field.type === 'select'
+                            ? field.options.find(opt => opt.value === data?.[field.name])?.label
+                            : data?.[field.name];
+                        return (
+                            <div key={field.name} className="column" style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
+                                <strong>{field.label}:</strong> {fieldValue || '—'}
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </div>

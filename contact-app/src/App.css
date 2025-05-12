@@ -126,6 +126,7 @@
   .ui.table:not(.unstackable) tr > td,
   .ui.table:not(.unstackable) tr > th {
     display: revert !important;
+    padding: 0.5em 0.75em !important;
   }
 
   .ui.table:not(.unstackable) thead {
@@ -427,7 +428,7 @@
   overflow-x: auto;
   max-width: 100%;
   max-height: calc(-250px + 100vh);
-  border-radius: 6px;
+  /* border-radius: 6px; */
   border-top: 2px solid rgba(34, 36, 38, 0.15);
   border-bottom: 2px solid rgba(34, 36, 38, 0.15);
   -webkit-overflow-scrolling: touch;

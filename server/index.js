@@ -41,12 +41,15 @@ const authenticateToken = (req, res, next) => {
 //     db.collection('Schema').updateOne({ key: 'student' }, {
 //         $addToSet: {
 //             fields: {
-//                 "name": "teacherid",
-//                 "label": "Teacher ID",
-//                 "type": "number",
-//                 "placeholder": "Teacher ID",
-//                 "required": true,
-//                 "disabled": true
+//                 "name": "studenttype",
+//                 "label": "Student Type",
+//                 "type": "select",
+//                 "placeholder": "Student Type",
+//                 "options": [
+//                     { "label": "Student", "value": "student" },
+//                     { "label": "Alumni", "value": "alumni" }
+//                 ],
+//                 "required": true
 //             }
 //         }
 //     });
