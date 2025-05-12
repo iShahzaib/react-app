@@ -38,7 +38,7 @@ const authenticateToken = (req, res, next) => {
 
 // const playDoc = async (data) => {
 //     const db = await getDBConnection('MSH_CONTACTAPP');
-//     db.collection('Schema').updateOne({ key: 'employee' }, {
+//     db.collection('Schema').updateOne({ key: 'student' }, {
 //         $addToSet: {
 //             fields: {
 //                 "name": "teacherid",
