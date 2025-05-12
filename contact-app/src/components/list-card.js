@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import { confirmDelete, showError, showSuccess } from "../contexts/common";
 import { defaultFields, tabItems } from "../constant";
@@ -39,42 +39,45 @@ const ListCard = (props) => {
     const fields = tab?.fields || defaultFields;
 
     return (
-        <Link to={linkPath} state={state} className="item">
-            <div className="grid-row">
+        <tr
+            style={{ cursor: 'pointer' }}
+            onDoubleClick={() => navigate(linkPath, { state })}
+        >
+            <td>
                 <img className="ui avatar image" src={profilepicture || user} alt="user" />
+            </td>
 
-                {fields.filter(field => !field.ispicture).map(field => (
-                    <div key={field.name} className="grid-cell">
-                        <span title={`${data[field.name] || ''}`}>{data[field.name] || '—'}</span>
-                    </div>
-                ))}
+            {fields.filter(field => !field.ispicture).map(field => (
+                <td key={field.name}>
+                    <span title={data[field.name] || ''}>{data[field.name] || '—'}</span>
+                </td>
+            ))}
 
-                <div className="grid-cell grid-row-action-buttons">
-                    {type !== 'user' && (
-                        <i
-                            className="edit blue alternate outline icon"
-                            title="Edit"
-                            style={{ cursor: "pointer", fontSize: "1.2rem" }}
-                            onClick={(e) => {
-                                e.preventDefault(); e.stopPropagation();
-                                navigate(`/update/${type}/${_id}`, { state: { ...state, loggedInUsername, type } });
-                            }}
-                        // onClick={() => props.updateDataHandler(_id)}
-                        />
-                    )}
+            <td className="grid-row-action-buttons">
+                {type !== 'user' && (
                     <i
-                        className="trash red alternate outline icon"
-                        title={type === 'user' && loggedInUsername === username ? `You can not delete your own ${type}.` : 'Delete'}
-                        style={{
-                            cursor: type === 'user' && loggedInUsername === username ? 'not-allowed' : 'pointer',
-                            opacity: type === 'user' && loggedInUsername === username ? 0.5 : 1,
-                            fontSize: "1.2rem"
+                        className="edit blue alternate outline icon"
+                        title="Edit"
+                        style={{ cursor: "pointer", fontSize: "1.2rem", marginRight: '0.5rem' }}
+                        onClick={(e) => {
+                            e.preventDefault(); e.stopPropagation();
+                            navigate(`/update/${type}/${_id}`, { state: { ...state, loggedInUsername, type } });
                         }}
-                        onClick={handleDelete}
+                    // onClick={() => props.updateDataHandler(_id)}
                     />
-                </div>
-            </div>
-        </Link>
+                )}
+                <i
+                    className="trash red alternate outline icon"
+                    title={type === 'user' && loggedInUsername === username ? `You cannot delete your own ${type}.` : 'Delete'}
+                    style={{
+                        cursor: type === 'user' && loggedInUsername === username ? 'not-allowed' : 'pointer',
+                        opacity: type === 'user' && loggedInUsername === username ? 0.5 : 1,
+                        fontSize: "1.2rem"
+                    }}
+                    onClick={handleDelete}
+                />
+            </td>
+        </tr>
     );
 };
 
@@ -83,21 +86,17 @@ export const ListCardHead = ({ type }) => {
     const fields = tab?.fields || defaultFields;
 
     return (
-        <Link className="item grid-row-head">
-            <div className="grid-row">
-                <div className="ui avatar image"></div>
-
+        <thead>
+            <tr>
+                <th></th> {/* For the avatar column */}
                 {fields.filter(field => !field.ispicture).map(field => (
-                    <div key={field.name} className="grid-cell">
-                        <strong style={{ color: "#075DA8" }}>{field.label}</strong>
-                    </div>
+                    <th key={field.name} style={{ color: "#075DA8" }}>
+                        {field.label}
+                    </th>
                 ))}
-
-                <div className="grid-cell grid-row-action-buttons">
-                    <strong style={{ color: "#075DA8" }}>Action Buttons</strong>
-                </div>
-            </div>
-        </Link>
+                <th className="grid-row-action-buttons" style={{ color: "#075DA8" }}>Action Buttons</th>
+            </tr>
+        </thead>
     );
 };
 

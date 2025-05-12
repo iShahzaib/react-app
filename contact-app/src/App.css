@@ -407,58 +407,66 @@
 
 /* grid css starts */
 
-.grid-table-wrapper {
+.table-wrapper {
+  margin: 1em 0;
   overflow-x: auto;
-  width: 100%;
+  max-width: 100%;
+  max-height: calc(-250px + 100vh);
+  border-radius: 6px;
+  border-top: 2px solid rgba(34, 36, 38, 0.15);
+  border-bottom: 2px solid rgba(34, 36, 38, 0.15);
   -webkit-overflow-scrolling: touch;
 }
 
-.grid-table {
-  margin: 1em 0;
-  min-width: max-content;
+.table-wrapper table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse !important;
+  border-spacing: 0;
 }
 
-.grid-row-head {
-  border-top: 3px solid rgba(34, 36, 38, 0.15) !important;
-  border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
-}
-
-.grid-row-head .grid-row {
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
-  align-items: center; /* Ensure vertical alignment */
-}
-
-.grid-header {
-  margin-bottom: 0 !important;
-}
-
-.grid-body {
-  margin-top: 0 !important;
-  overflow-y: auto;
-  max-height: calc(-250px + 100vh);
-}
-
-.grid-row {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  background: #fff;
-  gap: 10px;
-}
-
-.grid-cell {
-  flex: 0 0 150px;
+.table-wrapper thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #f9fafb;
+  color: #075da8;
+  text-align: left;
+  padding: 10px !important;
+  border: none !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.table-wrapper tbody td {
+  padding: 10px !important;
+  border: none !important;
+  background: #fff;
   color: #555555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-wrapper thead tr {
+  border-bottom: 2px solid rgba(34, 36, 38, 0.15);
+}
+
+.table-wrapper tbody tr {
+  border-top: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+.table-wrapper img.ui.avatar.image {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 
 .grid-row-action-buttons {
   /* margin-left: auto;
   display: flex;
   gap: 10px; */
-  text-align: right;
-  max-width: 100px;
+  text-align: right !important;
+  /* max-width: 100px; */
 }

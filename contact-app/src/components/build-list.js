@@ -93,12 +93,10 @@ const BuildList = React.memo(({ type }) => {
                     <i className="refresh icon" style={{ margin: 0 }}></i>
                 </button>
             </div>
-            <div className="grid-table-wrapper">
-                <div className="grid-table">
-                    <div className="ui celled list grid-header">
-                        <ListCardHead type={type} />
-                    </div>
-                    <div className="ui celled list grid-body">
+            <div className="table-wrapper">
+                <table className="ui celled table" style={{ border: "unset" }}>
+                    <ListCardHead type={type} />
+                    <tbody>
                         {filteredData.length > 0
                             ? filteredData.map(c => (
                                 <ListCard
@@ -109,10 +107,10 @@ const BuildList = React.memo(({ type }) => {
                                     deleteHandler={_id => deleteObject(_id)}
                                 />
                             ))
-                            : 'No record found'
+                            : (<tr><td colSpan="100%">No record found</td></tr>)
                         }
-                    </div>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
     );
