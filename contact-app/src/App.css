@@ -119,6 +119,7 @@
 
   .grid-table {
     min-width: 600px !important;
+    width: fit-content !important;
   }
 }
 
