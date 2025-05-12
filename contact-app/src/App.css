@@ -417,7 +417,7 @@
   margin: 1em 0;
   min-width: 1000px;
   width: 100%;
-  /* -webkit-overflow-scrolling: touch; */
+  -webkit-overflow-scrolling: touch;
 }
 
 .ui.celled.list {
@@ -443,8 +443,9 @@
 .grid-body {
   margin-top: 0 !important;
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: calc(-250px + 100vh);
-  /* -webkit-overflow-scrolling: touch; */
+  -webkit-overflow-scrolling: touch;
 }
 
 .grid-row {
