@@ -40,6 +40,8 @@
 //             { "name": "lastname", "label": "Last Name", "type": "text", "placeholder": "Last Name" },
 //             { "name": "email", "label": "Email", "type": "email", "placeholder": "Email", "required": true, "disabled": true },
 //             { "name": "profilepicture", "label": "Profile Picture", "type": "text", "placeholder": "Link", "ispicture": true }
+//             { "name": "studentid", "label": "Student ID", "type": "number", "placeholder": "Student ID", "required": true, "disabled": true },
+//             { "name": "teacherid", "label": "Teacher ID", "type": "number", "placeholder": "Teacher ID", "required": true, "disabled": true }
 //         ],
 //         "IsAccessible": true
 //     },

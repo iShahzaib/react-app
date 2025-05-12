@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import initializeSocket from './src/socket.js';
 import noauthRouter from './src/noauth.js';
 import router from './src/route.js';
+import getDBConnection from './src/database.js';
 
 const PORT = 9000;
 
@@ -35,11 +36,22 @@ const authenticateToken = (req, res, next) => {
 //     res.send('Hello from route.js!');
 // })
 
-// const insertDoc = async (data) => {
+// const playDoc = async (data) => {
 //     const db = await getDBConnection('MSH_CONTACTAPP');
-//     db.collection('Schema').insertMany(data);
+//     db.collection('Schema').updateOne({ key: 'employee' }, {
+//         $addToSet: {
+//             fields: {
+//                 "name": "teacherid",
+//                 "label": "Teacher ID",
+//                 "type": "number",
+//                 "placeholder": "Teacher ID",
+//                 "required": true,
+//                 "disabled": true
+//             }
+//         }
+//     });
 // };
-// insertDoc();
+// playDoc();
 
 app.use('/api/noauth', noauthRouter);
 
