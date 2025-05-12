@@ -89,12 +89,10 @@ export const ListCardHead = ({ type }) => {
         <thead>
             <tr>
                 <th></th> {/* For the avatar column */}
-                {fields.filter(field => !field.ispicture).map(field => (
-                    <th key={field.name} style={{ color: "#075DA8" }}>
-                        {field.label}
-                    </th>
-                ))}
-                <th className="grid-row-action-buttons" style={{ color: "#075DA8" }}>Action Buttons</th>
+                {
+                    fields.map(field => !field.ispicture && (<th key={field.name}>{field.label}</th>))
+                }
+                <th className="grid-row-action-buttons">Action Buttons</th>
             </tr>
         </thead>
     );

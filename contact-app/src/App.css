@@ -429,8 +429,7 @@
   position: sticky;
   top: 0;
   z-index: 2;
-  background-color: #f9fafb;
-  color: #075da8;
+  color: #075da8 !important;
   text-align: left;
   padding: 10px !important;
   border: none !important;
