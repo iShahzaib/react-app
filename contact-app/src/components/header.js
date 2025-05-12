@@ -54,15 +54,11 @@ const Header = () => {
                         </div>
                     ) : isLoginPage ? (
                         <Link to='/register'>
-                            <button className="ui button inverted" style={{ marginLeft: "1rem" }}>
-                                Register
-                            </button>
+                            <button className="ui button inverted">Register</button>
                         </Link>
                     ) : (
                         <Link to="/login">
-                            <button className="ui button inverted" style={{ marginLeft: "1rem" }}>
-                                Sign In
-                            </button>
+                            <button className="ui button inverted">Sign In</button>
                         </Link>
                     )}
                 </div>
@@ -86,7 +82,7 @@ const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
                 <Link to={`/myprofile/${username}`} onClick={closeDropdown}>
                     <i className="user alternate outline icon"></i> My Profile
                 </Link>
-                <div style={{ marginTop: "0.5rem" }}></div>
+                <div className="dropdown-popup"></div>
                 <Link to='/' onClick={onLogout}>
                     <i className="logout icon"></i> Sign Out
                 </Link>

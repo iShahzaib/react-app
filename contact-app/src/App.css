@@ -378,7 +378,7 @@
   top: 45px;
   right: 0;
   background-color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   white-space: nowrap;
@@ -403,13 +403,11 @@
 
 .grid-table-wrapper {
   overflow-x: auto;
-  border-bottom: 1px solid #ccc;
   width: 100%;
 }
 
 .grid-table {
   margin: 1em 0;
-  overflow-x: auto;
   max-height: calc(-250px + 100vh);
   min-width: 1000px;
   width: 100%;
