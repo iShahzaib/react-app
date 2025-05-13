@@ -90,11 +90,28 @@ const BuildList = React.memo(({ type }) => {
                         className="prompt"
                         value={searchTerm}
                         onChange={() => setSearchTerm(inputSearch.current.value)}
-                    // onChange={e => setSearchTerm(e.target.value)}
                     />
-                    <i className="search icon"></i>
+                    {searchTerm
+                        ? (<i
+                            className="close icon"
+                            style={{ cursor: 'pointer', pointerEvents: 'auto' }}
+                            onClick={() => {
+                                setSearchTerm('');
+                                inputSearch.current.value = '';
+                            }}
+                        />)
+                        : (<i className="search icon"></i>)
+                    }
                 </div>
-                <button className="prompt refresh-button" onClick={retrieveData} style={{ padding: ".67857143em 0.76em", color: "#00000080" }}>
+                <button
+                    className="prompt refresh-button"
+                    onClick={() => {
+                        setSearchTerm('');
+                        inputSearch.current.value = '';
+                        retrieveData();
+                    }}
+                    style={{ padding: ".67857143em 0.76em", color: "#00000080" }}
+                >
                     <i className="refresh icon" style={{ margin: 0 }}></i>
                 </button>
             </div>
