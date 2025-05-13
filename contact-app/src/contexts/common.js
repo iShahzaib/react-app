@@ -90,11 +90,12 @@ export const FieldCard = ({ self, field }) => {
                     id={field.name}
                     className="ui dropdown"
                     name={field.name}
+                    placeholder={field.placeholder}
                     required={field.required}
                     value={self.state[field.name]}
                     onChange={self.handleChange}
                 >
-                    <option value="" disabled>{field.placeholder || 'Select...'}</option>
+                    <option value=""></option>
                     {field.options?.map(opt => (
                         <option key={opt.value} value={opt.value}>
                             {opt.label}
