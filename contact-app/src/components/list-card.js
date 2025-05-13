@@ -5,7 +5,7 @@ import { confirmDelete, showError, showSuccess } from "../contexts/common";
 import { defaultFields, tabItems } from "../constant";
 
 const ListCard = (props) => {
-    const { data, type, loggedInUsername } = props;
+    const { data, type, loggedInUsername, isSelected, toggleSelectOne } = props;
     const { _id, username, email, profilepicture } = data;
     const navigate = useNavigate();
 
@@ -43,6 +43,16 @@ const ListCard = (props) => {
             style={{ cursor: 'pointer' }}
             onDoubleClick={() => navigate(linkPath, { state })}
         >
+            <td>
+                <div className="ui fitted checkbox">
+                    <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={toggleSelectOne}
+                    />
+                    <label></label>
+                </div>
+            </td>
             <td>
                 <img className="ui avatar image" src={profilepicture || user} alt="user" />
             </td>
@@ -88,13 +98,23 @@ const ListCard = (props) => {
     );
 };
 
-export const ListCardHead = ({ type }) => {
+export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
     const tab = tabItems.find(tab => tab.key === type);
     const fields = tab?.fields || defaultFields;
 
     return (
         <thead>
             <tr>
+                <th>
+                    <div className="ui fitted checkbox">
+                        <input
+                            type="checkbox"
+                            checked={isAllSelected}
+                            onChange={toggleSelectAll}
+                        />
+                        <label></label>
+                    </div>
+                </th>
                 <th></th>
                 {fields.map(field => !field.ispicture && <th key={field.name}>{field.label}</th>)}
                 <th className="grid-row-action-buttons">Action Buttons</th>

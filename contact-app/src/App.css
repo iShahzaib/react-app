@@ -473,6 +473,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 500px;
 }
 
 .table-wrapper thead tr {
@@ -495,4 +496,8 @@
   gap: 10px; */
   text-align: right !important;
   /* max-width: 100px; */
+}
+
+.ui.checkbox input:checked ~ label::after {
+    color: #075da8 !important;
 }
