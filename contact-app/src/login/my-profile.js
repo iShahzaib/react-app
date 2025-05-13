@@ -56,9 +56,9 @@ const MyProfile = () => {
             </div>
 
             <div className="ui segment" style={{ minHeight: "320px", overflowX: "auto" }}>
-                <div className="ui two column grid">
+                <div className="ui stackable grid">
                     {fields.map(field => (
-                        <div key={field.name} className="column" style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
+                        <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
                             <strong>{field.label}:</strong> {data?.[field.name] || '—'}
                         </div>
                     ))}

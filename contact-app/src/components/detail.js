@@ -46,13 +46,13 @@ const Detail = (props) => {
 
             {/* Information Section */}
             <div className="ui segment" style={{ minHeight: "450px", overflowX: "auto" }}>
-                <div className="ui two column grid">
+                <div className="ui stackable grid">
                     {fields.map(field => {
                         const fieldValue = field.type === 'select'
                             ? field.options.find(opt => opt.value === data?.[field.name])?.label
                             : data?.[field.name];
                         return (
-                            <div key={field.name} className="column" style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
+                            <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
                                 <strong>{field.label}:</strong> {fieldValue || '—'}
                             </div>
                         )
