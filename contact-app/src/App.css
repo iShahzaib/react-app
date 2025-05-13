@@ -117,6 +117,16 @@
     flex-direction: column;
   }
 
+  .responsive-form-button {
+    flex-wrap: nowrap !important;
+    padding: 1rem;
+  }
+
+  .responsive-button .button,
+  .responsive-form-button .button {
+    margin: 0;
+  }
+
   .grid-table {
     min-width: 600px !important;
   }
@@ -148,7 +158,8 @@
   flex-wrap: wrap;
 }
 
-.responsive-button {
+.responsive-button,
+.responsive-form-button {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;

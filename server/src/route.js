@@ -30,6 +30,7 @@ router.post('/adddocdata', async (req, res) => {
             return res.status(201).json({ message: 'Email already exists.' });
         }
 
+        data['createdAt'] = new Date();
         data['IsAccessible'] = true;
         const result = await db.collection(collection).insertOne(data);
 
@@ -49,6 +50,7 @@ router.post('/updatedocdata', async (req, res) => {
         const documentID = mongodb.ObjectId.createFromHexString(data._id);
         delete data._id;
 
+        data['updatedAt'] = new Date();
         const result = await db.collection(collection).updateOne({ _id: documentID }, { $set: data });
 
         res.status(201).json(result);

@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FieldCard, sentenceCase, showError, showSuccess, showWarning } from "../contexts/common";
+import { RenderForm, sentenceCase, showError, showSuccess, showWarning } from "../contexts/common";
 import { defaultFields, tabItems } from "../constant";
 import api from "../api/server";
 
@@ -37,7 +37,7 @@ class AddDataClass extends React.Component {
         this.redirectToPreviousPage();
     };
 
-    add = async (e) => {
+    handleSave = async (e) => {
         e.preventDefault();
 
         // Check for any empty required fields
@@ -61,21 +61,12 @@ class AddDataClass extends React.Component {
 
     render() {
         return (
-            <div className="ui main" style={{ padding: "1rem" }}>
-                <div className="responsive-header">
-                    <h2>Add {sentenceCase(this.props.state.type)}</h2>
-                </div>
-                <form className="ui form" style={{ marginTop: "0.5rem" }} onSubmit={this.add}>
-                    {this.fields.map(field => (
-                        <div className="field" key={field.name}>
-                            <label>{field.label}</label>
-                            <FieldCard self={this} field={field} />
-                        </div>
-                    ))}
-                    <button className="ui button blue" type="submit">Add</button>
-                    <button className="ui button" type="button" onClick={this.handleCancel}>Cancel</button>
-                </form>
-            </div>
+            <RenderForm
+                title={`Add ${sentenceCase(this.props.state.type)}`}
+                fields={this.fields}
+                buttonLabel="Add"
+                self={this}
+            />
         );
     }
 }

@@ -18,7 +18,12 @@ const BuildList = React.memo(({ type }) => {
             const response = await api.get(`/api/getdocdata?collection=${sentenceCase(type)}`);
 
             const getData = response.data || [];
-            setListData(getData);
+            const sortedData = getData.sort((a, b) =>
+                new Date(b.createdAt || parseInt(b._id.toString().substring(0, 8), 16) * 1000) -
+                new Date(a.createdAt || parseInt(a._id.toString().substring(0, 8), 16) * 1000)
+            );
+
+            setListData(sortedData);
 
         } catch (err) {
             console.error("Error fetching data:", err);

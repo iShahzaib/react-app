@@ -54,6 +54,34 @@ export const confirmDelete = (detail = '', extraParam) => {
     return Swal.fire(params);
 }
 
+export const RenderForm = ({ title, onSubmit, fields, buttonLabel, self }) => {
+    return (
+        <div className="ui main" style={{ padding: "1rem" }}>
+            <div className="responsive-header">
+                <h2>{title}</h2>
+            </div>
+
+            <form className="ui form" style={{ marginTop: "0.5rem" }} onSubmit={self.handleSave}>
+                <div className="ui stackable grid">
+                    {fields.map(field => (
+                        <div className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} key={field.name}>
+                            <div className="field">
+                                <label>{field.label}</label>
+                                <FieldCard self={self} field={field} />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="responsive-form-button" style={{ marginTop: "1rem" }}>
+                    <button className="ui button blue" type="submit">{buttonLabel}</button>
+                    <button className="ui button" type="button" onClick={self.handleCancel}>Cancel</button>
+                </div>
+            </form>
+        </div>
+    );
+};
+
 export const FieldCard = ({ self, field }) => {
     switch (field.type) {
         case 'select':
@@ -100,4 +128,3 @@ export const FieldCard = ({ self, field }) => {
             );
     }
 };
-
