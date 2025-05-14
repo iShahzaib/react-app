@@ -47,7 +47,7 @@ const MyProfile = () => {
                     </Link>
                 </div>
                 <div className="image" style={{ padding: "1rem", background: "#f9f9f9" }}>
-                    <img src={profilepicture || user} alt="user" style={{ borderRadius: "50%", width: "100px", height: "100px", margin: "0 auto", display: "block" }} />
+                    <img src={profilepicture || user} alt="user" className="image-logo" style={{ width: "100px", height: "100px" }} />
                 </div>
                 <div className="content" style={{ textAlign: "center" }}>
                     <h3 style={{ marginBottom: "0.5rem" }}>{username}</h3>

@@ -418,6 +418,13 @@
   object-fit: cover;
 }
 
+.image-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50% !important;
+  margin: 0 auto;
+}
+
 .dropdown-popup-header {
   position: absolute;
   top: 45px;

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import user from '../images/nouser.jpg';
+import logo from '../images/logo.png';
 // import { useAuth } from "../contexts/AuthContext"; // adjust path
 
 // Header Component
@@ -61,7 +62,8 @@ const Header = () => {
                         onClick={toggleSidebar}
                     />
                 )}
-                <h2 className="child-header">Contact Manager</h2>
+                <img src={logo} alt="user" className="image-logo" />
+                <h2 className="child-header" style={{ marginLeft: "0.5rem" }}>MySH Manager</h2>
                 <div style={{ flexShrink: 0, display: "flex", alignItems: "center", position: "relative" }}>
                     {isLoggedIn ? (
                         <div
@@ -156,8 +158,8 @@ const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
 export const Main = () => {
     return (
         <div className="main-page">
-            <h1 style={{ fontSize: "4rem", marginBottom: "1rem" }}>Welcome to Contact Manager</h1>
-            <p style={{ fontSize: "1.5rem" }}>Manage your contacts efficiently and securely</p>
+            <h1 style={{ fontSize: "4rem", marginBottom: "1rem" }}>Welcome to MySH Manager</h1>
+            <p style={{ fontSize: "1.5rem" }}>Manage Everything. The MySH Way. Your Smart Business Hub.</p>
             <Link to="/login">
                 <button className="ui massive inverted white button" style={{ marginTop: "2rem" }}>
                     Get Started
