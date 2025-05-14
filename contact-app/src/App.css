@@ -521,38 +521,53 @@
 /* Header.css */
 
 .custom-sidebar {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100vh;
-    background-color: #075da8;
-    color: white;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    transition: left 0.3s ease;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100vh;
+  background-color: #075da8;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: left 0.3s ease;
+  z-index: 1000;
 }
 
 .custom-sidebar.show {
-    left: 0;
+  left: 0;
 }
 
-.custom-sidebar a,
-.custom-sidebar div {
-    color: white;
-    margin: 1rem 0;
-    text-decoration: none;
-    cursor: pointer;
-    font-size: 1.2rem;
+.custom-sidebar a {
+  color: white;
+  margin: 1rem 0;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.sidebar-divider {
+  margin: 1em -0.5em 0.5em -0.5em;
+  border-bottom: 1px solid #eee;
+}
+
+.sidebar-header-text {
+  font-size: 1.25rem;
+  margin-left: 1rem;
+  max-width: 70%;
+}
+
+.sidebar-menu {
+  display: grid;
+  padding: 0.5rem 1rem;
 }
 
 .close-btn {
-    font-size: 1.5rem !important;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    text-align: right;
-    margin: 0px -3px !important;
-    margin-left: auto !important;
+  font-size: 1.5rem !important;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  text-align: right;
+  margin: 0px -3px !important;
+  margin-left: auto !important;
 }

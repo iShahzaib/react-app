@@ -44,9 +44,7 @@ const Header = () => {
     return (
         <div className="ui fixed menu main-header">
             <SideBar
-                username={username}
                 sidebarVisible={sidebarVisible}
-                onLogout={handleLogout}
                 closeSidebar={closeSidebar}
             />
 
@@ -84,20 +82,43 @@ const Header = () => {
     );
 };
 
-const SideBar = ({ username, sidebarVisible, onLogout, closeSidebar }) => {
+const SideBar = ({ sidebarVisible, closeSidebar }) => {
+    const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+    const isLoggedIn = !!username;
+
+    if (!isLoggedIn) return null;
+
     return (
         <div className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
             <i className="close icon close-btn" onClick={closeSidebar} />
-
-            <Link to={`/welcome/${username}`} onClick={closeSidebar}>
-                <i className="home icon"></i> Home
-            </Link>
-            <Link to={`/myprofile/${username}`} onClick={closeSidebar}>
-                <i className="user alternate outline icon"></i> My Profile
-            </Link>
-            <Link to='/' onClick={onLogout}>
-                <i className="logout icon"></i> Sign Out
-            </Link>
+            <div className="sidebar-header">
+                <div style={{ display: "flex" }}>
+                    <img src={profilepicture || user} alt="User" className="user-profile" />
+                    <div className="sidebar-header-text">
+                        <div style={{ fontWeight: "600", fontSize: "1.25rem" }}>{username}</div>
+                        <div style={{ fontSize: "1rem" }}>{email}</div>
+                    </div>
+                </div>
+            </div>
+            <div className="sidebar-divider"></div>
+            <div className="sidebar-menu">
+                <Link to={`/welcome/${username}`} onClick={closeSidebar}>
+                    <i className="home icon"></i>
+                    <span style={{ marginLeft: "0.5rem" }}>Home</span>
+                </Link>
+                <Link to={`/contacts`} onClick={closeSidebar}>
+                    <i className="address book icon"></i>
+                    <span style={{ marginLeft: "0.5rem" }}>Contacts</span>
+                </Link>
+                <Link to={`/users`} onClick={closeSidebar}>
+                    <i className="users icon"></i>
+                    <span style={{ marginLeft: "0.5rem" }}>Users</span>
+                </Link>
+                <Link to={`/groups`} onClick={closeSidebar}>
+                    <i className="users icon"></i>
+                    <span style={{ marginLeft: "0.5rem" }}>Groups</span>
+                </Link>
+            </div>
         </div>
     )
 };
