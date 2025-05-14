@@ -54,7 +54,7 @@ export const confirmDelete = (detail = '', extraParam) => {
     return Swal.fire(params);
 }
 
-export const RenderForm = ({ title, onSubmit, fields, buttonLabel, self }) => {
+export const RenderForm = ({ title, fields, buttonLabel, self }) => {
     return (
         <div className="ui main">
             <div className="responsive-header">

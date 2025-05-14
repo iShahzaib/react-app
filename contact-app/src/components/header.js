@@ -13,6 +13,7 @@ const Header = () => {
 
     const isLoggedIn = !!username;
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [sidebarVisible, setSidebarVisible] = useState(false);
     const dropdownRef = useRef(null);
 
     const handleLogout = () => {
@@ -21,6 +22,8 @@ const Header = () => {
         window.location.href = '/';
     };
 
+    const toggleSidebar = () => setSidebarVisible(prev => !prev);
+    const closeSidebar = () => setSidebarVisible(false);
     const toggleDropdown = () => setDropdownOpen(prev => !prev);
     const closeDropdown = () => setDropdownOpen(false);
 
@@ -38,19 +41,23 @@ const Header = () => {
         };
     }, []);
 
-    // const [sidebarVisible, setSidebarVisible] = useState(false);
-    // const toggleSidebar = () => {
-    //     setSidebarVisible(prev => !prev);
-    // };
-    // <i
-    //     className="bars icon big blue"
-    //     style={{ cursor: 'pointer', marginRight: '1rem' }}
-    //     onClick={toggleSidebar}
-    // />
-
     return (
         <div className="ui fixed menu main-header">
+            <SideBar
+                username={username}
+                sidebarVisible={sidebarVisible}
+                onLogout={handleLogout}
+                closeSidebar={closeSidebar}
+            />
+
             <div className="center-header">
+                {isLoggedIn && (
+                    <i
+                        className="bars icon big"
+                        style={{ cursor: 'pointer', marginRight: '1rem', color: "white" }}
+                        onClick={toggleSidebar}
+                    />
+                )}
                 <h2 className="child-header">Contact Manager</h2>
                 <div style={{ flexShrink: 0, display: "flex", alignItems: "center", position: "relative" }}>
                     {isLoggedIn ? (
@@ -75,6 +82,24 @@ const Header = () => {
             </div>
         </div>
     );
+};
+
+const SideBar = ({ username, sidebarVisible, onLogout, closeSidebar }) => {
+    return (
+        <div className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
+            <i className="close icon close-btn" onClick={closeSidebar} />
+
+            <Link to={`/welcome/${username}`} onClick={closeSidebar}>
+                <i className="home icon"></i> Home
+            </Link>
+            <Link to={`/myprofile/${username}`} onClick={closeSidebar}>
+                <i className="user alternate outline icon"></i> My Profile
+            </Link>
+            <Link to='/' onClick={onLogout}>
+                <i className="logout icon"></i> Sign Out
+            </Link>
+        </div>
+    )
 };
 
 const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
