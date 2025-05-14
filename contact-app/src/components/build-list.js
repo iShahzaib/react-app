@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import ListCard, { ListCardHead } from "./list-card";
 import { confirmDelete, sentenceCase, showSuccess, showWarning } from "../contexts/common";
 import api from "../api/server";
+import { tabItems } from "../constant";
 
 const BuildList = React.memo(({ type }) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -163,6 +164,7 @@ const SearchBar = (props) => {
     const { type, searchTerm, setSearchTerm, selectedIds, setSelectedIds, retrieveData, deleteObjects } = props;
 
     const inputSearch = useRef('');
+    const tab = tabItems.find(tab => tab.key === type);
 
     const handleRefresh = () => {
         setSelectedIds([]);
@@ -219,13 +221,13 @@ const SearchBar = (props) => {
                 <i className="refresh icon" style={{ margin: 0 }}></i>
             </button>
 
-            <button
+            {!tab?.IsShowActionButtons && (<button
                 className="prompt delete-button"
                 onClick={handleBulkDelete}
                 style={{ padding: ".67857143em 0.76em", color: "#00000080" }}
             >
                 <i className="trash icon red" style={{ margin: 0 }}></i>
-            </button>
+            </button>)}
         </div>
     )
 };
