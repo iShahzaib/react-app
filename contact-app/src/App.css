@@ -81,7 +81,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .responsive-header {
     align-items: stretch;
   }
@@ -145,6 +145,10 @@
 
   .ui.table:not(.unstackable) tr > th {
     background: #f9fafb !important;
+  }
+
+  .table-wrapper tbody td {
+    max-width: 300px !important;
   }
 }
 
@@ -499,5 +503,5 @@
 }
 
 .ui.checkbox input:checked ~ label::after {
-    color: #075da8 !important;
+  color: #075da8 !important;
 }
