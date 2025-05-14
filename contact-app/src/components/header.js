@@ -38,6 +38,16 @@ const Header = () => {
         };
     }, []);
 
+    // const [sidebarVisible, setSidebarVisible] = useState(false);
+    // const toggleSidebar = () => {
+    //     setSidebarVisible(prev => !prev);
+    // };
+    // <i
+    //     className="bars icon big blue"
+    //     style={{ cursor: 'pointer', marginRight: '1rem' }}
+    //     onClick={toggleSidebar}
+    // />
+
     return (
         <div className="ui fixed menu main-header">
             <div className="center-header">
