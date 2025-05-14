@@ -115,7 +115,7 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
                         <label></label>
                     </div>
                 </th>
-                <th></th>
+                <th>IMG</th>
                 {fields.map(field => !field.ispicture && <th key={field.name}>{field.label}</th>)}
                 {tab?.IsShowActionButtons && <th className="grid-row-action-buttons">Action Buttons</th>}
             </tr>
