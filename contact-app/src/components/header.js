@@ -15,6 +15,7 @@ const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const dropdownRef = useRef(null);
+    const sidebarRef = useRef(null);
 
     const handleLogout = () => {
         localStorage.clear();
@@ -33,6 +34,9 @@ const Header = () => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setDropdownOpen(false);
             }
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+                setSidebarVisible(false);
+            }
         };
 
         document.addEventListener("mousedown", handleClickOutside);
@@ -44,6 +48,7 @@ const Header = () => {
     return (
         <div className="ui fixed menu main-header">
             <SideBar
+                ref={sidebarRef}
                 sidebarVisible={sidebarVisible}
                 closeSidebar={closeSidebar}
             />
@@ -82,14 +87,14 @@ const Header = () => {
     );
 };
 
-const SideBar = ({ sidebarVisible, closeSidebar }) => {
+const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar }, sidebarRef) => {
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
     const isLoggedIn = !!username;
 
     if (!isLoggedIn) return null;
 
     return (
-        <div className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
+        <div ref={sidebarRef} className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
             <i className="close icon close-btn" onClick={closeSidebar} />
             <div className="sidebar-header">
                 <div style={{ display: "flex" }}>
@@ -121,7 +126,7 @@ const SideBar = ({ sidebarVisible, closeSidebar }) => {
             </div>
         </div>
     )
-};
+});
 
 const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
     return (
