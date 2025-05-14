@@ -17,7 +17,7 @@ const Detail = (props) => {
     const backPath = type !== 'contact' ? `/welcome/${loggedInUsername}` : `/contacts`;
 
     return (
-        <div className="ui main" style={{ padding: "1rem" }}>
+        <div className="ui main">
             <div className="responsive-header">
                 {/* Image Card */}
                 <div className="ui card" style={{ padding: '1rem', width: "100%", backgroundColor: "#f3f7ff" }}>

@@ -32,7 +32,7 @@ const LoginForm = React.memo((props) => {
     }
 
     return (
-        <div className="ui main" style={{ padding: "1rem" }}>
+        <div className="ui main">
             <div className="responsive-header">
                 <h2>Login</h2>
             </div>

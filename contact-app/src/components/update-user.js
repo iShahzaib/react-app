@@ -40,7 +40,7 @@ class UpdateUserClass extends React.Component {
     };
     render() {
         return (
-            <div className="ui main" style={{ padding: "1rem" }}>
+            <div className="ui main">
                 <div className="responsive-header">
                     <h2>Edit {this.state.username}</h2>
                 </div>

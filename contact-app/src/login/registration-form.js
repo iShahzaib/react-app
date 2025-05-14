@@ -25,7 +25,7 @@ const RegistrationForm = React.memo((props) => {
         if (response === 'success') navigate('/login');
     }
     return (
-        <div className="ui main" style={{ padding: "1rem" }}>
+        <div className="ui main">
             <div className="responsive-header">
                 <h2>Registration</h2>
             </div>

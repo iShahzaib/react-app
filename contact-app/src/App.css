@@ -37,6 +37,10 @@
   min-height: 68.8px !important;
 }
 
+.ui.main {
+  padding: 1rem 0.5rem;
+}
+
 .center-header {
   max-width: 1200px;
   margin: 0 auto;

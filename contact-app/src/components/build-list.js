@@ -75,7 +75,7 @@ const BuildList = React.memo(({ type }) => {
     };
 
     return (
-        <div className="ui main" style={{ padding: "1rem" }}>
+        <div className="ui main">
             <HeaderNav
                 type={type}
                 filteredData={filteredData}
