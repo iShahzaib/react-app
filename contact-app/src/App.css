@@ -469,6 +469,10 @@
   white-space: nowrap;
 }
 
+.table-wrapper thead .image-header {
+  color: transparent !important;
+}
+
 .table-wrapper tbody td {
   padding: 10px !important;
   border: none !important;
