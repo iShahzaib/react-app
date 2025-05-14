@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import ListCard, { ListCardHead } from "./list-card";
-import { sentenceCase } from "../contexts/common";
+import { confirmDelete, sentenceCase, showSuccess, showWarning } from "../contexts/common";
 import api from "../api/server";
 
 const BuildList = React.memo(({ type }) => {
@@ -51,12 +51,12 @@ const BuildList = React.memo(({ type }) => {
         || data.email?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const deleteObject = async (_id) => {
-        setListData(listData.filter(c => c._id !== _id));
+    const deleteObjects = async (_ids) => {
+        setListData(prev => prev.filter(item => !_ids.includes(item._id)));
         try {
-            await api.post(`/api/deletedocdata`, { data: { _id }, collection: sentenceCase(type) });
+            await api.post(`/api/deletedocdata`, { data: { _ids }, collection: sentenceCase(type) });
         } catch (err) {
-            console.error("Error deleting object:", err);
+            console.error("Error deleting objects:", err);
         }
     };
 
@@ -87,36 +87,54 @@ const BuildList = React.memo(({ type }) => {
                 selectedIds={selectedIds}
                 setSelectedIds={setSelectedIds}
                 retrieveData={retrieveData}
+                deleteObjects={deleteObjects}
             />
-            <div className="table-wrapper">
-                <table className="ui celled table" style={{ border: "unset" }}>
-                    <ListCardHead
-                        type={type}
-                        isAllSelected={isAllSelected}
-                        toggleSelectAll={toggleSelectAll}
-                    />
-                    <tbody>
-                        {filteredData.length > 0
-                            ? filteredData.map(c => (
-                                <ListCard
-                                    key={c._id}
-                                    data={c}
-                                    type={type}
-                                    loggedInUsername={loggedInUsername}
-                                    isSelected={selectedIds.includes(c._id)}
-                                    toggleSelectOne={() => toggleSelectOne(c._id)}
-                                    deleteHandler={deleteObject}
-                                />
-
-                            ))
-                            : (<tr><td colSpan="100%" style={{ textAlign: "center" }}>No record found</td></tr>)
-                        }
-                    </tbody>
-                </table>
-            </div>
+            <GridTable
+                type={type}
+                filteredData={filteredData}
+                loggedInUsername={loggedInUsername}
+                deleteObjects={deleteObjects}
+                isAllSelected={isAllSelected}
+                toggleSelectAll={toggleSelectAll}
+                toggleSelectOne={toggleSelectOne}
+                selectedIds={selectedIds}
+            />
         </div >
     );
 });
+
+const GridTable = (props) => {
+    const { type, filteredData, loggedInUsername, deleteObjects, isAllSelected, toggleSelectAll, toggleSelectOne, selectedIds } = props;
+
+    return (
+        <div className="table-wrapper">
+            <table className="ui celled table" style={{ border: "unset" }}>
+                <ListCardHead
+                    type={type}
+                    isAllSelected={isAllSelected}
+                    toggleSelectAll={toggleSelectAll}
+                />
+                <tbody>
+                    {filteredData.length > 0
+                        ? filteredData.map(c => (
+                            <ListCard
+                                key={c._id}
+                                data={c}
+                                type={type}
+                                loggedInUsername={loggedInUsername}
+                                isSelected={selectedIds.includes(c._id)}
+                                toggleSelectOne={() => toggleSelectOne(c._id)}
+                                deleteHandler={deleteObjects}
+                            />
+
+                        ))
+                        : (<tr><td colSpan="100%" style={{ textAlign: "center" }}>No record found</td></tr>)
+                    }
+                </tbody>
+            </table>
+        </div>
+    )
+};
 
 const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
     return (
@@ -142,7 +160,7 @@ const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
 };
 
 const SearchBar = (props) => {
-    const { type, searchTerm, setSearchTerm, selectedIds, setSelectedIds, retrieveData } = props;
+    const { type, searchTerm, setSearchTerm, selectedIds, setSelectedIds, retrieveData, deleteObjects } = props;
 
     const inputSearch = useRef('');
 
@@ -154,7 +172,19 @@ const SearchBar = (props) => {
     }
 
     const handleBulkDelete = () => {
-        console.log("Bulk delete:", selectedIds);
+        if (selectedIds.length > 0) {
+            confirmDelete(`Do you want to delete selected items?`).then((result) => {
+                if (result.isConfirmed) {
+                    deleteObjects(selectedIds);
+
+                    showSuccess(`${sentenceCase(type)}s have been deleted successfully.`, 'Deleted!');
+
+                    setSelectedIds([]);
+                }
+            });
+        } else {
+            showWarning('No records selected for deletion!');
+        }
     };
 
     return (

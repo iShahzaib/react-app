@@ -20,7 +20,7 @@ const ListCard = (props) => {
 
         confirmDelete(`Do you want to delete this ${type}?`).then((result) => {
             if (result.isConfirmed) {
-                props.deleteHandler(_id);
+                props.deleteHandler([_id]);
 
                 showSuccess(`The ${type} has been deleted successfully.`, 'Deleted!');
                 navigate(
@@ -70,7 +70,7 @@ const ListCard = (props) => {
                 )
             })}
 
-            <td className="grid-row-action-buttons">
+            {tab?.IsShowActionButtons && <td className="grid-row-action-buttons">
                 {type !== 'user' && (
                     <i
                         className="edit blue alternate outline icon"
@@ -93,7 +93,7 @@ const ListCard = (props) => {
                     }}
                     onClick={handleDelete}
                 />
-            </td>
+            </td>}
         </tr>
     );
 };
@@ -117,7 +117,7 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
                 </th>
                 <th></th>
                 {fields.map(field => !field.ispicture && <th key={field.name}>{field.label}</th>)}
-                <th className="grid-row-action-buttons">Action Buttons</th>
+                {tab?.IsShowActionButtons && <th className="grid-row-action-buttons">Action Buttons</th>}
             </tr>
         </thead>
     );

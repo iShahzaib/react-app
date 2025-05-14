@@ -66,9 +66,9 @@ router.post('/deletedocdata', async (req, res) => {
 
         const db = await getDBConnection('MSH_CONTACTAPP');
 
-        const documentID = mongodb.ObjectId.createFromHexString(data._id);
+        const documentIDs = data._ids.map(id => mongodb.ObjectId.createFromHexString(id));
 
-        const result = await db.collection(collection).updateOne({ _id: documentID }, { $set: { IsAccessible: false } });
+        const result = await db.collection(collection).updateMany({ _id: { $in: documentIDs } }, { $set: { IsAccessible: false, 'deletedAt': new Date() } });
 
         res.status(201).json(result);
     } catch (err) {
