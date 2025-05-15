@@ -523,6 +523,12 @@
   border-radius: 50%;
 }
 
+.ui.table tbody tr {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
 .grid-row-action-buttons {
   /* margin-left: auto;
   display: flex;
