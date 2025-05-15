@@ -158,10 +158,6 @@
   .table-wrapper tbody td {
     max-width: 300px !important;
   }
-
-  .sidebar-menu {
-    max-height: calc(-215px + 100vh) !important;
-  }
 }
 
 .extra-gap {
@@ -554,6 +550,7 @@
   flex-direction: column;
   transition: left 0.3s ease;
   z-index: 1000;
+  overflow-y: auto;
 }
 
 .custom-sidebar.show {
