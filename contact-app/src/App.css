@@ -140,7 +140,7 @@
   .ui.table:not(.unstackable) tr > td,
   .ui.table:not(.unstackable) tr > th {
     display: revert !important;
-    padding: 0.5em 0.75em !important;
+    padding: 0.25em 0.75em !important;
   }
 
   .ui.table:not(.unstackable) tr {
@@ -477,7 +477,7 @@
   z-index: 2;
   color: #075da8 !important;
   text-align: left;
-  padding: 10px !important;
+  padding: 5px 10px !important;
   border: none !important;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -489,7 +489,7 @@
 }
 
 .table-wrapper tbody td {
-  padding: 10px !important;
+  padding: 5px 10px !important;
   border: none !important;
   background: #fff;
   color: #555555;
@@ -499,12 +499,22 @@
   max-width: 500px;
 }
 
+.table-wrapper tbody tr:hover td {
+  background: #f9f9f9 !important;
+  /* background-color: #f9fafb; */
+}
+
+.table-wrapper tbody tr.selected td {
+  background: #0069bd12;
+}
+
 .table-wrapper thead tr {
   border-bottom: 2px solid rgba(34, 36, 38, 0.15);
 }
 
 .table-wrapper tbody tr {
   border-top: 1px solid rgba(34, 36, 38, 0.15);
+  cursor: pointer;
 }
 
 .table-wrapper img.ui.avatar.image {

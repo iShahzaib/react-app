@@ -39,7 +39,7 @@ const ListCard = (props) => {
     const fields = tab?.fields || defaultFields;
 
     return (
-        <tr style={{ cursor: 'pointer' }} onDoubleClick={() => navigate(linkPath, { state })}>
+        <tr className={`${isSelected ? 'selected' : ''}`} onDoubleClick={() => navigate(linkPath, { state })}>
             <td>
                 <div className="ui fitted checkbox">
                     <input
