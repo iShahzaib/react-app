@@ -160,7 +160,7 @@
   }
 
   .sidebar-scrollable {
-    max-height: calc(-198px + 100vh) !important;
+    max-height: calc(-146px + 100vh) !important;
   }
 }
 
