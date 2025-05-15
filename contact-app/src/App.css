@@ -165,7 +165,7 @@
 
   .sidebar-menu-header,
   .sidebar-menu {
-    max-height: calc(-198px + 100vh) !important;
+    max-height: calc(-225px + 100vh) !important;
   }
 }
 
