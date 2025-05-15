@@ -158,6 +158,10 @@
   .table-wrapper tbody td {
     max-width: 300px !important;
   }
+
+  .sidebar-menu {
+    max-height: calc(-215px + 100vh) !important;
+  }
 }
 
 .extra-gap {
