@@ -112,7 +112,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
 
             <div className="sidebar-divider"></div>
 
-            <div style={{ height: "100%", overflowX: "hidden", overflowY: "auto" }}>
+            <div className="sidebar-content">
                 <div className="sidebar-menu">
                     <Link to={`/welcome/${username}`} className="sidebar-menu-item" onClick={closeSidebar}>
                         <i className="home icon"></i>
@@ -126,9 +126,9 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
                     ))}
                 </div>
 
-                <div style={{ marginTop: "auto" }}>
+                <div className="sidebar-footer">
                     <div className="sidebar-divider"></div>
-                    <div className="sidebar-logout" onClick={onLogout} style={{ cursor: 'pointer', padding: '0.5rem 1rem' }}>
+                    <div className="sidebar-logout" onClick={onLogout}>
                         <i className="logout icon"></i>
                         <span style={{ marginLeft: "0.5rem" }}>Sign Out</span>
                     </div>
