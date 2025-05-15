@@ -583,6 +583,7 @@
 .sidebar-user-info {
   margin-left: 1rem;
   max-width: 70%;
+  word-wrap: break-word;
 }
 
 .sidebar-menu-header {
