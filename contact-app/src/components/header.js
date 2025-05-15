@@ -99,18 +99,20 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
 
     return (
         <div ref={sidebarRef} className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
-            <i className="close icon close-btn" onClick={closeSidebar} />
-            <div style={{ height: "100%" }}>
-                <div className="sidebar-header">
-                    <div style={{ display: "flex" }}>
-                        <img src={profilepicture || user} alt="User" className="user-profile" />
-                        <div className="sidebar-header-text">
-                            <div style={{ fontWeight: "600", fontSize: "1.25rem" }}>{username}</div>
-                            <div style={{ fontSize: "1rem" }}>{email}</div>
-                        </div>
+            <div className="sidebar-header">
+                <i className="close icon close-btn" onClick={closeSidebar} />
+                <div style={{ display: "flex" }}>
+                    <img src={profilepicture || user} alt="User" className="user-profile" />
+                    <div className="sidebar-header-text">
+                        <div style={{ fontWeight: "600", fontSize: "1.25rem" }}>{username}</div>
+                        <div style={{ fontSize: "1rem" }}>{email}</div>
                     </div>
                 </div>
-                <div className="sidebar-divider"></div>
+            </div>
+
+            <div className="sidebar-divider"></div>
+
+            <div style={{ height: "100%", overflowX: "hidden", overflowY: "auto" }}>
                 <div className="sidebar-menu">
                     <Link to={`/welcome/${username}`} className="sidebar-menu-item" onClick={closeSidebar}>
                         <i className="home icon"></i>
@@ -123,13 +125,13 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
                         </Link>
                     ))}
                 </div>
-            </div>
 
-            <div style={{ marginTop: "auto" }}>
-                <div className="sidebar-divider"></div>
-                <div className="sidebar-logout" onClick={onLogout} style={{ cursor: 'pointer', padding: '0.5rem 1rem' }}>
-                    <i className="logout icon"></i>
-                    <span style={{ marginLeft: "0.5rem" }}>Sign Out</span>
+                <div style={{ marginTop: "auto" }}>
+                    <div className="sidebar-divider"></div>
+                    <div className="sidebar-logout" onClick={onLogout} style={{ cursor: 'pointer', padding: '0.5rem 1rem' }}>
+                        <i className="logout icon"></i>
+                        <span style={{ marginLeft: "0.5rem" }}>Sign Out</span>
+                    </div>
                 </div>
             </div>
         </div>
