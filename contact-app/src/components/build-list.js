@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import ListCard, { ListCardHead } from "./list-card";
 import { confirmDelete, sentenceCase, showSuccess, showWarning } from "../contexts/common";
 import api from "../api/server";
 import { tabItems } from "../constant";
 
 const BuildList = React.memo(({ type }) => {
+    const { state } = useLocation();  // Access location object to get state
+    type = state?.collection || type;
+
     const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
 

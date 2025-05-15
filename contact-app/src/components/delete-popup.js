@@ -7,7 +7,7 @@ const DeletePopup = (props) => {
 
     const handleDelete = () => {
         props.deleteContact(_id);
-        navigate("/contacts");
+        navigate("/getalldata/Contact", { state: { collection: "Contact" } });
     };
 
     return (
@@ -16,7 +16,13 @@ const DeletePopup = (props) => {
                 <h2>Confirm Deletion</h2>
                 <p>Are you sure you want to delete this contact?</p>
                 <button className="ui red button" onClick={handleDelete}>Delete</button>
-                <button className="ui grey button" style={{ marginLeft: "1rem" }} onClick={() => navigate('/contacts')}>Cancel</button>
+                <button
+                    className="ui grey button"
+                    style={{ marginLeft: "1rem" }}
+                    onClick={() => navigate('/getalldata/Contact', { state: { collection: "Contact" } })}
+                >
+                    Cancel
+                </button>
             </div>
         </div>
     );

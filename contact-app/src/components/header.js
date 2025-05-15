@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import logo from '../images/logo.png';
+import { tabItems } from "../constant";
 // import { useAuth } from "../contexts/AuthContext"; // adjust path
 
 // Header Component
@@ -52,13 +53,14 @@ const Header = () => {
                 ref={sidebarRef}
                 sidebarVisible={sidebarVisible}
                 closeSidebar={closeSidebar}
+                onLogout={handleLogout}
             />
 
             <div className="center-header">
                 {isLoggedIn && (
                     <i
                         className="bars icon big"
-                        style={{ cursor: 'pointer', marginRight: '1rem', color: "white" }}
+                        style={{ cursor: 'pointer', marginRight: '1rem', color: "#fff" }}
                         onClick={toggleSidebar}
                     />
                 )}
@@ -89,45 +91,49 @@ const Header = () => {
     );
 };
 
-const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar }, sidebarRef) => {
+const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, sidebarRef) => {
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
     const isLoggedIn = !!username;
 
     if (!isLoggedIn) return null;
 
     return (
-        <div ref={sidebarRef} className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
+        <div ref={sidebarRef} className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <i className="close icon close-btn" onClick={closeSidebar} />
-            <div className="sidebar-header">
-                <div style={{ display: "flex" }}>
-                    <img src={profilepicture || user} alt="User" className="user-profile" />
-                    <div className="sidebar-header-text">
-                        <div style={{ fontWeight: "600", fontSize: "1.25rem" }}>{username}</div>
-                        <div style={{ fontSize: "1rem" }}>{email}</div>
+            <div style={{ height: "100%" }}>
+                <div className="sidebar-header">
+                    <div style={{ display: "flex" }}>
+                        <img src={profilepicture || user} alt="User" className="user-profile" />
+                        <div className="sidebar-header-text">
+                            <div style={{ fontWeight: "600", fontSize: "1.25rem" }}>{username}</div>
+                            <div style={{ fontSize: "1rem" }}>{email}</div>
+                        </div>
                     </div>
                 </div>
+                <div className="sidebar-divider"></div>
+                <div className="sidebar-menu">
+                    <Link to={`/welcome/${username}`} className="sidebar-menu-item" onClick={closeSidebar}>
+                        <i className="home icon"></i>
+                        <span style={{ marginLeft: "0.5rem" }}>Home</span>
+                    </Link>
+                    {tabItems.map(({ collection, icon, label }) => collection && (
+                        <Link key={label} to={`/getalldata/${collection}`} state={{ collection }} className="sidebar-menu-item" onClick={closeSidebar}>
+                            <i className={`${icon} icon`}></i>
+                            <span style={{ marginLeft: "0.5rem" }}>{label}</span>
+                        </Link>
+                    ))}
+                </div>
             </div>
-            <div className="sidebar-divider"></div>
-            <div className="sidebar-menu">
-                <Link to={`/welcome/${username}`} onClick={closeSidebar}>
-                    <i className="home icon"></i>
-                    <span style={{ marginLeft: "0.5rem" }}>Home</span>
-                </Link>
-                <Link to={`/contacts`} onClick={closeSidebar}>
-                    <i className="address book icon"></i>
-                    <span style={{ marginLeft: "0.5rem" }}>Contacts</span>
-                </Link>
-                <Link to={`/users`} onClick={closeSidebar}>
-                    <i className="users icon"></i>
-                    <span style={{ marginLeft: "0.5rem" }}>Users</span>
-                </Link>
-                <Link to={`/groups`} onClick={closeSidebar}>
-                    <i className="users icon"></i>
-                    <span style={{ marginLeft: "0.5rem" }}>Groups</span>
-                </Link>
+
+            <div style={{ marginTop: "auto" }}>
+                <div className="sidebar-divider"></div>
+                <div className="sidebar-logout" onClick={onLogout} style={{ cursor: 'pointer', padding: '0.5rem 1rem' }}>
+                    <i className="logout icon"></i>
+                    <span style={{ marginLeft: "0.5rem" }}>Sign Out</span>
+                </div>
             </div>
         </div>
-    )
+    );
 });
 
 const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
@@ -161,7 +167,7 @@ export const Main = () => {
             <h1 style={{ fontSize: "4rem", marginBottom: "1rem" }}>Welcome to MySH Manager</h1>
             <p style={{ fontSize: "1.5rem" }}>Manage Everything. The MySH Way. Your Smart Business Hub.</p>
             <Link to="/login">
-                <button className="ui massive inverted white button" style={{ marginTop: "2rem" }}>
+                <button className="ui massive inverted button" style={{ marginTop: "2rem" }}>
                     Get Started
                 </button>
             </Link>

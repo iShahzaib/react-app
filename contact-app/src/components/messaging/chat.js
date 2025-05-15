@@ -72,7 +72,7 @@ const ChatComponent = () => {
     }, []);
 
     if (!username) {
-        return <Navigate to="/users" replace />;
+        return <Navigate to="/getalldata/User" state={{ collection: 'User' }} replace />;
     }
 
     const sendMessage = () => {
@@ -93,7 +93,7 @@ const ChatComponent = () => {
                 </div>
                 <h2 className="chat-username">{username}</h2>
                 <div className="responsive-button">
-                    <Link to={`/users`}>
+                    <Link to={`/getalldata/User`} state={{ collection: 'User' }}>
                         <button className="ui button">Back</button>
                     </Link>
                 </div>

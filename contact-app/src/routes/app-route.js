@@ -17,10 +17,11 @@ const AuthRoutes = () => {
         <Routes>
             <Route path='/myprofile/:username' element={<MyProfile />} />
             <Route path='/welcome/:username' element={<Welcome />} />
-            <Route path='/users' element={<BuildList type='user' />} />
+            {/* <Route path='/users' element={<BuildList type='user' />} /> */}
             <Route path="/chat" element={<ChatComponent />} />
             {/* <Route path='/delete/:id' element={<DeletePopup deleteContact={deleteContact} />} /> */}
-            <Route path='/contacts' element={<BuildList type='contact' />} />
+            {/* <Route path='/contacts' element={<BuildList type='contact' />} /> */}
+            <Route path='/getalldata/:collection' element={<BuildList />} />
             <Route path='/add' element={<AddData contacts={contacts} setContacts={setContacts} />} />
             <Route path='/detail/:type/:_id' element={<Detail />} />
             <Route path="/update/:type/:_id" element={<UpdateRouter contacts={contacts} setContacts={setContacts} users={users} setUsers={setUsers} />} />

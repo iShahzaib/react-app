@@ -24,7 +24,7 @@ class UpdateUserClass extends React.Component {
             showWarning('All the fields are mandatory.');
             return;
         }
-        
+
         const updatedData = { ...state.data, username, email };
         updateUserHandler(updatedData);
 
@@ -35,7 +35,7 @@ class UpdateUserClass extends React.Component {
         if (_id === loggedInUserID) {
             navigate(`/myprofile/${loggedInUsername}`);
         } else {
-            navigate('/users');
+            navigate('/getalldata/User', { state: { collection: 'User' } });
         }
     };
     render() {

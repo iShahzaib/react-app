@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import { defaultFields, tabItems } from "../constant";
+import { sentenceCase } from "../contexts/common";
 
 const Detail = (props) => {
     const { type } = useParams();
@@ -13,8 +14,8 @@ const Detail = (props) => {
     const fields = tab?.fields || defaultFields;
 
     // const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
-    // const linkPath = type !== 'user' ? `/welcome/${loggedInUsername}` : `/contacts`;
-    const backPath = type !== 'contact' ? `/welcome/${loggedInUsername}` : `/contacts`;
+    // const linkPath = type !== 'user' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
+    const backPath = type === 'user' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
 
     return (
         <div className="ui main">
@@ -36,7 +37,7 @@ const Detail = (props) => {
                                 <button className="ui button blue">Edit</button>
                                 {/* onClick={() => props.updateDataHandler(_id)} */}
                             </Link>
-                            <Link to={backPath} state={{ type }}>
+                            <Link to={backPath} state={{ type, collection: sentenceCase(type) }}>
                                 <button className="ui button">Back</button>
                             </Link>
                         </div>

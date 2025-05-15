@@ -24,8 +24,8 @@ class UpdateDataClass extends React.Component {
     redirectToPreviousPage = (data) => {
         const { state, navigate } = this.props;
 
-        let url = '/contacts';
-        const navState = { type: state?.type, data };
+        let url = '/getalldata/Contact';
+        const navState = { type: state?.type, data, collection: 'Contact' };
 
         if (state?.location) {
             url = `/detail/${state.type}/${state.data._id}`;

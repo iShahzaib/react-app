@@ -8,9 +8,9 @@ import Swal from "sweetalert2";
 
 export const sentenceCase = (str) => {
     return str
-        .replace(/[_-]/g, ' ')               // replace underscores/dashes with spaces
-        .toLowerCase()                       // lowercase all
-        .replace(/^\w/, c => c.toUpperCase()); // capitalize first letter
+        ?.replace(/[_-]/g, ' ')               // replace underscores/dashes with spaces
+        ?.toLowerCase()                       // lowercase all
+        ?.replace(/^\w/, c => c.toUpperCase()); // capitalize first letter
 };
 
 export const showSuccess = (detail = '', msg, timer) => {

@@ -39,10 +39,7 @@ const ListCard = (props) => {
     const fields = tab?.fields || defaultFields;
 
     return (
-        <tr
-            style={{ cursor: 'pointer' }}
-            onDoubleClick={() => navigate(linkPath, { state })}
-        >
+        <tr style={{ cursor: 'pointer' }} onDoubleClick={() => navigate(linkPath, { state })}>
             <td>
                 <div className="ui fitted checkbox">
                     <input
@@ -70,30 +67,11 @@ const ListCard = (props) => {
                 )
             })}
 
-            {tab?.IsShowActionButtons && <td className="grid-row-action-buttons">
-                {type !== 'user' && (
-                    <i
-                        className="edit blue alternate outline icon"
-                        title="Edit"
-                        style={{ cursor: "pointer", fontSize: "1.2rem", marginRight: '0.5rem' }}
-                        onClick={(e) => {
-                            e.preventDefault(); e.stopPropagation();
-                            navigate(`/update/${type}/${_id}`, { state: { ...state, loggedInUsername, type } });
-                        }}
-                    // onClick={() => props.updateDataHandler(_id)}
-                    />
-                )}
-                <i
-                    className="trash red alternate outline icon"
-                    title={type === 'user' && loggedInUsername === username ? `You cannot delete your own ${type}.` : 'Delete'}
-                    style={{
-                        cursor: type === 'user' && loggedInUsername === username ? 'not-allowed' : 'pointer',
-                        opacity: type === 'user' && loggedInUsername === username ? 0.5 : 1,
-                        fontSize: "1.2rem"
-                    }}
-                    onClick={handleDelete}
-                />
-            </td>}
+            <ActionButtons
+                state={state}
+                parentProps={props}
+                handleDelete={handleDelete}
+            />
         </tr>
     );
 };
@@ -117,10 +95,42 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
                 </th>
                 <th className="image-header">IMG</th>
                 {fields.map(field => !field.ispicture && <th key={field.name}>{field.label}</th>)}
-                {tab?.IsShowActionButtons && <th className="grid-row-action-buttons">Action Buttons</th>}
+                <th className="grid-row-action-buttons">Action Buttons</th>
             </tr>
         </thead>
     );
+};
+
+const ActionButtons = ({ state, parentProps, handleDelete }) => {
+    const navigate = useNavigate();
+    const { data: { _id, username }, type, loggedInUsername } = parentProps;
+
+    return (
+        <td className="grid-row-action-buttons">
+            {type !== 'user' && (
+                <i
+                    className="edit blue alternate outline icon"
+                    title="Edit"
+                    style={{ cursor: "pointer", fontSize: "1.2rem", marginRight: '0.5rem' }}
+                    onClick={(e) => {
+                        e.preventDefault(); e.stopPropagation();
+                        navigate(`/update/${type}/${_id}`, { state: { ...state, loggedInUsername, type } });
+                    }}
+                // onClick={() => props.updateDataHandler(_id)}
+                />
+            )}
+            <i
+                className="trash red alternate outline icon"
+                title={type === 'user' && loggedInUsername === username ? `You cannot delete your own ${type}.` : 'Delete'}
+                style={{
+                    cursor: type === 'user' && loggedInUsername === username ? 'not-allowed' : 'pointer',
+                    opacity: type === 'user' && loggedInUsername === username ? 0.5 : 1,
+                    fontSize: "1.2rem"
+                }}
+                onClick={handleDelete}
+            />
+        </td>
+    )
 };
 
 export default ListCard;
