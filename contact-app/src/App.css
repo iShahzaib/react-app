@@ -158,6 +158,10 @@
   .table-wrapper tbody td {
     max-width: 300px !important;
   }
+
+  /* .sidebar-content {
+    max-height: calc(-146px + 100vh);
+  } */
 }
 
 .extra-gap {
@@ -581,7 +585,7 @@
   display: grid;
   padding: 0.5rem 1rem;
   overflow-y: auto;
-  max-height: calc(-166px + 100vh);
+  max-height: calc(-146px + 100vh);
 }
 
 .sidebar-menu-item {
@@ -603,8 +607,8 @@
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: calc(-110px + 100vh);
-  display: contents;
+  max-height: calc(-90px + 100vh);
+  /* display: contents; */
 }
 
 .close-btn {
