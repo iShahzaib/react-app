@@ -4,12 +4,12 @@ import api from '../api/server';
 import UpdateUser from "../components/update-user";
 import { sentenceCase, showSuccess } from "../contexts/common";
 
-export default function UpdateRouter({ contacts, setContacts, users, setUsers }) {
+export default function UpdateRouter({ records, setRecords, users, setUsers }) {
     const { type } = useParams();
 
     const updateHandler = (updatedData) => {
         const updatedtList = type !== 'user'
-            ? contacts.map((c) => c._id === updatedData._id ? updatedData : c)
+            ? records.map((c) => c._id === updatedData._id ? updatedData : c)
             : users.map((u) => u._id === updatedData._id ? updatedData : u);
 
         if (type === 'user') {
@@ -20,7 +20,7 @@ export default function UpdateRouter({ contacts, setContacts, users, setUsers })
                 localStorage.setItem('loggedInUser', JSON.stringify(updatedData));
             }
         } else {
-            setContacts(updatedtList);
+            setRecords(updatedtList);
         }
         showSuccess(`${sentenceCase(type)} has been updated successfully.`);
 

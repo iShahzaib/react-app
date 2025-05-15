@@ -17,11 +17,7 @@ const RegistrationForm = React.memo((props) => {
             return;
         }
         const response = await props.registrationHandler({ username, password, email: email?.toLowerCase(), profilepicture });
-        // this.setState({
-        //     name: '',
-        //     email: ''
-        // });
-        // Navigate to '/login' path after adding the contact
+
         if (response === 'success') navigate('/login');
     }
     return (

@@ -23,12 +23,6 @@ const LoginForm = React.memo((props) => {
         }
 
         props.loginHandler({ email: username?.toLowerCase(), password, navigate });
-        // this.setState({
-        //     name: '',
-        //     email: ''
-        // });
-        // Navigate to '/login' path after adding the contact
-        // navigate('/welcome');
     }
 
     return (

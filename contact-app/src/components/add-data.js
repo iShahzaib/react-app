@@ -23,8 +23,8 @@ class AddDataClass extends React.Component {
     redirectToPreviousPage = () => {
         const { state, navigate } = this.props;
         navigate(
-            `/${state.type ? `welcome/${state.username}` : 'contacts'}`,
-            { state: { type: state.type } }
+            `/${state.type ? `welcome/${state.username}` : 'getalldata/Contact'}`,
+            { state: { type: state.type, collection: 'Contact' } }
         );
     };
 
@@ -48,7 +48,7 @@ class AddDataClass extends React.Component {
             }
         }
 
-        const response = await this.props.addContactHandler(this.state, sentenceCase(this.props.state.type));
+        const response = await this.props.addDataHandler(this.state, sentenceCase(this.props.state.type));
         if (response === 'success') {
             // Reset all fields
             const clearedState = {};
@@ -74,18 +74,14 @@ class AddDataClass extends React.Component {
 // Wrapper to use hooks with class component
 const AddData = (props) => {
     const { state } = useLocation();  // Access location object to get state
-    const { contacts, setContacts } = props;
+    const { records, setRecords } = props;
     const { location, loggedInUsername: username, type } = state ?? {};
 
-    const addContactHandler = async (newContact, type) => {
-        // const newContact = { id: uuidv4(), ...contact };
-        const response = await api.post(`/api/adddocdata`, {
-            data: newContact,
-            collection: type
-        });
+    const addDataHandler = async (data, type) => {
+        const response = await api.post(`/api/adddocdata`, { data, collection: type });
 
         if (response?.data?.insertedId) {
-            setContacts([...contacts, newContact]);
+            setRecords([...records, data]);
 
             showSuccess(`${type} has been added successfully.`);
             return 'success';
@@ -95,7 +91,7 @@ const AddData = (props) => {
         }
     };
 
-    return <AddDataClass addContactHandler={addContactHandler} navigate={useNavigate()} state={{ username, location, type }} />;
+    return <AddDataClass addDataHandler={addDataHandler} navigate={useNavigate()} state={{ username, location, type }} />;
 };
 
 export default AddData;

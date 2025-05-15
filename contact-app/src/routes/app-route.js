@@ -10,21 +10,19 @@ import ChatComponent from '../components/messaging/chat';
 import MyProfile from '../login/my-profile';
 
 const AuthRoutes = () => {
-    const [contacts, setContacts] = useState([]);
+    const [records, setRecords] = useState([]);
     const [users, setUsers] = useState([]);
 
     return (
         <Routes>
             <Route path='/myprofile/:username' element={<MyProfile />} />
             <Route path='/welcome/:username' element={<Welcome />} />
-            {/* <Route path='/users' element={<BuildList type='user' />} /> */}
             <Route path="/chat" element={<ChatComponent />} />
             {/* <Route path='/delete/:id' element={<DeletePopup deleteContact={deleteContact} />} /> */}
-            {/* <Route path='/contacts' element={<BuildList type='contact' />} /> */}
             <Route path='/getalldata/:collection' element={<BuildList />} />
-            <Route path='/add' element={<AddData contacts={contacts} setContacts={setContacts} />} />
+            <Route path='/add' element={<AddData records={records} setRecords={setRecords} />} />
             <Route path='/detail/:type/:_id' element={<Detail />} />
-            <Route path="/update/:type/:_id" element={<UpdateRouter contacts={contacts} setContacts={setContacts} users={users} setUsers={setUsers} />} />
+            <Route path="/update/:type/:_id" element={<UpdateRouter records={records} setRecords={setRecords} users={users} setUsers={setUsers} />} />
 
             <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
