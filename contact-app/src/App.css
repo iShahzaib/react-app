@@ -160,7 +160,12 @@
   }
 
   .sidebar-content {
-    max-height: calc(-215px + 100vh) !important;
+    max-height: calc(-142px + 100vh) !important;
+  }
+
+  .sidebar-menu-header,
+  .sidebar-menu {
+    max-height: calc(-198px + 100vh) !important;
   }
 }
 
@@ -579,6 +584,11 @@
   font-size: 1.25rem;
   margin-left: 1rem;
   max-width: 70%;
+}
+
+.sidebar-menu-header {
+  height: 100%;
+  max-height: calc(-146px + 100vh);
 }
 
 .sidebar-menu {

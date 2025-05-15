@@ -113,7 +113,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
             <div className="sidebar-divider"></div>
 
             <div className="sidebar-content">
-                <div className="sidebar-menu-header" style={{ height: "100%", maxHeight: "calc(100vh - 146px)" }}>
+                <div className="sidebar-menu-header">
                     <div className="sidebar-menu">
                         <Link to={`/welcome/${username}`} className="sidebar-menu-item" onClick={closeSidebar}>
                             <i className="home icon"></i>
