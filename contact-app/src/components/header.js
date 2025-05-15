@@ -98,7 +98,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
     if (!isLoggedIn) return null;
 
     return (
-        <div ref={sidebarRef} className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <div ref={sidebarRef} className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
             <i className="close icon close-btn" onClick={closeSidebar} />
             <div style={{ height: "100%" }}>
                 <div className="sidebar-header">

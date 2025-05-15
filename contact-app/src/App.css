@@ -499,13 +499,13 @@
   max-width: 500px;
 }
 
-.table-wrapper tbody tr:hover td {
+.table-wrapper tbody tr:not(.selected):hover td {
   background: #f9f9f9 !important;
   /* background-color: #f9fafb; */
 }
 
 .table-wrapper tbody tr.selected td {
-  background: #0069bd12;
+  background: #0069bd12 !important;
 }
 
 .table-wrapper thead tr {
@@ -550,7 +550,9 @@
   flex-direction: column;
   transition: left 0.3s ease;
   z-index: 1000;
+
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .custom-sidebar.show {
