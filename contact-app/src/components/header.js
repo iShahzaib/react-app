@@ -101,9 +101,9 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
         <div ref={sidebarRef} className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
             <div className="sidebar-header">
                 <i className="close icon close-btn" onClick={closeSidebar} />
-                <div style={{ display: "flex" }}>
+                <div className="sidebar-user">
                     <img src={profilepicture || user} alt="User" className="user-profile" />
-                    <div className="sidebar-header-text">
+                    <div className="sidebar-user-info">
                         <div style={{ fontWeight: "600", fontSize: "1.25rem" }}>{username}</div>
                         <div style={{ fontSize: "1rem" }}>{email}</div>
                     </div>
@@ -112,20 +112,17 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
 
             <div className="sidebar-divider"></div>
 
-            <div className="sidebar-content">
-                <div className="sidebar-menu-header">
-                    <div className="sidebar-menu">
-                        <Link to={`/welcome/${username}`} className="sidebar-menu-item" onClick={closeSidebar}>
-                            <i className="home icon"></i>
-                            <span style={{ marginLeft: "0.5rem" }}>Home</span>
+            <div className="sidebar-scrollable">
+                <div className="sidebar-menu">
+                    <Link to={`/welcome/${username}`} className="sidebar-menu-item" onClick={closeSidebar}>
+                        <i className="home icon"></i> <span>Home</span>
+                    </Link>
+                    {tabItems.map(({ collection, icon, label }) => collection && (
+                        <Link key={label} to={`/getalldata/${collection}`} state={{ collection }} className="sidebar-menu-item" onClick={closeSidebar}>
+                            <i className={`${icon} icon`}></i>
+                            <span style={{ marginLeft: "0.5rem" }}>{label}</span>
                         </Link>
-                        {tabItems.map(({ collection, icon, label }) => collection && (
-                            <Link key={label} to={`/getalldata/${collection}`} state={{ collection }} className="sidebar-menu-item" onClick={closeSidebar}>
-                                <i className={`${icon} icon`}></i>
-                                <span style={{ marginLeft: "0.5rem" }}>{label}</span>
-                            </Link>
-                        ))}
-                    </div>
+                    ))}
                 </div>
 
                 <div className="sidebar-footer">
