@@ -131,6 +131,10 @@
     margin: 0;
   }
 
+  .chat-input {
+    font-size: 16px !important;
+  }
+
   .grid-table {
     min-width: 600px !important;
   }
