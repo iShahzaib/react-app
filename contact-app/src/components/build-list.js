@@ -7,7 +7,7 @@ import { tabItems } from "../constant";
 
 const BuildList = React.memo(({ type }) => {
     const { state } = useLocation();  // Access location object to get state
-    type = state?.collection || type;
+    type = state?.collection?.toLowerCase() || type;
 
     const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
