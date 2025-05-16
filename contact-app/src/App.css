@@ -586,11 +586,6 @@
   word-wrap: break-word;
 }
 
-.sidebar-menu-header {
-  height: 100%;
-  max-height: calc(-146px + 100vh);
-}
-
 .sidebar-menu {
   padding: 0.5rem 1rem;
   display: flex;

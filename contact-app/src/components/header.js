@@ -115,7 +115,8 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
             <div className="sidebar-scrollable">
                 <div className="sidebar-menu">
                     <Link to={`/welcome/${username}`} className="sidebar-menu-item" onClick={closeSidebar}>
-                        <i className="home icon"></i> <span>Home</span>
+                        <i className="home icon"></i>
+                        <span style={{ marginLeft: "0.5rem" }}>Home</span>
                     </Link>
                     {tabItems.map(({ collection, icon, label }) => collection && (
                         <Link key={label} to={`/getalldata/${collection}`} state={{ collection }} className="sidebar-menu-item" onClick={closeSidebar}>
