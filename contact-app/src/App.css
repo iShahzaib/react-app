@@ -159,9 +159,9 @@
     max-width: 300px !important;
   }
 
-  .sidebar-scrollable {
+  /* .sidebar-scrollable {
     max-height: calc(-175px + 100dvh) !important;
-  }
+  } */
 }
 
 .extra-gap {
@@ -578,8 +578,6 @@
 .sidebar-user {
   display: flex;
   align-items: center;
-  /* height: 100%;
-  max-height: calc(-146px + 100dvh); */
 }
 
 .sidebar-user-info {
@@ -592,6 +590,8 @@
   padding: 0.5rem 1rem;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  max-height: calc(-146px + 100dvh);
 }
 
 .sidebar-menu-item {
@@ -612,7 +612,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 .close-btn {
