@@ -552,7 +552,7 @@
   top: 0;
   left: -250px;
   width: 250px;
-  height: 100vh;
+  height: 100dvh;
   background-color: #075da8;
   color: #fff;
   display: flex;
