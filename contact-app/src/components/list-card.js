@@ -83,7 +83,7 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
     return (
         <thead>
             <tr>
-                <th>
+                <th style={{ width: "5%" }}>
                     <div className="ui fitted checkbox">
                         <input
                             type="checkbox"
@@ -93,7 +93,7 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
                         <label></label>
                     </div>
                 </th>
-                <th className="image-header">IMG</th>
+                <th className="image-header" style={{ width: "6%" }}>IMG</th>
                 {fields.map(field => !field.ispicture && !field.notshowongrid && <th key={field.name}>{field.label}</th>)}
                 <th className="grid-row-action-buttons">Action Buttons</th>
             </tr>
