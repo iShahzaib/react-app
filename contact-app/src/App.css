@@ -61,7 +61,7 @@
 .main-page {
   height: 98.8dvh;
   background: linear-gradient(to right, #6a11cb, #2575fc);
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   flex-direction: column;
