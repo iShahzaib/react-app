@@ -55,7 +55,7 @@ const ListCard = (props) => {
             </td>
 
             {fields.map(field => {
-                if (field.ispicture) return null;
+                if (field.ispicture || field.notshowongrid) return null;
 
                 const fieldValue = field.type === 'select'
                     ? field.options.find(opt => opt.value === data?.[field.name])?.label
@@ -94,7 +94,7 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
                     </div>
                 </th>
                 <th className="image-header">IMG</th>
-                {fields.map(field => !field.ispicture && <th key={field.name}>{field.label}</th>)}
+                {fields.map(field => !field.ispicture && !field.notshowongrid && <th key={field.name}>{field.label}</th>)}
                 <th className="grid-row-action-buttons">Action Buttons</th>
             </tr>
         </thead>
