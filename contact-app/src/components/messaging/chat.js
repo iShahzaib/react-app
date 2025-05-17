@@ -85,7 +85,7 @@ const ChatComponent = () => {
     };
 
     return (
-        <div className="chat-container">
+        <div className="ui container chat-container">
             <div className="chat-header">
                 <div className="avatar-container">
                     <img className="chat-avatar" src={profilepicture || user} alt="user" />

@@ -259,9 +259,6 @@
 /* chat css starts */
 
 .chat-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  margin-top: 6rem;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
