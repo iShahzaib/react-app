@@ -48,7 +48,7 @@ const Header = () => {
     }, []);
 
     return (
-        <div className="ui fixed menu main-header">
+        <div className="ui menu main-header sticky-header">
             <SideBar
                 ref={sidebarRef}
                 sidebarVisible={sidebarVisible}

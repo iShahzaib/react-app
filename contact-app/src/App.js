@@ -76,12 +76,10 @@ const App = () => {
   }
 
   return (
-    <div className='ui container'>
+    <div className='ui'>
       <Router>
         <Header />
-
-        <div className='extra-gap'></div>
-
+        {/* <div className='extra-gap'></div> */}
         <Suspense fallback={<div className='fallback-loader'>Loading...</div>}>
 
           <Routes>
