@@ -264,7 +264,7 @@
 }
 
 .chat-box {
-  height: calc(-250px + 100dvh);
+  height: calc(-300px + 100dvh);
   min-height: 250px;
   overflow-y: auto;
   border: 1px solid #ccc;
