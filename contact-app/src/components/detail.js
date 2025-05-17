@@ -18,7 +18,7 @@ const Detail = (props) => {
     const backPath = type === 'user' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
 
     return (
-        <div className="ui main">
+        <div className="ui main container">
             <div className="responsive-header">
                 {/* Image Card */}
                 <div className="ui card" style={{ padding: '1rem', width: "100%", backgroundColor: "#f3f7ff" }}>

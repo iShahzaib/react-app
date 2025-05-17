@@ -26,7 +26,7 @@ const LoginForm = React.memo((props) => {
     }
 
     return (
-        <div className="ui main">
+        <div className="ui main container">
             <div className="responsive-header">
                 <h2>Login</h2>
             </div>

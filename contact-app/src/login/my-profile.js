@@ -34,7 +34,7 @@ const MyProfile = () => {
     const fields = tab?.fields || defaultFields;
 
     return (
-        <div className="ui main">
+        <div className="ui main container">
             <div className="ui centered card" style={{ width: "320px", margin: "0 auto", boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}>
                 <div className="content">
                     <Link

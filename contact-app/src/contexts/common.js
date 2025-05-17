@@ -56,7 +56,7 @@ export const confirmDelete = (detail = '', extraParam) => {
 
 export const RenderForm = ({ title, fields, buttonLabel, self }) => {
     return (
-        <div className="ui main">
+        <div className="ui main container">
             <div className="responsive-header">
                 <h2>{title}</h2>
             </div>
