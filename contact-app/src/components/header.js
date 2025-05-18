@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import logo from '../images/logo.png';
-import { tabItems } from "../constant";
+import { useSchema } from "../contexts/SchemaContext";
 // import { useAuth } from "../contexts/AuthContext"; // adjust path
 
 // Header Component
@@ -92,6 +92,7 @@ const Header = () => {
 };
 
 const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, sidebarRef) => {
+    const { schemaList } = useSchema();
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
     const isLoggedIn = !!username;
 
@@ -118,7 +119,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
                         <i className="home icon"></i>
                         <span style={{ marginLeft: "0.5rem" }}>Home</span>
                     </Link>
-                    {tabItems.map(({ collection, icon, label }) => collection && (
+                    {Object.values(schemaList).map(({ collection, icon, label }) => collection && (
                         <Link key={label} to={`/getalldata/${collection}`} state={{ collection }} className="sidebar-menu-item" onClick={closeSidebar}>
                             <i className={`${icon} icon`}></i>
                             <span style={{ marginLeft: "0.5rem" }}>{label}</span>

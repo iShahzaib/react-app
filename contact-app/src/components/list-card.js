@@ -2,9 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import { confirmDelete, showError, showSuccess } from "../contexts/common";
-import { defaultFields, tabItems } from "../constant";
+import { defaultFields } from "../constant";
+import { useSchema } from "../contexts/SchemaContext";
 
 const ListCard = (props) => {
+    const { schemaList } = useSchema();
     const { data, type, loggedInUsername, isSelected, toggleSelectOne } = props;
     const { _id, username, email, profilepicture } = data;
     const navigate = useNavigate();
@@ -35,7 +37,7 @@ const ListCard = (props) => {
     const linkPath = type !== 'user' ? `/detail/${type}/${_id}` : '/chat';
 
     // Get field config based on type
-    const tab = tabItems.find(tab => tab.key === type);
+    const tab = schemaList[type];
     const fields = tab?.fields || defaultFields;
 
     return (
@@ -77,7 +79,8 @@ const ListCard = (props) => {
 };
 
 export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
-    const tab = tabItems.find(tab => tab.key === type);
+    const { schemaList } = useSchema();
+    const tab = schemaList[type];
     const fields = tab?.fields || defaultFields;
 
     return (

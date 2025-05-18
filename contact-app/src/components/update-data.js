@@ -1,13 +1,14 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RenderForm, showWarning } from "../contexts/common";
-import { defaultFields, tabItems } from "../constant";
+import { defaultFields } from "../constant";
+import { useSchema } from "../contexts/SchemaContext";
 
 class UpdateDataClass extends React.Component {
     constructor(props) {
         super(props);
 
-        const tabItem = tabItems.find(item => item.key === props.state.type);
+        const tabItem = props.schemaList[props.state.type];
         this.fields = tabItem?.fields || defaultFields;
 
         const initialState = {};
@@ -82,9 +83,11 @@ class UpdateDataClass extends React.Component {
 // Functional wrapper
 const UpdateData = (props) => {
     const { state } = useLocation();
+    const { schemaList } = useSchema();
+    
     const { data, location, loggedInUsername: username, type } = state ?? {};
 
-    return <UpdateDataClass {...props} navigate={useNavigate()} state={{ data, location, username, type }} />;
+    return <UpdateDataClass {...props} navigate={useNavigate()} schemaList={schemaList} state={{ data, location, username, type }} />;
 };
 
 export default UpdateData;

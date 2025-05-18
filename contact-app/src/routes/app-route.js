@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Welcome from '../login/welcome';
 import AddData from '../components/add-data';
@@ -8,10 +8,22 @@ import BuildList from '../components/build-list';
 import UpdateRouter from './update-router';
 import ChatComponent from '../components/messaging/chat';
 import MyProfile from '../login/my-profile';
+import api from '../api/server';
+import { useSchema } from '../contexts/SchemaContext';
 
 const AuthRoutes = () => {
     const [records, setRecords] = useState([]);
     const [users, setUsers] = useState([]);
+    const { setSchemaList } = useSchema();
+
+    useEffect(() => {
+        (async () => {
+            const response = await api.get(`/api/getdocdata?collection=Schema`);
+            const schemaObj = Object.fromEntries(response.data?.map(item => [item.key, item]));
+            setSchemaList(schemaObj);
+            window['schemaList'] = schemaObj;
+        })();
+    }, [setSchemaList]);
 
     return (
         <Routes>

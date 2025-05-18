@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
-import { defaultFields, tabItems } from "../constant";
+import { defaultFields } from "../constant";
 import { sentenceCase } from "../contexts/common";
+import BuildList from "./build-list";
+import { useSchema } from "../contexts/SchemaContext";
 
-const Detail = (props) => {
+const Detail = () => {
     const { type } = useParams();
     const { state } = useLocation();  // Access location object to get state
     const { data, loggedInUsername } = state || {};
     const { _id, profilepicture } = data || {};
 
-    const tab = tabItems.find(tab => tab.key === type);
+    const { schemaList } = useSchema();
+    const tab = schemaList[type];
     const fields = tab?.fields || defaultFields;
 
     // const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
     // const linkPath = type !== 'user' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
     const backPath = type === 'user' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
+
+    const [activeTab, setActiveTab] = useState('detail');
+    const setDataInParams = (tabName) => {
+        if (activeTab !== tabName) {
+            setActiveTab(tabName);
+        }
+    };
 
     return (
         <div className="ui main container">
@@ -45,19 +55,63 @@ const Detail = (props) => {
                 </div>
             </div>
 
-            {/* Information Section */}
-            <div className="ui segment" style={{ minHeight: "450px", overflowX: "auto" }}>
-                <div className="ui stackable grid">
-                    {fields.map(field => {
-                        const fieldValue = field.type === 'select'
-                            ? field.options.find(opt => opt.value === data?.[field.name])?.label
-                            : data?.[field.name];
+            <div className="ui segment parent-container" style={{ overflowX: "auto", marginTop: "2rem" }}>
+                <ul className="tab-button-group responsive-button">
+                    <li>
+                        <Link
+                            to={`/detail/${type}/${_id}`} state={{ data, loggedInUsername }}
+                            className={`tab-button ${activeTab === 'detail' ? "active" : ""}`}
+                            style={{ backgroundColor: '#46a1a1' }}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setDataInParams('detail');
+                            }}
+                        >
+                            Details
+                        </Link>
+                    </li>
+                    {tab?.tabItems?.map(({ name, icon, schemaName }) => {
+                        const schemaData = schemaList[schemaName] || {};
+                        const { key, icon: mainIcon, className, link, bgcolor } = schemaData;
+
                         return (
-                            <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
-                                <strong>{field.label}:</strong> {fieldValue || '—'}
-                            </div>
+                            <li key={key || schemaName}>
+                                <Link
+                                    to={link || "#"}
+                                    className={`tab-button ${className || ""} ${activeTab === (key || schemaName) ? "active" : ""}`}
+                                    style={{ backgroundColor: bgcolor || '#2185d0' }}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setDataInParams(key || schemaName);
+                                    }}
+                                >
+                                    {icon && <i className={`${icon || mainIcon} icon`} style={{ marginRight: "0.5rem" }}></i>}
+                                    {name}
+                                </Link>
+                            </li>
                         )
                     })}
+                </ul>
+
+                {/* Information Section */}
+                <div className="tab-content" style={{ borderTop: "2px solid #22242626", paddingTop: "1rem" }}>
+                    {activeTab === 'detail'
+                        ? (<div className="detail-tab" style={{ minHeight: "450px" }}>
+                            <div className="ui stackable grid">
+                                {fields.map(field => {
+                                    const fieldValue = field.type === 'select'
+                                        ? field.options.find(opt => opt.value === data?.[field.name])?.label
+                                        : data?.[field.name];
+                                    return (
+                                        <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
+                                            <strong>{field.label}:</strong> {fieldValue || '—'}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>)
+                        : <BuildList type={activeTab} />
+                    }
                 </div>
             </div>
         </div>

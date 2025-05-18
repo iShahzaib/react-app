@@ -38,19 +38,20 @@ const authenticateToken = (req, res, next) => {
 
 // const playDoc = async (data) => {
 //     const db = await getDBConnection('MSH_CONTACTAPP');
-//     db.collection('Schema').updateOne({ key: 'student' }, {
-//         $addToSet: {
-//             fields: {
-//                 "name": "studenttype",
-//                 "label": "Student Type",
-//                 "type": "select",
-//                 "placeholder": "Student Type",
-//                 "options": [
-//                     { "label": "Student", "value": "student" },
-//                     { "label": "Alumni", "value": "alumni" }
-//                 ],
-//                 "required": true
-//             }
+//     db.collection('Schema').updateOne({ key: 'contact' }, {
+//         $set: {
+//             tabItems: [
+//                 {
+//                     "name": "Employee",
+//                     "icon": "fa-solid fa-user",
+//                     "schemaName": "employee"
+//                 },
+//                 {
+//                     "name": "Student",
+//                     "icon": "fa-solid fa-user-graduate",
+//                     "schemaName": "student"
+//                 }
+//             ]
 //         }
 //     });
 // };
@@ -61,6 +62,8 @@ app.use('/api/noauth', noauthRouter);
 app.use('/api', authenticateToken, router);
 
 initializeSocket(server);
+
+// app.listen(3000, () => console.log('REST API running on port 3000'));
 
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

@@ -3,10 +3,12 @@ import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import socketClient from '../api/socket';
 import { showWarning } from "../contexts/common";
-import { defaultFields, tabItems } from "../constant";
+import { defaultFields } from "../constant";
+import { useSchema } from "../contexts/SchemaContext";
 
 const MyProfile = () => {
     const { state } = useLocation();
+    const { schemaList } = useSchema()
     const { username: authenticatedUser } = useParams();
     const data = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
@@ -30,7 +32,7 @@ const MyProfile = () => {
         return <Navigate to="/login" replace />;  // <-- This will redirect without remount issues
     }
 
-    const tab = tabItems.find(tab => tab.key === 'user');
+    const tab = schemaList['user'];
     const fields = tab?.fields || defaultFields;
 
     return (

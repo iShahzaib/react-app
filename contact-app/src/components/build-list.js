@@ -3,7 +3,7 @@ import { Link, Navigate, useLocation } from "react-router-dom";
 import ListCard, { ListCardHead } from "./list-card";
 import { confirmDelete, sentenceCase, showSuccess, showWarning } from "../contexts/common";
 import api from "../api/server";
-import { tabItems } from "../constant";
+import { useSchema } from "../contexts/SchemaContext";
 
 const BuildList = React.memo(({ type }) => {
     const { state } = useLocation();  // Access location object to get state
@@ -141,10 +141,14 @@ const GridTable = (props) => {
 };
 
 const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
+    const { schemaList } = useSchema();
+    const tab = schemaList[type];
+    const tableHeader = tab?.tableName || `${sentenceCase(type)} List`;
+
     return (
         <div className="responsive-header">
             <h2 style={{ marginBottom: "0.5rem" }}>
-                {sentenceCase(type)} List
+                {tableHeader}
                 <div style={{ fontSize: "0.9rem", color: "#555", fontWeight: "500" }}>
                     {filteredData.length > 0 ? `${filteredData.length} Item${filteredData.length > 1 ? "s" : ""}` : "No record found"}
                 </div>
@@ -164,10 +168,11 @@ const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
 };
 
 const SearchBar = (props) => {
+    const { schemaList } = useSchema();
     const { type, searchTerm, setSearchTerm, selectedIds, setSelectedIds, retrieveData, deleteObjects } = props;
 
     const inputSearch = useRef('');
-    const tab = tabItems.find(tab => tab.key === type);
+    const tab = schemaList[type];
 
     const handleRefresh = () => {
         setSelectedIds([]);

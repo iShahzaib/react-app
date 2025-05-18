@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import { v4 as uuidv4 } from 'uuid';
 import './App.css';
-import api from './api/server';
 import Header, { Main } from './components/header';
 import { showError, showSuccess, showWarning } from './contexts/common';
 import NoauthRoutes from './routes/noauth-route';
@@ -34,9 +33,6 @@ const App = () => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('loggedInUser', JSON.stringify(res.user)); // <-- Save login
         localStorage.setItem('isAuthenticated', 'true'); // (optional)
-
-        const response = await api.get(`/api/getdocdata?collection=Schema`);
-        localStorage.setItem("tabItems", JSON.stringify(response.data));
 
         showSuccess(`Login successful!`);
         setTimeout(() => {

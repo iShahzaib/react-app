@@ -1,4 +1,4 @@
-// export const tabItems = [
+// export const schemaList = [
 //     {
 //         "key": "user",
 //         "label": "User Detail",
@@ -60,9 +60,8 @@
 //     }
 // ];
 
-export const tabItems = JSON.parse(localStorage.getItem("tabItems")) || [];
-
 export const defaultFields = [
     { "name": "name", "label": "Name", "type": "text", "placeholder": "Name", "required": true },
-    { "name": "email", "label": "Email", "type": "email", "placeholder": "Email", "required": true, "disabled": true }
+    { "name": "email", "label": "Email", "type": "email", "placeholder": "Email", "required": true, "disabled": true },
+    { "name": "profilepicture", "label": "Profile Picture", "type": "text", "placeholder": "Link", "ispicture": true }
 ];

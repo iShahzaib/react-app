@@ -1,15 +1,16 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RenderForm, sentenceCase, showError, showSuccess, showWarning } from "../contexts/common";
-import { defaultFields, tabItems } from "../constant";
+import { defaultFields } from "../constant";
 import api from "../api/server";
+import { useSchema } from "../contexts/SchemaContext";
 
 class AddDataClass extends React.Component {
     constructor(props) {
         super(props);
 
         // Find current tab's field config
-        const tabItem = tabItems.find(item => item.key === props.state.type);
+        const tabItem = props.schemaList[props.state.type];
         const fields = tabItem?.fields || defaultFields;
 
         // Initialize state based on field names
@@ -77,6 +78,8 @@ const AddData = (props) => {
     const { records, setRecords } = props;
     const { location, loggedInUsername: username, type } = state ?? {};
 
+    const { schemaList } = useSchema();
+
     const addDataHandler = async (data, type) => {
         const response = await api.post(`/api/adddocdata`, { data, collection: type });
 
@@ -91,7 +94,7 @@ const AddData = (props) => {
         }
     };
 
-    return <AddDataClass addDataHandler={addDataHandler} navigate={useNavigate()} state={{ username, location, type }} />;
+    return <AddDataClass addDataHandler={addDataHandler} schemaList={schemaList} navigate={useNavigate()} state={{ username, location, type }} />;
 };
 
 export default AddData;
