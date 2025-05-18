@@ -156,7 +156,7 @@ const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
                     {filteredData.length > 0 ? `${filteredData.length} Item${filteredData.length > 1 ? "s" : ""}` : "No record found"}
                 </div>
             </h2>
-            <div className="responsive-button">
+            <div className="grid-button">
                 {type !== 'user' && (
                     <Link to="/add" state={{ loggedInUsername, type }}>
                         <button className="ui button blue">Add {sentenceCase(type)}</button>

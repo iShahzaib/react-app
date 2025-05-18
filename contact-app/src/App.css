@@ -104,6 +104,7 @@
 
   .responsive-header h2 {
     font-size: 1.3rem;
+    max-width: 45% !important;
   }
 
   .ui.button {
@@ -131,7 +132,6 @@
 
   .responsive-button {
     flex-direction: column;
-    margin-bottom: 1em !important;
   }
 
   .responsive-form-button {
@@ -140,7 +140,7 @@
   }
 
   .responsive-button .button,
-  .responsive-form-button .button {
+  .grid-button .button .responsive-form-button .button {
     margin: 0;
   }
 
@@ -209,6 +209,11 @@
   flex-wrap: wrap;
 }
 
+.responsive-header h2 {
+  max-width: 75%;
+}
+
+.grid-button,
 .responsive-button,
 .responsive-form-button {
   display: flex;
