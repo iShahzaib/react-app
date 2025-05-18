@@ -145,6 +145,9 @@ const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
     const tab = schemaList[type];
     const tableHeader = tab?.tableName || `${sentenceCase(type)} List`;
 
+    const location = useLocation();
+    const isWelcomePage = location.pathname.includes("/welcome/");
+
     return (
         <div className="responsive-header">
             <h2 style={{ marginBottom: "0.5rem" }}>
@@ -159,9 +162,11 @@ const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
                         <button className="ui button blue">Add {sentenceCase(type)}</button>
                     </Link>
                 )}
-                <Link to={`/welcome/${loggedInUsername}`}>
-                    <button className="ui button">Close</button>
-                </Link>
+                {!isWelcomePage && (
+                    <Link to={`/welcome/${loggedInUsername}`}>
+                        <button className="ui button">Close</button>
+                    </Link>
+                )}
             </div>
         </div>
     )
