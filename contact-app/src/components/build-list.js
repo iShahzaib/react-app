@@ -154,14 +154,14 @@ const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
                 </div>
             </h2>
             <div className="responsive-button">
-                {type !== 'user'
-                    ? (<Link to="/add" state={{ loggedInUsername, type }}>
+                {type !== 'user' && (
+                    <Link to="/add" state={{ loggedInUsername, type }}>
                         <button className="ui button blue">Add {sentenceCase(type)}</button>
-                    </Link>)
-                    : (<Link to={`/welcome/${loggedInUsername}`}>
-                        <button className="ui button">Back</button>
-                    </Link>)
-                }
+                    </Link>
+                )}
+                <Link to={`/welcome/${loggedInUsername}`}>
+                    <button className="ui button">Close</button>
+                </Link>
             </div>
         </div>
     )
