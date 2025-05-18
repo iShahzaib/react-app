@@ -72,12 +72,12 @@ const Detail = () => {
                     </li>
                     {tab?.tabItems?.map(({ name, icon, schemaName }) => {
                         const schemaData = schemaList[schemaName] || {};
-                        const { key, icon: mainIcon, className, link, bgcolor } = schemaData;
+                        const { key, icon: mainIcon, className, bgcolor } = schemaData;
 
                         return (
                             <li key={key || schemaName}>
                                 <Link
-                                    to={link || "#"}
+                                    to="#"
                                     className={`tab-button ${className || ""} ${activeTab === (key || schemaName) ? "active" : ""}`}
                                     style={{ backgroundColor: bgcolor || '#2185d0' }}
                                     onClick={(e) => {
