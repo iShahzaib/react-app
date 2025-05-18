@@ -110,7 +110,7 @@ const Detail = () => {
                                 })}
                             </div>
                         </div>)
-                        : <BuildList type={activeTab} />
+                        : <BuildList type={activeTab} origin="detail" />
                     }
                 </div>
             </div>

@@ -39,7 +39,7 @@ const Welcome = () => {
             </div>
 
             <div className="ui segment" style={{ marginTop: '2rem' }}>
-                <BuildList type="user" />
+                <BuildList type="user" origin="welcome" />
             </div>
         </div>
     );

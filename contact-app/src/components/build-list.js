@@ -5,7 +5,7 @@ import { confirmDelete, sentenceCase, showSuccess, showWarning } from "../contex
 import api from "../api/server";
 import { useSchema } from "../contexts/SchemaContext";
 
-const BuildList = React.memo(({ type }) => {
+const BuildList = React.memo(({ type, origin }) => {
     const { state } = useLocation();  // Access location object to get state
     type = state?.collection?.toLowerCase() || type;
 
@@ -83,6 +83,7 @@ const BuildList = React.memo(({ type }) => {
                 type={type}
                 filteredData={filteredData}
                 loggedInUsername={loggedInUsername}
+                origin={origin}
             />
             <SearchBar
                 type={type}
@@ -140,13 +141,10 @@ const GridTable = (props) => {
     )
 };
 
-const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
+const HeaderNav = ({ type, filteredData, loggedInUsername, origin }) => {
     const { schemaList } = useSchema();
     const tab = schemaList[type];
     const tableHeader = tab?.tableName || `${sentenceCase(type)} List`;
-
-    const location = useLocation();
-    const isWelcomePage = location.pathname.includes("/welcome/");
 
     return (
         <div className="responsive-header">
@@ -162,7 +160,7 @@ const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
                         <button className="ui button blue">Add {sentenceCase(type)}</button>
                     </Link>
                 )}
-                {!isWelcomePage && (
+                {origin !== 'welcome' && origin !== 'detail' && (
                     <Link to={`/welcome/${loggedInUsername}`}>
                         <button className="ui button close-btn"><i className="close icon red" /></button>
                     </Link>
