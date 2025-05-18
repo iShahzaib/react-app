@@ -101,7 +101,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
     return (
         <div ref={sidebarRef} className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
             <div className="sidebar-header">
-                <i className="close icon close-btn" onClick={closeSidebar} />
+                <i className="close icon close-sidebar" onClick={closeSidebar} />
                 <div className="sidebar-user">
                     <img src={profilepicture || user} alt="User" className="user-profile" />
                     <div className="sidebar-user-info">

@@ -48,7 +48,7 @@ const Detail = () => {
                                 {/* onClick={() => props.updateDataHandler(_id)} */}
                             </Link>
                             <Link to={backPath} state={{ type, collection: sentenceCase(type) }}>
-                                <button className="ui button">Close</button>
+                                <button className="ui button close-btn"><i className="close icon red" /></button>
                             </Link>
                         </div>
                     </div>

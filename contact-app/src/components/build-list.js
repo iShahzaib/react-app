@@ -164,7 +164,7 @@ const HeaderNav = ({ type, filteredData, loggedInUsername }) => {
                 )}
                 {!isWelcomePage && (
                     <Link to={`/welcome/${loggedInUsername}`}>
-                        <button className="ui button">Close</button>
+                        <button className="ui button close-btn"><i className="close icon red" /></button>
                     </Link>
                 )}
             </div>
