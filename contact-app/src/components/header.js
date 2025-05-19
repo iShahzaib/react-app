@@ -30,8 +30,8 @@ const Header = () => {
     );
 };
 
-// Home/Main Page Component
-export const Main = () => {
+// Main Page Component
+export const MainPage = () => {
     return (
         <>
             <Header />

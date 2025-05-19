@@ -20,7 +20,7 @@ const NoauthRoutes = ({ handleLogin, handleRegistration }) => (
             ? (<Route path="/*" element={<AuthRoutes />} />)
             : (<Route path="*" element={<Navigate to="/" replace />} />)    // Redirect all unmatched routes to home
         }
-        {/* <Route path='/welcome/:username' element={<ProtectedRoute> <Welcome /> </ProtectedRoute>} /> */}
+        {/* <Route path='/welcome/:username' element={<ProtectedRoute> <HomePage /> </ProtectedRoute>} /> */}
     </Routes>
 );
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import Welcome, { WelcomeHeader } from '../login/welcome';
+import HomePage, { HomePageHeader, Welcome } from '../login/welcome';
 import AddData from '../components/add-data';
 import Detail from '../components/detail';
 import BuildList from '../components/build-list';
@@ -14,7 +14,42 @@ import { useSchema } from '../contexts/SchemaContext';
 const AuthRoutes = () => {
     const [records, setRecords] = useState([]);
     const [users, setUsers] = useState([]);
+
+    const { username } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+
+    const [tabs, setTabs] = useState([
+        {
+            tab: 'Welcome',
+            component: <Welcome username={username} />,
+            id: 'welcome',
+            closeable: false
+        }
+    ]);
+
+    const [activeIndex, setActiveIndex] = useState(0);
     const { setSchemaList } = useSchema();
+
+    const handleCloseTab = (id) => {
+        const tabIndexToClose = tabs.findIndex(tab => tab.id === id);
+        if (tabIndexToClose < 0) return;
+
+        const newTabs = tabs.filter(tab => tab.id !== id);
+
+        const newActiveIndex = tabIndexToClose < activeIndex
+            ? activeIndex - 1
+            : tabIndexToClose === activeIndex
+                ? Math.min(activeIndex, newTabs.length - 1)
+                : activeIndex;
+
+        setTabs(newTabs);
+        setActiveIndex(newActiveIndex);
+
+        return false;
+    };
+
+    const handleClickTab = (id, newIndex) => {
+        setActiveIndex(newIndex);
+    };
 
     useEffect(() => {
         (async () => {
@@ -27,9 +62,22 @@ const AuthRoutes = () => {
 
     return (
         <Routes>
-            <Route element={<PrivateLayout />}>
+            <Route element={
+                <PrivateLayout
+                    tabs={tabs}
+                    setTabs={setTabs}
+                    setActiveIndex={setActiveIndex}
+                />
+            }>
                 <Route path='/myprofile/:username' element={<MyProfile />} />
-                <Route path='/welcome/:username' element={<Welcome />} />
+                <Route path='/welcome/:username' element={
+                    <HomePage
+                        tabs={tabs}
+                        activeIndex={activeIndex}
+                        handleClickTab={handleClickTab}
+                        handleCloseTab={handleCloseTab}
+                    />
+                } />
                 <Route path="/chat" element={<ChatComponent />} />
                 {/* <Route path='/delete/:id' element={<DeletePopup deleteContact={deleteContact} />} /> */}
                 <Route path='/getalldata/:collection' element={<BuildList />} />
@@ -43,10 +91,32 @@ const AuthRoutes = () => {
     )
 };
 
-const PrivateLayout = () => (
-    <>
-        <WelcomeHeader /><Outlet />
-    </>
-);
+const PrivateLayout = ({ tabs, setTabs, setActiveIndex }) => {
+    const handleAddTab = (label, key) => {
+        const id = `${key}`;
+        const existingTab = tabs.find(tab => tab.id === id);
+
+        if (existingTab) {
+            setActiveIndex(tabs.findIndex(tab => tab.id === id));
+            return;
+        }
+
+        const newTab = {
+            tab: label,
+            component: <BuildList type={key} origin="welcome" />,
+            id,
+            closeable: true
+        };
+        setTabs(prev => [...prev, newTab]);
+        setActiveIndex(tabs.length);
+    };
+
+    return (
+        <>
+            <HomePageHeader handleAddTab={handleAddTab} />
+            <Outlet />
+        </>
+    );
+};
 
 export default AuthRoutes;

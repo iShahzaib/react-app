@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import CloseableTabs from 'react-closeable-tabs';
 import user from '../images/nouser.jpg';
 import logo from '../images/logo.png';
 import socketClient from '../api/socket';
 import { sentenceCase, showWarning } from "../contexts/common";
-import BuildList from "../components/build-list";
 import { useSchema } from "../contexts/SchemaContext";
+import BuildList from "../components/build-list";
 
-const Welcome = () => {
+const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
     const { username: authenticatedUser } = useParams();
     const { username } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
@@ -32,23 +33,24 @@ const Welcome = () => {
 
     return (
         <div className="ui container parent-container" style={{ paddingBottom: '1rem' }}>
-            <div className="ui card fluid">
-                <div className="content">
-                    <h2 className="ui header" style={{ color: '#1b1c1d' }}>
-                        Welcome back, {sentenceCase(username)}!
-                    </h2>
-                    <p>Here is your user dashboard. You can view, manage, and explore records as needed.</p>
-                </div>
-            </div>
-
-            <div className="ui segment" style={{ marginTop: '2rem' }}>
-                <BuildList type="user" origin="welcome" />
+            <div className="custom-tab-wrapper">
+                <CloseableTabs
+                    data={tabs}
+                    activeIndex={activeIndex}
+                    onCloseTab={handleCloseTab}
+                    onTabClick={handleClickTab}
+                    // tabPanelColor="#f9f9f9"
+                    // renderClose={() => (
+                    //     <span className="close-btn" title="Close this tab">&times;</span>
+                    // )}
+                    closeTitle="Close this tab"
+                />
             </div>
         </div>
     );
 };
 
-export const WelcomeHeader = () => {
+export const HomePageHeader = ({ handleAddTab }) => {
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -90,6 +92,7 @@ export const WelcomeHeader = () => {
                 ref={sidebarRef}
                 sidebarVisible={sidebarVisible}
                 closeSidebar={closeSidebar}
+                handleAddTab={handleAddTab}
                 onLogout={handleLogout}
             />
             <div className="center-header">
@@ -115,7 +118,7 @@ export const WelcomeHeader = () => {
     );
 };
 
-const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, sidebarRef) => {
+const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, onLogout }, sidebarRef) => {
     const { schemaList } = useSchema();
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
@@ -140,11 +143,16 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, si
                         <i className="home icon"></i>
                         <span style={{ marginLeft: "0.5rem" }}>Home</span>
                     </Link>
-                    {Object.values(schemaList).map(({ collection, icon, label }) => collection && (
-                        <Link key={label} to={`/getalldata/${collection}`} state={{ collection }} className="sidebar-menu-item" onClick={closeSidebar}>
+                    {Object.values(schemaList).map(({ key, collection, icon, label }) => collection && (
+                        <div
+                            key={label}
+                            className="sidebar-menu-item"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => { handleAddTab(label, key); closeSidebar(); }}
+                        >
                             <i className={`${icon} icon`}></i>
                             <span style={{ marginLeft: "0.5rem" }}>{label}</span>
-                        </Link>
+                        </div>
                     ))}
                 </div>
 
@@ -184,4 +192,21 @@ const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
     );
 };
 
-export default Welcome;
+export const Welcome = ({ username }) => (
+    <>
+        <div className="ui card fluid">
+            <div className="content">
+                <h2 className="ui header" style={{ color: '#1b1c1d' }}>
+                    Welcome back, {sentenceCase(username)}!
+                </h2>
+                <p>Here is your user dashboard. You can view, manage, and explore records as needed.</p>
+            </div>
+        </div>
+
+        <div className="ui segment" style={{ marginTop: '2rem' }}>
+            <BuildList type="user" origin="welcome" />
+        </div>
+    </>
+);
+
+export default HomePage;

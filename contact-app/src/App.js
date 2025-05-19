@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import { v4 as uuidv4 } from 'uuid';
 import './App.css';
-import { Main } from './components/header';
+import { MainPage } from './components/header';
 import { showError, showSuccess, showWarning } from './contexts/common';
 import NoauthRoutes from './routes/noauth-route';
 
@@ -78,7 +78,7 @@ const App = () => {
         <Suspense fallback={<div className='fallback-loader'>Loading...</div>}>
 
           <Routes>
-            <Route path='/' element={<Main />} />
+            <Route path='/' element={<MainPage />} />
             <Route path="*" element={<NoauthRoutes handleLogin={handleLogin} handleRegistration={handleRegistration} />} />
           </Routes>
 

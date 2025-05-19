@@ -180,6 +180,7 @@
 .parent-container .fluid {
   background: #f4f8ff;
   padding: 1rem;
+  margin-top: 0.5rem !important;
 }
 
 .detail-tab {
@@ -680,4 +681,50 @@
 .sidebar-logout {
   cursor: pointer;
   padding: 1rem 2rem 1.5rem;
+}
+
+
+/* Tab style.css */
+.custom-tab-wrapper {
+  .tab {
+    display: inline-block;
+    background-color: #f2f2f2;
+    color: #333;
+    padding: 8px 16px;
+    margin-right: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+
+  .tab:hover {
+    background-color: #e0e0e0;
+  }
+
+  .tab.active {
+    background-color: white;
+    border-bottom: 1px solid white;
+    font-weight: bold;
+  }
+
+  .closeTab {
+    margin-left: 8px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 50%;
+    background-color: #eee;
+    transition: background 0.3s;
+  }
+
+  .closeTab:hover {
+    background-color: #ccc;
+  }
+
+  .tab {
+    font-size: 16px;
+  }
 }
