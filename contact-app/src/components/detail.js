@@ -27,6 +27,8 @@ const Detail = () => {
         }
     };
 
+    const title = data?.[fields.find(f => f.isTitle)?.name] || data?.name || data?.username;
+
     return (
         <div className="ui main container">
             <div className="responsive-header">
@@ -35,7 +37,7 @@ const Detail = () => {
                     <div style={{ display: "flex" }}>
                         <img src={profilepicture || user} alt="user" style={{ width: '100px' }} />
                         <div style={{ marginLeft: '1rem', maxWidth: "70%" }}>
-                            <h4>{data?.name || data?.username}</h4>
+                            <h4>{title}</h4>
                         </div>
 
                         {/* Action Buttons */}
