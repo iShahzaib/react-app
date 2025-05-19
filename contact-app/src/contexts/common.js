@@ -166,10 +166,24 @@ export const FieldCard = ({ self, field }) => {
                                     placeholder={field.placeholder || ''}
                                     style={{ flex: 1 }}
                                 />
-                                <button type="button" onClick={() => removeArrayItem(index)} style={{ marginLeft: 8 }}>Remove</button>
+                                <button
+                                    type="button"
+                                    onClick={() => removeArrayItem(index)}
+                                    style={{ padding: "0.75rem", marginLeft: 8 }}
+                                    className="ui negative basic button"
+                                >
+                                    Remove
+                                </button>
                             </div>
                         ))}
-                        <button type="button" onClick={addArrayItem}>Add Item</button>
+                        <button
+                            type="button"
+                            style={{ padding: "0.75rem" }}
+                            className="ui positive basic button"
+                            onClick={addArrayItem}
+                        >
+                            Add Item
+                        </button>
                     </div>
                 );
             }

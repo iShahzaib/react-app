@@ -118,9 +118,6 @@ export const WelcomeHeader = () => {
 const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, sidebarRef) => {
     const { schemaList } = useSchema();
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
-    const isLoggedIn = !!username;
-
-    if (!isLoggedIn) return null;
 
     return (
         <div ref={sidebarRef} className={`custom-sidebar ${sidebarVisible ? 'show' : ''}`}>
