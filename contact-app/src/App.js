@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import { v4 as uuidv4 } from 'uuid';
 import './App.css';
-import Header, { Main } from './components/header';
+import { Main } from './components/header';
 import { showError, showSuccess, showWarning } from './contexts/common';
 import NoauthRoutes from './routes/noauth-route';
 
@@ -74,7 +74,6 @@ const App = () => {
   return (
     <div className='ui'>
       <Router>
-        <Header />
         {/* <div className='extra-gap'></div> */}
         <Suspense fallback={<div className='fallback-loader'>Loading...</div>}>
 
