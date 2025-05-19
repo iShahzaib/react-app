@@ -101,7 +101,10 @@ const Detail = () => {
                                 {fields.map(field => {
                                     const fieldValue = field.type === 'select'
                                         ? field.options.find(opt => opt.value === data?.[field.name])?.label
-                                        : data?.[field.name];
+                                        : field.type === 'array'
+                                            ? data?.[field.name] && data?.[field.name].join(', ')
+                                            : data?.[field.name];
+
                                     return (
                                         <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
                                             <strong>{field.label}:</strong> {fieldValue || '—'}

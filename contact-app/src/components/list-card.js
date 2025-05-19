@@ -61,7 +61,10 @@ const ListCard = (props) => {
 
                 const fieldValue = field.type === 'select'
                     ? field.options.find(opt => opt.value === data?.[field.name])?.label
-                    : data?.[field.name];
+                    : field.type === 'array'
+                        ? data?.[field.name] && data?.[field.name].join(', ')
+                        : data?.[field.name];
+
                 return (
                     <td key={field.name}>
                         <span title={fieldValue || ''}>{fieldValue || '—'}</span>

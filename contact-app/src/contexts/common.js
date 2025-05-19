@@ -83,6 +83,43 @@ export const RenderForm = ({ title, fields, buttonLabel, self }) => {
 };
 
 export const FieldCard = ({ self, field }) => {
+    const value = self.state[field.name] || [];
+
+    const handleArrayItemChange = (index, newValue) => {
+        // const updated = [...(value || [])];
+        const updated = [...value];
+        updated[index] = newValue;
+        self.handleChange({
+            target: {
+                name: field.name,
+                value: updated
+            }
+        });
+    };
+
+    const addArrayItem = () => {
+        // const updated = [...(value || []), ''];
+        const updated = [...value, ''];
+        self.handleChange({
+            target: {
+                name: field.name,
+                value: updated
+            }
+        });
+    };
+
+    const removeArrayItem = (index) => {
+        // const updated = [...(value || [])];
+        const updated = [...value];
+        updated.splice(index, 1);
+        self.handleChange({
+            target: {
+                name: field.name,
+                value: updated
+            }
+        });
+    };
+
     switch (field.type) {
         case 'select':
             return (
@@ -114,6 +151,61 @@ export const FieldCard = ({ self, field }) => {
                     onChange={self.handleChange}
                     style={{ height: "8em" }}
                 />
+            );
+        case 'array':
+            if (field.subtype === 'text') {
+                return (
+                    <div>
+                        <label style={{ marginRight: "0.5rem" }}>{field.label}</label>
+                        {value.map((item, index) => (
+                            <div key={index} style={{ display: 'flex', marginBottom: 8 }}>
+                                <input
+                                    type="text"
+                                    value={item}
+                                    onChange={(e) => handleArrayItemChange(index, e.target.value)}
+                                    placeholder={field.placeholder || ''}
+                                    style={{ flex: 1 }}
+                                />
+                                <button type="button" onClick={() => removeArrayItem(index)} style={{ marginLeft: 8 }}>Remove</button>
+                            </div>
+                        ))}
+                        <button type="button" onClick={addArrayItem}>Add Item</button>
+                    </div>
+                );
+            }
+            break;
+        case 'checkbox':
+            return (
+                <div>
+                    <input
+                        id={field.name}
+                        type="checkbox"
+                        name={field.name}
+                        required={field.required}
+                        checked={self.state[field.name]}
+                        onChange={self.handleChange}
+                    />
+                    <label htmlFor={field.name}>{field.label}</label>
+                </div>
+            );
+        case 'radio':
+            return (
+                <div>
+                    {field.options?.map(opt => (
+                        <div key={opt.value}>
+                            <input
+                                id={`${field.name}-${opt.value}`}
+                                type="radio"
+                                name={field.name}
+                                value={opt.value}
+                                required={field.required}
+                                checked={self.state[field.name] === opt.value}
+                                onChange={self.handleChange}
+                            />
+                            <label htmlFor={`${field.name}-${opt.value}`}>{opt.label}</label>
+                        </div>
+                    ))}
+                </div>
             );
         default:
             return (

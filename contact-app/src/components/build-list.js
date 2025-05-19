@@ -50,9 +50,9 @@ const BuildList = React.memo(({ type, origin }) => {
     }
 
     const filteredData = listData.filter(data =>
-        data.name?.toLowerCase().includes(searchTerm.toLowerCase())
-        || data.username?.toLowerCase().includes(searchTerm.toLowerCase())
-        || data.email?.toLowerCase().includes(searchTerm.toLowerCase())
+        Object.values(data).some(value =>
+            value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        )
     );
 
     const deleteObjects = async (_ids) => {
