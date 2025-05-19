@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
-import CloseableTabs from 'react-closeable-tabs';
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+// import CloseableTabs from 'react-closeable-tabs';
 import user from '../images/nouser.jpg';
 import logo from '../images/logo.png';
 import socketClient from '../api/socket';
@@ -33,7 +33,8 @@ const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
 
     return (
         <div className="ui container parent-container" style={{ paddingBottom: '1rem' }}>
-            <div className="custom-tab-wrapper">
+            <Welcome />
+            {/* <div className="custom-tab-wrapper">
                 <CloseableTabs
                     data={tabs}
                     activeIndex={activeIndex}
@@ -45,8 +46,8 @@ const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
                     // )}
                     closeTitle="Close this tab"
                 />
-            </div>
-        </div>
+            </div> */}
+        </div >
     );
 };
 
@@ -120,6 +121,7 @@ export const HomePageHeader = ({ handleAddTab }) => {
 
 const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, onLogout }, sidebarRef) => {
     const { schemaList } = useSchema();
+    const navigate = useNavigate();
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     return (
@@ -148,7 +150,11 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                             key={label}
                             className="sidebar-menu-item"
                             style={{ cursor: "pointer" }}
-                            onClick={() => { handleAddTab(label, key); closeSidebar(); }}
+                            onClick={() => {
+                                // handleAddTab(label, key);
+                                navigate(`/getalldata/${collection}`, { state: { collection } });
+                                closeSidebar();
+                            }}
                         >
                             <i className={`${icon} icon`}></i>
                             <span style={{ marginLeft: "0.5rem" }}>{label}</span>
