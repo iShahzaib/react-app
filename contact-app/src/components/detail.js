@@ -29,7 +29,7 @@ const Detail = () => {
 
     const title = tab.isMainTitle
         ? tab.isMainTitle.replace(/\$\{(\w+)\}/g, (_, key) => {
-            const value = data[key];
+            const value = data?.[key];
             return value !== undefined && value !== null ? value : '';
         })
         : data?.[fields.find(f => f.isTitle)?.name] || data?.name;
