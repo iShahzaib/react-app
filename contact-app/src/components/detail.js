@@ -28,11 +28,11 @@ const Detail = () => {
     };
 
     const title = tab.isMainTitle
-        ? data?.[fields.find(f => f.isTitle)?.name] || data?.name
-        : tab.isTitleFormula.replace(/\$\{(\w+)\}/g, (_, key) => {
+        ? tab.isMainTitle.replace(/\$\{(\w+)\}/g, (_, key) => {
             const value = data[key];
             return value !== undefined && value !== null ? value : '';
-        });
+        })
+        : data?.[fields.find(f => f.isTitle)?.name] || data?.name;
 
     return (
         <div className="ui main container">
