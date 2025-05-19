@@ -77,9 +77,9 @@ const Detail = () => {
                             Details
                         </Link>
                     </li>
-                    {tab?.tabItems?.map(({ name, icon, bgcolor, schemaName }) => {
+                    {tab?.tabItems?.map(({ name, icon, schemaName }) => {
                         const schemaData = schemaList[schemaName] || {};
-                        const { key, icon: mainIcon, className } = schemaData;
+                        const { key, icon: mainIcon, className, bgcolor } = schemaData;
 
                         return (
                             <li key={key || schemaName}>
