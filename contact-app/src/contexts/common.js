@@ -120,6 +120,11 @@ export const FieldCard = ({ self, field }) => {
         });
     };
 
+    const getLocalToday = () => {
+        const today = new Date();
+        return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    };
+
     switch (field.type) {
         case 'select':
             return (
@@ -227,8 +232,7 @@ export const FieldCard = ({ self, field }) => {
                     name={field.name}
                     required={field.required}
                     placeholder={field.placeholder}
-                    value={self.state[field.name]}
-                    defaultValue={self.state[field.name]}
+                    value={self.state[field.name] || getLocalToday()}
                     onChange={self.handleChange}
                 />
             );
