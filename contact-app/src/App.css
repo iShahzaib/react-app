@@ -184,6 +184,15 @@
   .remove-subtype-field {
     width: 20% !important;
   }
+
+  .subtype-field {
+    margin: 0 !important;
+    margin-top: 8px !important;
+  }
+
+  .add-subtype-field {
+    margin-top: 8px !important;
+  }
 }
 
 .parent-container .fluid {
@@ -737,6 +746,11 @@
   }
 }
 
+.subtype-field {
+  display: flex;
+  margin: 8px 0;
+}
+
 .remove-subtype-field {
   padding: 0.75rem !important;
   margin: 0 0 0 8px !important;
@@ -744,5 +758,4 @@
 
 .add-subtype-field {
   padding: 0.75rem;
-  /* margin-top: 8px !important; */
 }

@@ -158,7 +158,7 @@ export const FieldCard = ({ self, field }) => {
                     <div>
                         <label style={{ marginRight: "0.5rem" }}>{field.label}</label>
                         {value.map((item, index) => (
-                            <div key={index} style={{ display: 'flex', margin: "8px 0" }}>
+                            <div key={index} className="subtype-field">
                                 <input
                                     type="text"
                                     value={item}
