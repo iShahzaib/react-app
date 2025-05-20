@@ -104,6 +104,9 @@
 
   .responsive-header h2 {
     font-size: 1.3rem;
+  }
+
+  .responsive-header:not(.form-header) h2 {
     max-width: 45% !important;
   }
 
@@ -210,7 +213,7 @@
   flex-wrap: wrap;
 }
 
-.responsive-header h2 {
+.responsive-header:not(.form-header) h2 {
   max-width: 75%;
 }
 
@@ -682,7 +685,6 @@
   cursor: pointer;
   padding: 1rem 2rem 1.5rem;
 }
-
 
 /* Tab style.css */
 .custom-tab-wrapper {

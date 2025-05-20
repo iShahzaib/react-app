@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { RenderForm, showWarning } from "../contexts/common";
+import { RenderForm, sentenceCase, showWarning } from "../contexts/common";
 import { defaultFields } from "../constant";
 import { useSchema } from "../contexts/SchemaContext";
 
@@ -24,17 +24,12 @@ class UpdateDataClass extends React.Component {
 
     redirectToPreviousPage = (data) => {
         const { state, navigate } = this.props;
+        const navState = { type: state.type, data, collection: `${sentenceCase(state.type)}` };
 
-        let url = '/getalldata/Contact';
-        const navState = { type: state?.type, data, collection: 'Contact' };
-
-        if (state?.location) {
-            url = `/detail/${state.type}/${state.data._id}`;
-        } else if (state?.type) {
-            url = `/welcome/${state.username}`;
-        }
-
-        navigate(url, { state: navState });
+        navigate(
+            state.location ? `/detail/${state.type}/${state.data._id}` : `/getalldata/${sentenceCase(state.type)}`,
+            { state: navState }
+        );
     };
 
     handleChange = (e) => {
@@ -84,7 +79,7 @@ class UpdateDataClass extends React.Component {
 const UpdateData = (props) => {
     const { state } = useLocation();
     const { schemaList } = useSchema();
-    
+
     const { data, location, loggedInUsername: username, type } = state ?? {};
 
     return <UpdateDataClass {...props} navigate={useNavigate()} schemaList={schemaList} state={{ data, location, username, type }} />;

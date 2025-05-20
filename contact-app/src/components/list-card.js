@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import user from '../images/nouser.jpg';
-import { confirmDelete, showError, showSuccess } from "../contexts/common";
+import { confirmDelete, sentenceCase, showError, showSuccess } from "../contexts/common";
 import { defaultFields } from "../constant";
 import { useSchema } from "../contexts/SchemaContext";
 
@@ -26,8 +26,8 @@ const ListCard = (props) => {
 
                 showSuccess(`The ${type} has been deleted successfully.`, 'Deleted!');
                 navigate(
-                    `/${type ? `welcome/${loggedInUsername}` : `${type}s`}`,
-                    { state: { ...props.data, loggedInUsername, type } }
+                    `/getalldata/${sentenceCase(type)}`,
+                    { state: { ...props.data, loggedInUsername, type, collection: `${sentenceCase(type)}` } }
                 );
             }
         });
