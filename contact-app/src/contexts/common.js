@@ -158,7 +158,7 @@ export const FieldCard = ({ self, field }) => {
                     <div>
                         <label style={{ marginRight: "0.5rem" }}>{field.label}</label>
                         {value.map((item, index) => (
-                            <div key={index} style={{ display: 'flex', marginBottom: 8 }}>
+                            <div key={index} style={{ display: 'flex', margin: "8px 0" }}>
                                 <input
                                     type="text"
                                     value={item}
@@ -168,9 +168,8 @@ export const FieldCard = ({ self, field }) => {
                                 />
                                 <button
                                     type="button"
+                                    className="ui negative basic button remove-subtype-field"
                                     onClick={() => removeArrayItem(index)}
-                                    style={{ padding: "0.75rem", marginLeft: 8 }}
-                                    className="ui negative basic button"
                                 >
                                     Remove
                                 </button>
@@ -178,8 +177,7 @@ export const FieldCard = ({ self, field }) => {
                         ))}
                         <button
                             type="button"
-                            style={{ padding: "0.75rem" }}
-                            className="ui positive basic button"
+                            className="ui positive basic button add-subtype-field"
                             onClick={addArrayItem}
                         >
                             Add Item
