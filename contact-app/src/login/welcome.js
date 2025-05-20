@@ -33,7 +33,7 @@ const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
 
     return (
         <div className="ui container parent-container" style={{ paddingBottom: '1rem' }}>
-            <Welcome />
+            <Welcome username={username} />
             {/* <div className="custom-tab-wrapper">
                 <CloseableTabs
                     data={tabs}
