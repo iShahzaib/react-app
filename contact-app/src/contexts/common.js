@@ -219,6 +219,19 @@ export const FieldCard = ({ self, field }) => {
                     ))}
                 </div>
             );
+        case 'date':
+            return (
+                <input
+                    id={field.name}
+                    type={field.type}
+                    name={field.name}
+                    required={field.required}
+                    placeholder={field.placeholder}
+                    value={self.state[field.name]}
+                    defaultValue={self.state[field.name]}
+                    onChange={self.handleChange}
+                />
+            );
         default:
             return (
                 <input
