@@ -93,7 +93,7 @@ const ChatComponent = () => {
                 </div>
                 <h2 className="chat-username">{username}</h2>
                 <div className="responsive-button">
-                    <Link to={`/getalldata/User`} state={{ collection: 'User' }}>
+                    <Link to={`/welcome/${loggedInUsername}`}>
                         <button className="ui button close-btn"><i className="close icon red" /></button>
                     </Link>
                 </div>
