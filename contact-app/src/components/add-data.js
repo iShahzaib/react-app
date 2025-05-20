@@ -24,8 +24,9 @@ class AddDataClass extends React.Component {
     redirectToPreviousPage = () => {
         const { state, navigate } = this.props;
         navigate(
-            `/${state.type ? `welcome/${state.username}` : 'getalldata/Contact'}`,
-            { state: { type: state.type, collection: 'Contact' } }
+            // `/${state.type ? `welcome/${state.username}` : 'getalldata/Contact'}`,
+            `/getalldata/${sentenceCase(state.type)}`,
+            { state: { type: state.type, collection: `${sentenceCase(state.type)}` } }
         );
     };
 
