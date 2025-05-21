@@ -54,7 +54,13 @@ export const confirmDelete = (detail = '', extraParam) => {
     return Swal.fire(params);
 }
 
-export const RenderForm = ({ title, fields, buttonLabel, self }) => {
+export const RenderForm = ({ title, buttonLabel, self }) => {
+    const fields = self.fields;
+
+    if (!title && self.state?._id) {
+        title = 'Edit ' + (self.state?.[fields.find(f => f.isTitle)?.name] || self.state?.name || '');
+    }
+
     return (
         <div className="ui main container">
             <div className="responsive-header form-header">

@@ -65,12 +65,7 @@ class UpdateDataClass extends React.Component {
 
     render() {
         return (
-            <RenderForm
-                title={`Edit ${this.state.name}`}
-                fields={this.fields}
-                buttonLabel="Update"
-                self={this}
-            />
+            <RenderForm buttonLabel="Update" self={this} />
         );
     }
 }

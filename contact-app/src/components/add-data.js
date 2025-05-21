@@ -52,23 +52,17 @@ class AddDataClass extends React.Component {
 
         const response = await this.props.addDataHandler(this.state, sentenceCase(this.props.state.type));
         if (response === 'success') {
-            // Reset all fields
             const clearedState = {};
             this.fields.forEach(f => clearedState[f.name] = '');
             this.setState(clearedState);
 
-            this.redirectToPreviousPage()
+            this.redirectToPreviousPage();
         }
     };
 
     render() {
         return (
-            <RenderForm
-                title={`Add ${sentenceCase(this.props.state.type)}`}
-                fields={this.fields}
-                buttonLabel="Add"
-                self={this}
-            />
+            <RenderForm title={`Add ${sentenceCase(this.props.state.type)}`} buttonLabel="Add" self={this} />
         );
     }
 }
