@@ -8,9 +8,11 @@ class UpdateDataClass extends React.Component {
     constructor(props) {
         super(props);
 
-        const tabItem = props.schemaList[props.state.type];
-        this.fields = tabItem?.fields || defaultFields;
+        // Find current tab's field config
+        this.tabItem = props.schemaList[props.state.type];
+        this.fields = this.tabItem?.fields || defaultFields;
 
+        // Initialize state based on field names
         const initialState = {};
         this.fields.forEach(f => {
             initialState[f.name] = props.state.data[f.name] ?? '';
@@ -49,9 +51,10 @@ class UpdateDataClass extends React.Component {
         this.redirectToPreviousPage(this.state);
     };
 
-    handleSave = (e) => {
+    handleSave = async (e) => {
         e.preventDefault();
 
+        // Check for any empty required fields
         for (let field of this.fields) {
             if (field.required && !this.state[field.name]) {
                 showWarning('All the fields are mandatory.');
