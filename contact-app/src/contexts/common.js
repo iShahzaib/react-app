@@ -181,10 +181,7 @@ export const FieldCard = ({ self, field }) => {
                             self.handleChange({
                                 target: {
                                     name: field.name,
-                                    value: selectedOption ? selectedOption.value : ''
-                                },
-                                refTarget: {
-                                    refName: `${field.name}_RefFields`,
+                                    value: selectedOption ? selectedOption.value : null,
                                     refValue: selectedOption || null
                                 }
                             });
