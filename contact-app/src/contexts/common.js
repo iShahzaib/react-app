@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import api from "../api/server";
 
 // export const checkEmailUnique = async (email, collection) => {
 //     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${collection}?email=${email}`);
@@ -89,11 +91,59 @@ export const RenderForm = ({ title, buttonLabel, self }) => {
 };
 
 export const FieldCard = ({ self, field }) => {
-    const value = self.state[field.name] || [];
+    const [refOptions, setRefOptions] = useState([]);
+    const fieldData = self.state[field.name];
+
+    const refFieldData = (field.type === 'select' && field.ref && fieldData && self.state[`${field.name}_RefFields`])
+        ? self.state[`${field.name}_RefFields`]
+        : null;
+
+    useEffect(() => {
+        if (refFieldData && !refOptions.find(opt => opt.value === fieldData)) {
+            const manualOption = {
+                value: fieldData,
+                label: refFieldData.label,
+                _id: fieldData
+            };
+            setRefOptions(prev => [...prev, manualOption]);
+        }
+    }, [fieldData, refFieldData, refOptions]);
+
+    const fetchRefOptions = async () => {
+        if (field.type === 'select' && field.ref) {
+            try {
+                const response = await api.get(`/api/getdocdata?collection=${field.ref}`);
+
+                const formatted = response?.data?.map(item => {
+                    const labelName = field.refFields?.map(fld => item[fld] || '').join(' ') || item._id;
+                    return {
+                        value: item._id,
+                        label: labelName,
+                        _id: item._id // in case needed in _RefFields
+                    };
+                });
+                formatted.sort((a, b) => {
+                    let x = a.label.toLowerCase();
+                    let y = b.label.toLowerCase();
+                    return x > y ? 1 : y > x ? -1 : 0;
+                });
+
+                if (self.refDataMap) {
+                    self.refDataMap[field.name] = formatted;
+                } else {
+                    self.refDataMap = { [field.name]: formatted };
+                }
+
+                setRefOptions(formatted);
+            } catch (error) {
+                console.error(`Error fetching ref options for ${field.name}:`, error);
+            }
+        }
+    };
 
     const handleArrayItemChange = (index, newValue) => {
-        // const updated = [...(value || [])];
-        const updated = [...value];
+        // const updated = [...(fieldData || [])];
+        const updated = [...fieldData];
         updated[index] = newValue;
         self.handleChange({
             target: {
@@ -104,8 +154,8 @@ export const FieldCard = ({ self, field }) => {
     };
 
     const addArrayItem = () => {
-        // const updated = [...(value || []), ''];
-        const updated = [...value, ''];
+        // const updated = [...(fieldData || []), ''];
+        const updated = [...fieldData, ''];
         self.handleChange({
             target: {
                 name: field.name,
@@ -115,8 +165,8 @@ export const FieldCard = ({ self, field }) => {
     };
 
     const removeArrayItem = (index) => {
-        // const updated = [...(value || [])];
-        const updated = [...value];
+        // const updated = [...(fieldData || [])];
+        const updated = [...fieldData];
         updated.splice(index, 1);
         self.handleChange({
             target: {
@@ -133,6 +183,7 @@ export const FieldCard = ({ self, field }) => {
 
     switch (field.type) {
         case 'select':
+            const optionsToRender = field.options || refOptions;
             return (
                 <select
                     id={field.name}
@@ -140,11 +191,12 @@ export const FieldCard = ({ self, field }) => {
                     name={field.name}
                     placeholder={field.placeholder}
                     required={field.required}
-                    value={self.state[field.name]}
+                    value={fieldData}
                     onChange={self.handleChange}
+                    onFocus={fetchRefOptions}
                 >
                     <option value=""></option>
-                    {field.options?.map(opt => (
+                    {optionsToRender.map(opt => (
                         <option key={opt.value} value={opt.value}>
                             {opt.label}
                         </option>
@@ -158,7 +210,7 @@ export const FieldCard = ({ self, field }) => {
                     name={field.name}
                     required={field.required}
                     placeholder={field.placeholder}
-                    value={self.state[field.name]}
+                    value={fieldData}
                     onChange={self.handleChange}
                     style={{ height: "8em" }}
                 />
@@ -168,7 +220,7 @@ export const FieldCard = ({ self, field }) => {
                 return (
                     <div>
                         <label style={{ marginRight: "0.5rem" }}>{field.label}</label>
-                        {value.map((item, index) => (
+                        {(fieldData || []).map((item, index) => (
                             <div key={index} className="subtype-field">
                                 <input
                                     type="text"
@@ -205,7 +257,7 @@ export const FieldCard = ({ self, field }) => {
                         type="checkbox"
                         name={field.name}
                         required={field.required}
-                        checked={self.state[field.name]}
+                        checked={fieldData}
                         onChange={self.handleChange}
                     />
                     <label htmlFor={field.name}>{field.label}</label>
@@ -222,7 +274,7 @@ export const FieldCard = ({ self, field }) => {
                                 name={field.name}
                                 value={opt.value}
                                 required={field.required}
-                                checked={self.state[field.name] === opt.value}
+                                checked={fieldData === opt.value}
                                 onChange={self.handleChange}
                             />
                             <label htmlFor={`${field.name}-${opt.value}`}>{opt.label}</label>
@@ -238,7 +290,7 @@ export const FieldCard = ({ self, field }) => {
                     name={field.name}
                     required={field.required}
                     placeholder={field.placeholder}
-                    value={self.state[field.name] || getLocalToday()}
+                    value={fieldData || getLocalToday()}
                     onChange={self.handleChange}
                 />
             );
@@ -250,9 +302,26 @@ export const FieldCard = ({ self, field }) => {
                     name={field.name}
                     required={field.required}
                     placeholder={field.placeholder}
-                    value={self.state[field.name]}
+                    value={fieldData}
                     onChange={self.handleChange}
                 />
             );
+    }
+};
+
+export const displayLabel = (field, data) => {
+    const fieldData = data?.[field.name];
+
+    switch (field.type) {
+        case 'select':
+            return (field.ref && field.refFields && data[`${field.name}_RefFields`]
+                ? data[`${field.name}_RefFields`]
+                : field.options?.find(opt => opt.value === fieldData))?.label;
+
+        case 'array':
+            return fieldData ? fieldData.join(', ') : ''
+
+        default:
+            return fieldData;
     }
 };

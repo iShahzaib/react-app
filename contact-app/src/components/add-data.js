@@ -50,7 +50,26 @@ class AddDataClass extends React.Component {
             }
         }
 
-        const response = await this.props.addDataHandler(this.state, sentenceCase(this.props.state.type));
+        const dataToSave = { ...this.state };
+
+        this.fields.forEach(field => {
+            const value = this.state[field.name];
+
+            if (field.type === 'select' && field.ref && field.refFields?.length && value) {
+                const selectedItem = this.refDataMap?.[field.name]?.find(opt => opt.value === value);
+
+                if (selectedItem) {
+                    dataToSave[`${field.name}_RefFields`] = {
+                        label: selectedItem.label,
+                        _id: selectedItem._id || value,
+                        IsAccessible: true
+                    };
+                }
+            }
+        });
+
+        const response = await this.props.addDataHandler(dataToSave, sentenceCase(this.props.state.type));
+
         if (response === 'success') {
             const clearedState = {};
             this.fields.forEach(f => clearedState[f.name] = '');

@@ -14,6 +14,10 @@ class UpdateDataClass extends React.Component {
         const initialState = {};
         this.fields.forEach(f => {
             initialState[f.name] = props.state.data[f.name] ?? '';
+
+            if (f.type === 'select' && f.ref && f.refFields?.length) {
+                initialState[`${f.name}_RefFields`] = props.state.data[`${f.name}_RefFields`] ?? '';
+            }
         });
 
         this.state = {
@@ -54,8 +58,20 @@ class UpdateDataClass extends React.Component {
         const { updateDataHandler, state } = this.props;
         this.updatedData = { ...state.data };
 
-        this.fields.forEach(f => {
-            this.updatedData[f.name] = this.state[f.name];
+        this.fields.forEach(field => {
+            const fieldData = this.state[field.name];
+            this.updatedData[field.name] = fieldData;
+
+            // For select fields with ref and refFields
+            if (field.type === 'select' && field.ref && field.refFields?.length && fieldData) {
+                const selectedItem = this.refDataMap[field.name].find(opt => opt.value === fieldData);
+
+                this.updatedData[`${field.name}_RefFields`] = {
+                    _id: selectedItem?._id || fieldData,
+                    label: selectedItem?.label || '',
+                    IsAccessible: true
+                };
+            }
         });
 
         updateDataHandler(this.updatedData);
