@@ -12,11 +12,15 @@ import api from '../api/server';
 import { useSchema } from '../contexts/SchemaContext';
 
 const AuthRoutes = () => {
+    const { setSchemaList } = useSchema();
+    const [loading, setLoading] = useState(true);
+
     const [records, setRecords] = useState([]);
     const [users, setUsers] = useState([]);
 
     const { username } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
+    const [activeIndex, setActiveIndex] = useState(0);
     const [tabs, setTabs] = useState([
         {
             tab: 'Welcome',
@@ -26,8 +30,22 @@ const AuthRoutes = () => {
         }
     ]);
 
-    const [activeIndex, setActiveIndex] = useState(0);
-    const { setSchemaList } = useSchema();
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await api.get(`/api/getdocdata?collection=Schema`);
+                const schemaObj = Object.fromEntries(response.data?.map(item => [item.key, item]));
+                setSchemaList(schemaObj);
+                window['schemaList'] = schemaObj;
+            } catch (err) {
+                console.error("Failed to load schema", err);
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [setSchemaList]);
+
+    if (loading) return <div className="fallback-loader">Loading schema...</div>;
 
     const handleCloseTab = (id) => {
         const tabIndexToClose = tabs.findIndex(tab => tab.id === id);
@@ -50,15 +68,6 @@ const AuthRoutes = () => {
     const handleClickTab = (id, newIndex) => {
         setActiveIndex(newIndex);
     };
-
-    useEffect(() => {
-        (async () => {
-            const response = await api.get(`/api/getdocdata?collection=Schema`);
-            const schemaObj = Object.fromEntries(response.data?.map(item => [item.key, item]));
-            setSchemaList(schemaObj);
-            window['schemaList'] = schemaObj;
-        })();
-    }, [setSchemaList]);
 
     return (
         <Routes>
