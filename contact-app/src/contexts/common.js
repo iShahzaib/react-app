@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Select from 'react-select';
 import Swal from "sweetalert2";
 import api from "../api/server";
 
@@ -112,21 +113,15 @@ export const FieldCard = ({ self, field }) => {
     const fetchRefOptions = async () => {
         if (field.type === 'select' && field.ref) {
             try {
-                const response = await api.get(`/api/getdocdata?collection=${field.ref}`);
+                const projection = field.refFields?.concat('_id')?.join(','); // Always include _id for value
+                const response = await api.get(`/api/getdocdata?collection=${field.ref}&projection=${projection}`);
 
                 const formatted = response?.data?.map(item => {
                     const labelName = field.refFields?.map(fld => item[fld] || '').join(' ') || item._id;
-                    return {
-                        value: item._id,
-                        label: labelName,
-                        _id: item._id // in case needed in _RefFields
-                    };
+                    return { value: item._id, label: labelName, _id: item._id };
                 });
-                formatted.sort((a, b) => {
-                    let x = a.label.toLowerCase();
-                    let y = b.label.toLowerCase();
-                    return x > y ? 1 : y > x ? -1 : 0;
-                });
+
+                formatted.sort((a, b) => a.label.localeCompare(b.label));
 
                 if (self.refDataMap) {
                     self.refDataMap[field.name] = formatted;
@@ -183,25 +178,42 @@ export const FieldCard = ({ self, field }) => {
 
     switch (field.type) {
         case 'select':
-            const optionsToRender = field.options || refOptions;
             return (
-                <select
-                    id={field.name}
-                    className="ui dropdown"
-                    name={field.name}
-                    placeholder={field.placeholder}
-                    required={field.required}
-                    value={fieldData}
-                    onChange={self.handleChange}
-                    onFocus={fetchRefOptions}
-                >
-                    <option value=""></option>
-                    {optionsToRender.map(opt => (
-                        <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                        </option>
-                    ))}
-                </select>
+                field.ref
+                    ? <Select
+                        inputId={field.name}
+                        name={field.name}
+                        value={refOptions.find(opt => opt.value === fieldData) || null}
+                        onChange={(selectedOption) => {
+                            self.handleChange({
+                                target: {
+                                    name: field.name,
+                                    value: selectedOption ? selectedOption.value : ''
+                                }
+                            });
+                        }}
+                        onFocus={fetchRefOptions}
+                        options={refOptions}
+                        placeholder={field.placeholder || 'Select...'}
+                        className={`${field.required ? 'required' : ''}`}
+                        isClearable
+                    />
+                    : <select
+                        id={field.name}
+                        className="ui dropdown"
+                        name={field.name}
+                        placeholder={field.placeholder}
+                        required={field.required}
+                        value={fieldData}
+                        onChange={self.handleChange}
+                    >
+                        <option value=""></option>
+                        {field.options.map(opt => (
+                            <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                            </option>
+                        ))}
+                    </select>
             );
         case 'textarea':
             return (

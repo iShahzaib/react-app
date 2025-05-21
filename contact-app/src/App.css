@@ -242,8 +242,9 @@
   margin: 0 0 auto auto;
 }
 
-[required] {
+[required], .required {
   border-left: 0.1rem solid red !important;
+  border-radius: 0.28571429rem !important;
 }
 
 .search-container {

@@ -6,11 +6,15 @@ const router = express.Router();
 
 router.get('/getdocdata', async (req, res) => {
     try {
-        const collectionName = req.query.collection;
+        const { collection, projection } = req.query;
+
+        const project = projection
+            ? projection.split(',').reduce((acc, field) => ({ ...acc, [field]: 1 }), {})
+            : {};
 
         const db = await getDBConnection('MSH_CONTACTAPP');
 
-        const data = await db.collection(collectionName).find({ IsAccessible: true }).toArray();
+        const data = await db.collection(collection).find({ IsAccessible: true }, { projection: project }).toArray();
 
         res.status(201).json(data);
     } catch (err) {
