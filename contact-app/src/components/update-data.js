@@ -39,6 +39,11 @@ class UpdateDataClass extends React.Component {
     handleChange = (e) => {
         const { name, value } = e.target;
         this.setState({ [name]: value });
+
+        if (e.refTarget) {
+            const { refName, refValue } = e.refTarget;
+            this.setState({ [refName]: refValue });
+        }
     };
 
     handleCancel = () => {
@@ -63,14 +68,8 @@ class UpdateDataClass extends React.Component {
             this.updatedData[field.name] = fieldData;
 
             // For select fields with ref and refFields
-            if (field.type === 'select' && field.ref && field.refFields?.length && fieldData) {
-                const selectedItem = this.refDataMap[field.name].find(opt => opt.value === fieldData);
-
-                this.updatedData[`${field.name}_RefFields`] = {
-                    _id: selectedItem?._id || fieldData,
-                    label: selectedItem?.label || '',
-                    IsAccessible: true
-                };
+            if (field.type === 'select' && field.ref && this.state[`${field.name}_RefFields`]) {
+                this.updatedData[`${field.name}_RefFields`] = this.state[`${field.name}_RefFields`];
             }
         });
 

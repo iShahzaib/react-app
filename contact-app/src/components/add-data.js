@@ -33,6 +33,11 @@ class AddDataClass extends React.Component {
     handleChange = (e) => {
         const { name, value } = e.target;
         this.setState({ [name]: value });
+
+        if (e.refTarget) {
+            const { refName, refValue } = e.refTarget;
+            this.setState({ [refName]: refValue });
+        }
     };
 
     handleCancel = () => {
@@ -53,18 +58,8 @@ class AddDataClass extends React.Component {
         const dataToSave = { ...this.state };
 
         this.fields.forEach(field => {
-            const value = this.state[field.name];
-
-            if (field.type === 'select' && field.ref && field.refFields?.length && value) {
-                const selectedItem = this.refDataMap?.[field.name]?.find(opt => opt.value === value);
-
-                if (selectedItem) {
-                    dataToSave[`${field.name}_RefFields`] = {
-                        label: selectedItem.label,
-                        _id: selectedItem._id || value,
-                        IsAccessible: true
-                    };
-                }
+            if (field.type === 'select' && field.ref && this.state[`${field.name}_RefFields`]) {
+                dataToSave[`${field.name}_RefFields`] = this.state[`${field.name}_RefFields`]
             }
         });
 

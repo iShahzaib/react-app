@@ -122,13 +122,6 @@ export const FieldCard = ({ self, field }) => {
                 });
 
                 formatted.sort((a, b) => a.label.localeCompare(b.label));
-
-                if (self.refDataMap) {
-                    self.refDataMap[field.name] = formatted;
-                } else {
-                    self.refDataMap = { [field.name]: formatted };
-                }
-
                 setRefOptions(formatted);
             } catch (error) {
                 console.error(`Error fetching ref options for ${field.name}:`, error);
@@ -189,6 +182,10 @@ export const FieldCard = ({ self, field }) => {
                                 target: {
                                     name: field.name,
                                     value: selectedOption ? selectedOption.value : ''
+                                },
+                                refTarget: {
+                                    refName: `${field.name}_RefFields`,
+                                    refValue: selectedOption || null
                                 }
                             });
                         }}
