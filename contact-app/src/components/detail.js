@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import { defaultFields } from "../constant";
-import { sentenceCase } from "../contexts/common";
+import { displayLabel, sentenceCase } from "../contexts/common";
 import BuildList from "./build-list";
 import { useSchema } from "../contexts/SchemaContext";
 
@@ -106,11 +106,7 @@ const Detail = () => {
                         ? (<div className="detail-tab" style={{ minHeight: "450px" }}>
                             <div className="ui stackable grid">
                                 {fields.map(field => {
-                                    const fieldValue = field.type === 'select'
-                                        ? field.options.find(opt => opt.value === data?.[field.name])?.label
-                                        : field.type === 'array'
-                                            ? data?.[field.name] && data?.[field.name].join(', ')
-                                            : data?.[field.name];
+                                    const fieldValue = displayLabel(field, data);
 
                                     return (
                                         <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>

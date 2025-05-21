@@ -26,7 +26,7 @@ router.post('/adddocdata', async (req, res) => {
         const db = await getDBConnection('MSH_CONTACTAPP');
 
         const existingUser = await db.collection(collection).findOne({ email: data.email, IsAccessible: true });
-        if (existingUser) {
+        if (existingUser && data.email) {
             return res.status(201).json({ message: 'Email already exists.' });
         }
 

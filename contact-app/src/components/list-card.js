@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import user from '../images/nouser.jpg';
-import { confirmDelete, sentenceCase, showError, showSuccess } from "../contexts/common";
+import { confirmDelete, displayLabel, sentenceCase, showError, showSuccess } from "../contexts/common";
 import { defaultFields } from "../constant";
 import { useSchema } from "../contexts/SchemaContext";
 
@@ -58,12 +58,7 @@ const ListCard = (props) => {
 
             {fields.map(field => {
                 if (field.ispicture || field.notshowongrid) return null;
-
-                const fieldValue = field.type === 'select'
-                    ? field.options.find(opt => opt.value === data?.[field.name])?.label
-                    : field.type === 'array'
-                        ? data?.[field.name] && data?.[field.name].join(', ')
-                        : data?.[field.name];
+                const fieldValue = displayLabel(field, data);
 
                 return (
                     <td key={field.name}>
