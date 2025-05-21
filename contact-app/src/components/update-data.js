@@ -8,23 +8,25 @@ class UpdateDataClass extends React.Component {
     constructor(props) {
         super(props);
 
+        const { state, schemaList, mode } = props;
+
         // Find current tab's field config
-        this.tabItem = props.schemaList[props.state.type];
+        this.tabItem = schemaList[state.type];
         this.fields = this.tabItem?.fields || defaultFields;
 
         // Initialize state based on field names
         const initialState = {};
         this.fields.forEach(f => {
-            initialState[f.name] = props.state.data[f.name] ?? '';
+            initialState[f.name] = state.data[f.name] ?? '';
 
             if (f.type === 'select' && f.ref && f.refFields?.length) {
-                initialState[`${f.name}_RefFields`] = props.state.data[`${f.name}_RefFields`] ?? '';
+                initialState[`${f.name}_RefFields`] = state.data[`${f.name}_RefFields`] ?? '';
             }
         });
 
         this.state = {
             ...initialState,
-            _id: props.state.data._id
+            ...(mode === 'update' ? { _id: state.data._id } : {})
         };
     }
 

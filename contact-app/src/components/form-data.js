@@ -6,15 +6,20 @@ class FormDataClass extends React.Component {
     constructor(props) {
         super(props);
 
+        const { state, schemaList, mode } = props;
+
         // Find current tab's field config
-        this.tabItem = props.schemaList[props.state.type];
+        this.tabItem = schemaList[state.type];
         this.fields = this.tabItem?.fields || defaultFields;
 
         // Initialize state based on field names
         const initialState = {};
         this.fields.forEach(f => { initialState[f.name] = ''; });
 
-        this.state = initialState;
+        this.state = {
+            ...initialState,
+            ...(mode === 'update' ? { _id: state.data._id } : {})
+        };
     }
 
     redirectToPreviousPage = () => {
