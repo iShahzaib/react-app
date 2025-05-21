@@ -182,6 +182,7 @@ export const FieldCard = ({ self, field }) => {
                                 target: {
                                     name: field.name,
                                     value: selectedOption ? selectedOption.value : null,
+                                    refName: `${field.name}_RefFields`,
                                     refValue: selectedOption || null
                                 }
                             });

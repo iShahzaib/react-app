@@ -31,11 +31,11 @@ class AddDataClass extends React.Component {
     };
 
     handleChange = (e) => {
-        const { name, value, refValue } = e.target;
+        const { name, value, refName, refValue } = e.target;
         this.setState({ [name]: value });
 
-        if (refValue) {
-            this.setState({ [`${name}_RefField`]: refValue });
+        if (refName) {
+            this.setState({ [refName]: refValue });
         }
     };
 
