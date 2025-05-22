@@ -104,7 +104,7 @@
   }
 
   .responsive-header:not(.form-header) h2 {
-    max-width: 45% !important;
+    max-width: 55% !important;
   }
 
   .ui.button {
@@ -230,7 +230,7 @@
 }
 
 .responsive-header:not(.form-header) h2 {
-  max-width: 75%;
+  max-width: 80%;
 }
 
 .grid-button,

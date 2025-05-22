@@ -147,11 +147,11 @@ const HeaderNav = ({ type, filteredData, loggedInUsername, origin }) => {
     const tableHeader = tab?.tableName || `${sentenceCase(type)} List`;
 
     return (
-        <div className="responsive-header">
+        <div className={`responsive-header ${origin === 'welcome' ? 'form-header' : ''}`}>
             <h2 style={{ marginBottom: "0.5rem" }}>
                 {tableHeader}
                 <div style={{ fontSize: "0.9rem", color: "#555", fontWeight: "500" }}>
-                    {filteredData.length > 0 ? `${filteredData.length} Item${filteredData.length > 1 ? "s" : ""}` : "No record found"}
+                    {filteredData.length > 0 ? `${filteredData.length} Record${filteredData.length > 1 ? "s" : ""}` : "No record found"}
                 </div>
             </h2>
             <div className="grid-button">

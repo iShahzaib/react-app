@@ -38,10 +38,15 @@ class UpdateUserClass extends React.Component {
             navigate('/getalldata/User', { state: { collection: 'User' } });
         }
     };
+
+    handleCancel = () => {
+        this.props.navigate(`/myprofile/${this.state.username}`);
+    };
+
     render() {
         return (
             <div className="ui main container">
-                <div className="responsive-header">
+                <div className="responsive-header form-header">
                     <h2>Edit {this.state.username}</h2>
                 </div>
                 <form className="ui form" style={{ marginTop: "0.5rem" }} onSubmit={this.update}>
@@ -78,7 +83,10 @@ class UpdateUserClass extends React.Component {
                             onChange={e => this.setState({ profilepicture: e.target.value })}
                         />
                     </div>
-                    <button className="ui button blue">Update</button>
+                    <div className="responsive-form-button" style={{ marginTop: "1rem", padding: "1rem 0" }}>
+                        <button className="ui button blue" type="submit">Update</button>
+                        <button className="ui button" type="button" onClick={this.handleCancel}>Cancel</button>
+                    </div>
                 </form>
             </div>
         )
