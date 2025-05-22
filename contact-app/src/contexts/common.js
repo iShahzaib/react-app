@@ -115,7 +115,7 @@ export const FieldCard = ({ self, field }) => {
             try {
                 const projection = field.refFields?.concat('_id')?.join(','); // Always include _id for value
                 const response = await api.get(`/api/getdocdata?collection=${field.ref}&projection=${projection}`);
-                const seperator = field.refFieldsSeperator || ' ';
+                const seperator = field.refFieldsSeparator || ' ';
 
                 const formatted = response?.data?.map(item => {
                     const labelName = field.refFields?.map(fld => item[fld] || '').join(seperator) || item._id;
