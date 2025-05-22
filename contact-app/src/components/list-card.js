@@ -42,7 +42,7 @@ const ListCard = (props) => {
 
     return (
         <tr className={`${isSelected ? 'selected' : ''}`} onDoubleClick={() => navigate(linkPath, { state })}>
-            <td>
+            <td className="grid-row-checkbox">
                 <div className="ui fitted checkbox">
                     <input
                         type="checkbox"
@@ -81,7 +81,7 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
     return (
         <thead>
             <tr>
-                <th style={{ width: "5%" }}>
+                <th className="grid-row-checkbox-all" style={{ width: "5%" }}>
                     <div className="ui fitted checkbox">
                         <input
                             type="checkbox"

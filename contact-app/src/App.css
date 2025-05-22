@@ -39,8 +39,6 @@
 
 .ui.main {
   padding: 0.25rem 0.25rem 0.75rem;
-  overflow-y: auto;
-  height: 100dvh;
 }
 
 .center-header {
@@ -85,6 +83,12 @@
 }
 
 @media (max-width: 767px) {
+  .ui.main {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(-92px + 100dvh);
+  }
+
   .parent-container .main {
     margin: 0 !important;
   }
@@ -198,6 +202,10 @@
   background: #f4f8ff;
   padding: 1rem;
   margin-top: 0.5rem !important;
+}
+
+.parent-container .tab-content .table-wrapper tbody tr td:not(.grid-row-checkbox, .grid-row-action-buttons) {
+  pointer-events: none;
 }
 
 .detail-tab {
