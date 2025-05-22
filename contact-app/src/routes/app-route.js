@@ -46,8 +46,8 @@ const AuthRoutes = () => {
     }, [setSchemaList]);
 
     if (loading) {
-        return (<div className="ui active dimmer fallback-loader">
-            <div className="ui text loader">Loading...</div>
+        return (<div className="ui inline fallback-loader">
+            <div className="ui text active loader">Loading...</div>
         </div>);
     }
 

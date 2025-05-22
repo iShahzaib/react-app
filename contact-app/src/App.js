@@ -75,8 +75,8 @@ const App = () => {
     <div className='ui'>
       <Router>
         <Suspense fallback={
-          <div className="ui active dimmer fallback-loader">
-            <div className="ui text loader">Loading...</div>
+          <div className="ui inline fallback-loader">
+            <div className="ui text active loader">Loading...</div>
           </div>
         }>
           <Routes>
