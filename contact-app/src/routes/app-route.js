@@ -45,7 +45,11 @@ const AuthRoutes = () => {
         })();
     }, [setSchemaList]);
 
-    if (loading) return <div className="fallback-loader">Loading schema...</div>;
+    if (loading) {
+        return (<div className="ui active dimmer fallback-loader">
+            <div className="ui text loader">Loading...</div>
+        </div>);
+    }
 
     const handleCloseTab = (id) => {
         const tabIndexToClose = tabs.findIndex(tab => tab.id === id);

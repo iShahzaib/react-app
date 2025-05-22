@@ -74,9 +74,11 @@ const App = () => {
   return (
     <div className='ui'>
       <Router>
-        {/* <div className='extra-gap'></div> */}
-        <Suspense fallback={<div className='fallback-loader'>Loading...</div>}>
-
+        <Suspense fallback={
+          <div className="ui active dimmer fallback-loader">
+            <div className="ui text loader">Loading...</div>
+          </div>
+        }>
           <Routes>
             <Route path='/' element={<MainPage />} />
             <Route path="*" element={<NoauthRoutes handleLogin={handleLogin} handleRegistration={handleRegistration} />} />
