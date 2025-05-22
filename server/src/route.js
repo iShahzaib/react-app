@@ -53,6 +53,7 @@ router.post('/updatedocdata', async (req, res) => {
 
         const documentID = mongodb.ObjectId.createFromHexString(data._id);
         delete data._id;
+        delete data.createdAt;
 
         data['updatedAt'] = new Date();
         const result = await db.collection(collection).updateOne({ _id: documentID }, { $set: data });
