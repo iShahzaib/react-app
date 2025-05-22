@@ -133,7 +133,7 @@ const GridTable = (props) => {
                             />
 
                         ))
-                        : (<tr><td colSpan="100%" style={{ textAlign: "center" }}>No record found</td></tr>)
+                        : (<tr><td colSpan="100%" style={{ textAlign: "center" }}>No entry found</td></tr>)
                     }
                 </tbody>
             </table>
@@ -151,7 +151,7 @@ const HeaderNav = ({ type, filteredData, loggedInUsername, origin }) => {
             <h2 style={{ marginBottom: "0.5rem" }}>
                 {tableHeader}
                 <div style={{ fontSize: "0.9rem", color: "#555", fontWeight: "500" }}>
-                    {filteredData.length > 0 ? `${filteredData.length} Record${filteredData.length > 1 ? "s" : ""}` : "No record found"}
+                    {filteredData.length > 0 ? `${filteredData.length} Entr${filteredData.length > 1 ? "ies" : "y"}` : "No entry found"}
                 </div>
             </h2>
             <div className="grid-button">

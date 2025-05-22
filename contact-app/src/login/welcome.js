@@ -145,7 +145,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                         <i className="home icon"></i>
                         <span style={{ marginLeft: "0.5rem" }}>Home</span>
                     </Link>
-                    {Object.values(schemaList).map(({ key, collection, icon, label }) => collection && (
+                    {Object.values(schemaList).map(({ key, collection, icon, label, notInMenu }) => collection && !notInMenu && (
                         <div
                             key={label}
                             className="sidebar-menu-item"
