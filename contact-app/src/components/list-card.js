@@ -52,10 +52,7 @@ const ListCard = (props) => {
                     <label></label>
                 </div>
             </td>
-            <td>
-                <img className="ui avatar image" src={profilepicture || user} alt="user" />
-            </td>
-
+            {fields.some(field => field.ispicture) && <td><img className="ui avatar image" src={profilepicture || user} alt="user" /></td>}
             {fields.map(field => {
                 if (field.ispicture || field.notshowongrid) return null;
                 const fieldValue = displayLabel(field, data);
@@ -94,7 +91,7 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
                         <label></label>
                     </div>
                 </th>
-                <th className="image-header" style={{ width: "6%" }}>IMG</th>
+                {fields.some(field => field.ispicture) && <th className="image-header" style={{ width: "6%" }}>IMG</th>}
                 {fields.map(field => !field.ispicture && !field.notshowongrid && <th key={field.name}>{field.label}</th>)}
                 <th className="grid-row-action-buttons">Action Buttons</th>
             </tr>
