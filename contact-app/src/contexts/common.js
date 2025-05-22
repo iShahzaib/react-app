@@ -317,7 +317,7 @@ export const displayLabel = (field, data) => {
 
     switch (field.type) {
         case 'select':
-            return (field.ref && field.refFields && data[`${field.name}_RefFields`]
+            return (field.ref && data[`${field.name}_RefFields`]
                 ? data[`${field.name}_RefFields`]
                 : field.options?.find(opt => opt.value === fieldData))?.label;
 
