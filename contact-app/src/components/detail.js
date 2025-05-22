@@ -114,6 +114,9 @@ const Detail = () => {
                                         </div>
                                     )
                                 })}
+                                <div key={'createdAt'} className={`column sixteen wide`} style={{ marginBottom: "1rem", wordWrap: "break-word", color: "#2185d0" }}>
+                                    <strong>Created At:</strong> {displayLabel({ name: 'createdAt', type: 'datetime' }, data) || '—'}
+                                </div>
                             </div>
                         </div>)
                         : <BuildList type={activeTab} origin="detail" />

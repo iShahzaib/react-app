@@ -325,6 +325,10 @@ export const displayLabel = (field, data) => {
         case 'array':
             return fieldData ? fieldData.join(', ') : ''
 
+        case 'date':
+        case 'datetime':
+            return formatDateTime(fieldData, field.type === 'datetime');
+
         default:
             return fieldData;
     }
@@ -334,3 +338,22 @@ export const getLocalToday = () => {
     const today = new Date();
     return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 };
+
+export const formatDateTime = (timestamp, includeTime) => {
+    if (!timestamp) return '';
+
+    const date = new Date(timestamp);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+    hours = String(hours).padStart(2, '0');
+
+    return `${day}-${month}-${year} ${includeTime ? `${hours}:${minutes} ${ampm}` : ``}`;
+}
+
