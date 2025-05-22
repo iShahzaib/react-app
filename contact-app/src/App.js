@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import { v4 as uuidv4 } from 'uuid';
 import './App.css';
@@ -17,18 +17,18 @@ const App = () => {
   //   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
   // }, [contacts]);
 
-  useEffect(() => {
-    const ua = navigator.userAgent || navigator.vendor;
-    // simple sniff for iPhone X/11/12/13/14 series
-    const isiOS = /iPhone/.test(ua) && !window.MSStream;
-    const hasNotch = window.screen.height >= 812; // X and newer
-    if (isiOS && hasNotch) {
-      // set a CSS var to use in your styles
-      document.documentElement.style.setProperty('--safe-area-top', '60px');
-    } else {
-      document.documentElement.style.setProperty('--safe-area-top', '0px');
-    }
-  }, []);
+  // useEffect(() => {
+  //   const ua = navigator.userAgent || navigator.vendor;
+  //   // simple sniff for iPhone X/11/12/13/14 series
+  //   const isiOS = /iPhone/.test(ua) && !window.MSStream;
+  //   const hasNotch = window.screen.height >= 812; // X and newer
+  //   if (isiOS && hasNotch) {
+  //     // set a CSS var to use in your styles
+  //     document.documentElement.style.setProperty('--safe-area-top', '60px');
+  //   } else {
+  //     document.documentElement.style.setProperty('--safe-area-top', '0px');
+  //   }
+  // }, []);
 
   const handleLogin = async ({ email, password, navigate }) => {
     try {
