@@ -203,7 +203,7 @@ export const Welcome = ({ username }) => (
         <div className="ui card fluid">
             <div className="content">
                 <h2 className="ui header" style={{ color: '#1b1c1d' }}>
-                    Welcome back, {sentenceCase(username)}!
+                    Welcome back, {username}!
                 </h2>
                 <p>Here is your user dashboard. You can view, manage, and explore records as needed.</p>
             </div>

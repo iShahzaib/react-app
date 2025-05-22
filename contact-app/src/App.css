@@ -83,12 +83,6 @@
 }
 
 @media (max-width: 767px) {
-  .ui.main {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(-92px + 100dvh);
-  }
-
   .parent-container .main {
     margin: 0 !important;
   }
