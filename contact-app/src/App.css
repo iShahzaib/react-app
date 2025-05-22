@@ -39,6 +39,8 @@
 
 .ui.main {
   padding: 0.25rem 0.25rem 0.75rem;
+  overflow-y: auto;
+  height: 100dvh;
 }
 
 .center-header {
