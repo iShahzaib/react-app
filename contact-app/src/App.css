@@ -2,6 +2,16 @@
   text-align: center;
 }
 
+.safe-area-top {
+  background: #000;
+  height: env(safe-area-inset-top, 0px); /* fallback to 0 if not supported */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -204,7 +214,7 @@
 
 .sticky-header {
   position: sticky;
-  z-index: 1000;
+  /* z-index: 1000; */
   background-color: #2185d0; /* Or your preferred header color */
   border-bottom: 1px solid #ccc;
   top: 0;
@@ -213,6 +223,10 @@
   bottom: auto;
   box-sizing: border-box;
   border-radius: 0 !important;
+ 
+  top: env(safe-area-inset-top, 0px); /* shift down below the notch */
+  padding-top: 0; /* avoid double-padding */
+  z-index: 9999;
 }
 
 .responsive-header {
