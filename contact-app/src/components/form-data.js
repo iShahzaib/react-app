@@ -7,14 +7,21 @@ class FormDataClass extends React.Component {
         super(props);
 
         const { state, schemaList, mode } = props;
-
-        // Find current tab's field config
         this.tabItem = schemaList[state.type];
         this.fields = this.tabItem?.fields || defaultFields;
 
-        // Initialize state based on field names
         const initialState = {};
-        this.fields.forEach(f => { initialState[f.name] = ''; });
+
+        this.fields.forEach(f => {
+            const isUpdate = mode === 'update';
+            const existingData = isUpdate ? state.data : {};
+
+            initialState[f.name] = existingData[f.name] ?? '';
+
+            if (f.type === 'select' && f.ref && f.refFields?.length) {
+                initialState[`${f.name}_RefFields`] = existingData[`${f.name}_RefFields`] ?? '';
+            }
+        });
 
         this.state = {
             ...initialState,
@@ -22,13 +29,15 @@ class FormDataClass extends React.Component {
         };
     }
 
-    redirectToPreviousPage = () => {
-        const { state, navigate } = this.props;
-        navigate(
-            // `/${state.type ? `welcome/${state.username}` : 'getalldata/Contact'}`,
-            `/getalldata/${sentenceCase(state.type)}`,
-            { state: { type: state.type, collection: `${sentenceCase(state.type)}` } }
-        );
+    redirectToPreviousPage = (data) => {
+        const { state, navigate, mode } = this.props;
+        const navState = { type: state.type, data, collection: `${sentenceCase(state.type)}` };
+
+        const path = mode === 'update' && state.location
+            ? `/detail/${state.type}/${state.data._id}`
+            : `/getalldata/${sentenceCase(state.type)}`;
+
+        navigate(path, { state: navState });
     };
 
     handleChange = (e) => {
@@ -41,13 +50,12 @@ class FormDataClass extends React.Component {
     };
 
     handleCancel = () => {
-        this.redirectToPreviousPage();
+        this.redirectToPreviousPage(this.state);
     };
 
     handleSave = async (e) => {
         e.preventDefault();
 
-        // Check for any empty required fields
         for (let field of this.fields) {
             if (field.required && !this.state[field.name]) {
                 showWarning('All the fields are mandatory.');
@@ -55,30 +63,41 @@ class FormDataClass extends React.Component {
             }
         }
 
+        const { mode, addDataHandler, updateDataHandler, state } = this.props;
+
         const dataToSave = { ...this.state };
 
         this.fields.forEach(field => {
             if (field.type === 'select' && field.ref && this.state[`${field.name}_RefFields`]) {
-                dataToSave[`${field.name}_RefFields`] = this.state[`${field.name}_RefFields`]
+                dataToSave[`${field.name}_RefFields`] = this.state[`${field.name}_RefFields`];
             }
         });
 
-        const response = await this.props.addDataHandler(dataToSave, sentenceCase(this.props.state.type));
+        if (mode === 'add') {
+            const response = await addDataHandler(dataToSave, sentenceCase(state.type));
 
-        if (response === 'success') {
-            const clearedState = {};
-            this.fields.forEach(f => clearedState[f.name] = '');
-            this.setState(clearedState);
-
-            this.redirectToPreviousPage();
+            if (response === 'success') {
+                const clearedState = {};
+                this.fields.forEach(f => clearedState[f.name] = '');
+                this.setState(clearedState);
+                this.redirectToPreviousPage();
+            }
+        } else {
+            const updatedData = { ...state.data, ...dataToSave };
+            updateDataHandler(updatedData);
+            this.redirectToPreviousPage(updatedData);
         }
     };
 
     render() {
+        const { mode, state } = this.props;
+        const buttonLabel = mode === 'add' ? 'Add' : 'Update';
+        const title = mode === 'add' ? `Add ${sentenceCase(state.type)}` : undefined;
+
         return (
-            <RenderForm title={`Add ${sentenceCase(this.props.state.type)}`} buttonLabel="Add" self={this} />
+            <RenderForm title={title} buttonLabel={buttonLabel} self={this} />
         );
     }
-}
+};
 
 export default FormDataClass;

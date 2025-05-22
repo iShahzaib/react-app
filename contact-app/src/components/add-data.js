@@ -5,7 +5,6 @@ import api from "../api/server";
 import { useSchema } from "../contexts/SchemaContext";
 import FormDataClass from "./form-data";
 
-// Wrapper to use hooks with class component
 const AddData = (props) => {
     const { state } = useLocation();  // Access location object to get state
     const { records, setRecords } = props;
