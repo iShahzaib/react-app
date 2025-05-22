@@ -313,7 +313,8 @@ export const FieldCard = ({ self, field }) => {
 };
 
 export const displayLabel = (field, data) => {
-    const fieldData = data?.[field.name];
+    if (!data) return '';
+    const fieldData = data[field.name];
 
     switch (field.type) {
         case 'select':
