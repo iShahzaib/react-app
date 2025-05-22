@@ -1,5 +1,5 @@
 import React from "react";
-import { RenderForm, sentenceCase, showWarning } from "../contexts/common";
+import { getLocalToday, RenderForm, sentenceCase, showWarning } from "../contexts/common";
 import { defaultFields } from "../constant";
 
 class FormDataClass extends React.Component {
@@ -20,6 +20,8 @@ class FormDataClass extends React.Component {
 
             if (f.type === 'select' && f.ref && f.refFields?.length) {
                 initialState[`${f.name}_RefFields`] = existingData[`${f.name}_RefFields`] ?? '';
+            } else if (f.type === 'date' && mode === 'add') {
+                initialState[f.name] = getLocalToday();
             }
         });
 

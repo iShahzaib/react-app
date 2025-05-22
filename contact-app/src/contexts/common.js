@@ -164,11 +164,6 @@ export const FieldCard = ({ self, field }) => {
         });
     };
 
-    const getLocalToday = () => {
-        const today = new Date();
-        return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-    };
-
     switch (field.type) {
         case 'select':
             return (
@@ -331,4 +326,9 @@ export const displayLabel = (field, data) => {
         default:
             return fieldData;
     }
+};
+
+export const getLocalToday = () => {
+    const today = new Date();
+    return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 };
