@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import logo from '../images/logo.png';
 import socketClient from '../api/socket';
-import { sentenceCase, showWarning } from "../contexts/common";
+import { showWarning } from "../contexts/common";
 import { useSchema } from "../contexts/SchemaContext";
 import BuildList from "../components/build-list";
 
