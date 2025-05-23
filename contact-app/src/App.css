@@ -585,6 +585,11 @@
   color: #075da8 !important;
 }
 
+.ui.checkbox {
+  transform: scale(1.1);
+  transform-origin: top left;
+}
+
 /* Header.css */
 
 .custom-sidebar {
