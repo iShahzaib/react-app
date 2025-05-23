@@ -62,7 +62,7 @@ export const RenderForm = ({ title, buttonLabel, self }) => {
     const fields = self.fields;
 
     if (!title && self.state?._id) {
-        title = 'Edit ' + (self.state?.[fields.find(f => f.isTitle)?.name] || self.state?.name || '');
+        title = 'Edit ' + (displayLabel(fields.find(f => f.isTitle), self.state) || self.state?.name || '');
     }
 
     return (
@@ -197,7 +197,7 @@ export const FieldCard = ({ self, field }) => {
 
         case 'checkbox':
             return (
-                <div className="ui fitted checkbox">
+                <div className="ui fitted checkbox custom-checkbox">
                     <input
                         id={field.name}
                         type="checkbox"

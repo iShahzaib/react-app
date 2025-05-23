@@ -590,6 +590,10 @@
   transform-origin: top left;
 }
 
+.custom-checkbox {
+  transform: scale(1.2) !important;
+}
+
 /* Header.css */
 
 .custom-sidebar {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import { defaultFields } from "../constant";
-import { BuildDetail, sentenceCase } from "../contexts/common";
+import { BuildDetail, displayLabel, sentenceCase } from "../contexts/common";
 import BuildList from "./build-list";
 import { useSchema } from "../contexts/SchemaContext";
 
@@ -32,7 +32,7 @@ const Detail = () => {
             const value = data?.[key];
             return value !== undefined && value !== null ? value : '';
         })
-        : data?.[fields.find(f => f.isTitle)?.name] || data?.name;
+        : displayLabel(fields.find(f => f.isTitle), data) || data?.name;
 
     return (
         <div className="ui main container">
