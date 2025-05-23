@@ -267,13 +267,20 @@ export const BuildDetail = ({ fields, data }) => {
                 const fieldValue = displayLabel(field, data);
 
                 return (
-                    <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
+                    <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
                         <strong>{field.label}:</strong> {fieldValue || '—'}
                     </div>
                 )
             })}
-            <div key={'createdAt'} className={`column sixteen wide`} style={{ marginBottom: "1rem", wordWrap: "break-word", color: "#2185d0" }}>
-                <strong>Created At:</strong> {displayLabel({ name: 'createdAt', type: 'datetime' }, data) || '—'}
+            <div className={`column sixteen wide`} style={{ marginBottom: "1rem", wordWrap: "break-word", color: "#2185d0" }}>
+                <div className="ui stackable grid">
+                    {[{ name: 'createdAt', label: 'Created At', type: 'datetime' },
+                    { name: 'updatedAt', label: 'Updated At', type: 'datetime' }].map(field => (
+                        <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
+                            <strong>{field.label}:</strong> {displayLabel(field, data) || '—'}
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
@@ -301,7 +308,8 @@ export const displayLabel = (field, data) => {
                             className="chip-display"
                             title={`Tag: ${chip}`}
                         >
-                            <span className="chip-icon">🏷️</span>{chip}
+                            {/* <span className="chip-icon">🏷️</span>{chip} */}
+                            <i className="tag icon"></i> {chip}
                         </span>
                     ))}
                 </div>

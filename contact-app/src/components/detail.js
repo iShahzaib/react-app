@@ -41,7 +41,7 @@ const Detail = () => {
                 <div className="ui card" style={{ padding: '1rem', width: "100%", backgroundColor: "#f3f7ff" }}>
                     <div style={{ display: "flex" }}>
                         <img src={profilepicture || user} alt="user" style={{ width: '80px' }} />
-                        <div style={{ marginLeft: '1rem', maxWidth: "70%" }}>
+                        <div style={{ marginLeft: '1rem', maxWidth: "65%" }}>
                             <h4>{title}</h4>
                         </div>
 

@@ -800,9 +800,9 @@
   color: #006064;
 }
 
-.detail-tab .chip-display-container {
+/* .detail-tab .chip-display-container {
   margin-top: 0.35rem;
-}
+} */
 
 .chip-display-container {
   display: flex;
@@ -821,4 +821,16 @@
 
 .chip-icon {
   margin-right: 0.2rem;
+}
+
+.field-summary {
+  display: flex !important;
+  margin-bottom: 1rem;
+  overflow-wrap: break-word;
+}
+
+.field-summary strong {
+  /* display: inline-block;
+    min-width: 120px; */
+  margin-right: 0.5rem;
 }
