@@ -52,14 +52,14 @@ const ListCard = (props) => {
                     <label></label>
                 </div>
             </td>
-            {fields.some(field => field.ispicture) && <td><img className="ui avatar image" src={profilepicture || user} alt="user" /></td>}
+            {fields.some(field => field.ispicture) && <td style={{ width: '55px', textOverflow: "unset" }}><img className="ui avatar image" src={profilepicture || user} alt="user" /></td>}
             {fields.map(field => {
                 if (field.ispicture || field.notshowongrid) return null;
                 const fieldValue = displayLabel(field, rowData);
 
                 return (
-                    <td key={field.name}>
-                        <span title={fieldValue || ''}>{fieldValue || '—'}</span>
+                    <td key={field.name} style={{ width: field.columnWidth || '150px' }}>
+                        <span style={{ display: field.type === 'checkbox' ? 'flex' : 'inline' }} title={fieldValue || ''}>{fieldValue || '—'}</span>
                     </td>
                 )
             })}
@@ -81,7 +81,7 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
     return (
         <thead>
             <tr>
-                <th className="grid-row-checkbox-all" style={{ width: "5%" }}>
+                <th className="grid-row-checkbox-all" style={{ width: "40px" }}>
                     <div className="ui fitted checkbox">
                         <input
                             type="checkbox"
@@ -91,9 +91,17 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
                         <label></label>
                     </div>
                 </th>
-                {fields.some(field => field.ispicture) && <th className="image-header" style={{ width: "6%" }}>IMG</th>}
-                {fields.map(field => !field.ispicture && !field.notshowongrid && <th key={field.name}>{field.label}</th>)}
-                <th className="grid-row-action-buttons">Action Buttons</th>
+                {fields.some(field => field.ispicture) && <th className="image-header" style={{ width: "55px" }}>IMG</th>}
+                {fields.map(field => {
+                    if (field.ispicture || field.notshowongrid) return null;
+
+                    return (
+                        <th key={field.name} style={{ width: field.columnWidth || '150px' }}>
+                            {field.label}
+                        </th>
+                    )
+                })}
+                <th className="grid-row-action-buttons" style={{ width: '120px' }}>Action Buttons</th>
             </tr>
         </thead>
     );
@@ -104,12 +112,12 @@ const ActionButtons = ({ state, parentProps, handleDelete }) => {
     const { rowData: { _id, username }, type, loggedInUsername } = parentProps;
 
     return (
-        <td className="grid-row-action-buttons">
+        <td className="grid-row-action-buttons" style={{ width: '120px' }}>
             {type !== 'user' && (
                 <i
                     className="edit blue alternate outline icon"
                     title="Edit"
-                    style={{ cursor: "pointer", fontSize: "1.2rem", marginRight: '0.5rem' }}
+                    style={{ cursor: "pointer", fontSize: "1.2rem", marginRight: '1rem' }}
                     onClick={(e) => {
                         e.preventDefault(); e.stopPropagation();
                         navigate(`/update/${type}/${_id}`, { state: { ...state, loggedInUsername, type } });

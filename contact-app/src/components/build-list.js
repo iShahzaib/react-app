@@ -128,7 +128,7 @@ const GridTable = (props) => {
 
     return (
         <div className="table-wrapper">
-            <table className="ui celled table" style={{ border: "unset" }}>
+            <table className="ui unstackable table" style={{ border: "unset" }}>
                 <ListCardHead
                     type={type}
                     isAllSelected={isAllSelected}

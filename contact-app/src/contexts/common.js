@@ -308,7 +308,6 @@ export const displayLabel = (field, data) => {
                             className="chip-display"
                             title={`Tag: ${chip}`}
                         >
-                            {/* <span className="chip-icon">🏷️</span>{chip} */}
                             <i className="tag icon"></i> {chip}
                         </span>
                     ))}
@@ -316,7 +315,8 @@ export const displayLabel = (field, data) => {
             ) : '';
 
         case 'checkbox':
-            return fieldData ? '✅ Yes' : '❌ No';
+            // return fieldData ? '✅ Yes' : '❌ No';
+            return fieldData ? <><i className="check square icon large green"></i>Yes</> : <><i className="square outline icon large grey"></i>No</>;
 
         case 'date':
         case 'datetime':

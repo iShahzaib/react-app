@@ -154,26 +154,6 @@
     min-width: 600px !important;
   }
 
-  .ui.table:not(.unstackable) tbody,
-  .ui.table:not(.unstackable) tr,
-  .ui.table:not(.unstackable) tr > td,
-  .ui.table:not(.unstackable) tr > th {
-    display: revert !important;
-    padding: 0.25em 0.75em !important;
-  }
-
-  .ui.table:not(.unstackable) tr {
-    box-shadow: unset !important;
-  }
-
-  .ui.table:not(.unstackable) thead {
-    display: revert !important;
-  }
-
-  .ui.table:not(.unstackable) tr > th {
-    background: #f9fafb !important;
-  }
-
   .table-wrapper tbody tr {
     height: 40px !important;
   }
@@ -535,8 +515,10 @@
 }
 
 .table-wrapper table {
-  width: max-content;
+  width: max-content !important;
+  table-layout: fixed !important;
   min-width: 100%;
+  width: 100%;
   border-collapse: collapse !important;
   border-spacing: 0;
 }
@@ -566,7 +548,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 500px;
 }
 
 .table-wrapper tbody tr:not(.selected):hover td {
@@ -782,9 +763,9 @@
 
 .chip-removable-container {
   background-color: #e0f7fa;
-  padding: 0.3rem 0.6rem;
+  padding: 0.3rem 0.7rem;
   border-radius: 6px;
-  display: inline-flex;
+  display: inline-block;
   align-items: center;
   color: #006064;
   border: 1px solid #4dd0e1;
@@ -792,6 +773,7 @@
 
 .remove-chip {
   margin-left: 5px;
+  margin-right: -5px;
   cursor: pointer;
   font-weight: bold;
   background: none;
@@ -813,7 +795,7 @@
 .chip-display {
   background-color: #e0f7fa;
   color: #00796b;
-  padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+  padding: 0.3rem 0.7rem 0.3rem 0.5rem;
   border-radius: 6px;
   font-size: 1em;
   border: 1px solid #4dd0e1;
