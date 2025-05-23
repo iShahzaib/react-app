@@ -5,6 +5,7 @@ import socketClient from '../api/socket';
 import { BuildDetail, showWarning } from "../contexts/common";
 import { defaultFields } from "../constant";
 import { useSchema } from "../contexts/SchemaContext";
+import BuildList from "../components/build-list";
 
 const MyProfile = () => {
     const { state } = useLocation();
@@ -66,9 +67,10 @@ const MyProfile = () => {
 
 export const ManageTags = () => {
     return (
-        <div className="ui inline fallback-loader">
-            <div className="ui text active loader">Work In Progress...</div>
-        </div>
+        // <div className="ui inline fallback-loader">
+        //     <div className="ui text active loader">Work In Progress...</div>
+        // </div>
+        <BuildList type="note" origin="welcome" />
     );
 };
 
