@@ -103,7 +103,7 @@ const Detail = () => {
                 {/* Information Section */}
                 <div className="tab-content" style={{ borderTop: "2px solid #22242626", paddingTop: "1rem" }}>
                     {activeTab === 'detail'
-                        ? (<div className="detail-tab" style={{ minHeight: "450px" }}>
+                        ? (<div className="detail-tab" style={{ minHeight: "450px", marginTop: "1rem" }}>
                             <BuildDetail fields={fields} data={data} />
                         </div>)
                         : <BuildList type={activeTab} origin="detail" />
