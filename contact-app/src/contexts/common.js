@@ -349,7 +349,13 @@ export const displayLabel = (field, data) => {
             return Array.isArray(fieldData) ? (
                 <div className="chip-display-container">
                     {fieldData.map((chip, index) => (
-                        <span key={index} className="chip-display">{chip}</span>
+                        <span
+                            key={index}
+                            className="chip-display"
+                            title={`Tag: ${chip}`}
+                        >
+                            <span className="chip-icon">🏷️</span>{chip}
+                        </span>
                     ))}
                 </div>
             ) : '';
@@ -419,9 +425,15 @@ const ChipsInput = ({ field, fieldData = [], onChange }) => {
     return (
         <div className="chips-container">
             {chips.map((chip, index) => (
-                <div key={index} className="chip">
+                <div key={index} className="chip-removable-container">
                     {chip}
-                    <span className="remove-chip" onClick={() => removeChip(index)}>×</span>
+                    <button
+                        type="button"
+                        className="remove-chip"
+                        onClick={() => removeChip(index)}
+                    >
+                        &times;
+                    </button>
                 </div>
             ))}
             <input

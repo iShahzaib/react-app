@@ -780,22 +780,28 @@
   border-radius: 5px;
 }
 
-.chip {
-  background-color: #e9e9e9;
+.chip-removable-container {
+  background-color: #e0f7fa;
   padding: 0.3rem 0.6rem;
   border-radius: 6px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  color: #006064;
+  border: 1px solid #4dd0e1;
 }
 
 .remove-chip {
-  margin-left: 0.5rem;
+  margin-left: 5px;
   cursor: pointer;
   font-weight: bold;
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #006064;
 }
 
 .detail-tab .chip-display-container {
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
 }
 
 .chip-display-container {
@@ -809,5 +815,5 @@
   color: #00796b;
   padding: 0.3rem 0.7rem;
   border-radius: 6px;
-  font-size: 0.85rem;
+  font-size: 1em;
 }

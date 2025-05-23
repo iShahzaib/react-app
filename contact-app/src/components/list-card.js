@@ -7,8 +7,8 @@ import { useSchema } from "../contexts/SchemaContext";
 
 const ListCard = (props) => {
     const { schemaList } = useSchema();
-    const { data, type, loggedInUsername, isSelected, toggleSelectOne } = props;
-    const { _id, username, email, profilepicture } = data;
+    const { rowData, type, loggedInUsername, isSelected, toggleSelectOne } = props;
+    const { _id, username, email, profilepicture } = rowData;
     const navigate = useNavigate();
 
     const handleDelete = (e) => {
@@ -27,13 +27,13 @@ const ListCard = (props) => {
                 showSuccess(`The ${type} has been deleted successfully.`, 'Deleted!');
                 navigate(
                     `/getalldata/${sentenceCase(type)}`,
-                    { state: { ...props.data, loggedInUsername, type, collection: `${sentenceCase(type)}` } }
+                    { state: { ...props.rowData, loggedInUsername, type, collection: `${sentenceCase(type)}` } }
                 );
             }
         });
     };
 
-    const state = type !== 'user' ? { data: props.data, loggedInUsername } : { _id, username, email, profilepicture, loggedInUsername };
+    const state = type !== 'user' ? { data: props.rowData, loggedInUsername } : { _id, username, email, profilepicture, loggedInUsername };
     const linkPath = type !== 'user' ? `/detail/${type}/${_id}` : '/chat';
 
     // Get field config based on type
@@ -55,7 +55,7 @@ const ListCard = (props) => {
             {fields.some(field => field.ispicture) && <td><img className="ui avatar image" src={profilepicture || user} alt="user" /></td>}
             {fields.map(field => {
                 if (field.ispicture || field.notshowongrid) return null;
-                const fieldValue = displayLabel(field, data);
+                const fieldValue = displayLabel(field, rowData);
 
                 return (
                     <td key={field.name}>
@@ -101,7 +101,7 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
 
 const ActionButtons = ({ state, parentProps, handleDelete }) => {
     const navigate = useNavigate();
-    const { data: { _id, username }, type, loggedInUsername } = parentProps;
+    const { rowData: { _id, username }, type, loggedInUsername } = parentProps;
 
     return (
         <td className="grid-row-action-buttons">

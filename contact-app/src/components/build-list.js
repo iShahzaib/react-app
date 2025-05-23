@@ -52,9 +52,9 @@ const BuildList = React.memo(({ type, origin }) => {
 
     const schema = schemaList[type];
 
-    const filteredData = listData.filter(data =>
+    const filteredData = listData.filter(rowData =>
         schema?.fields.some(field => {
-            const value = data[field.name];
+            const value = rowData[field.name];
 
             if (typeof value === 'boolean') {
                 const boolText = value ? 'yes' : 'no';
@@ -139,7 +139,7 @@ const GridTable = (props) => {
                         ? filteredData.map(c => (
                             <ListCard
                                 key={c._id}
-                                data={c}
+                                rowData={c}
                                 type={type}
                                 loggedInUsername={loggedInUsername}
                                 isSelected={selectedIds.includes(c._id)}
