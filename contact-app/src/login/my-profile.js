@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import socketClient from '../api/socket';
-import { showWarning } from "../contexts/common";
+import { BuildDetail, showWarning } from "../contexts/common";
 import { defaultFields } from "../constant";
 import { useSchema } from "../contexts/SchemaContext";
 
@@ -58,13 +58,7 @@ const MyProfile = () => {
             </div>
 
             <div className="ui segment" style={{ minHeight: "320px", overflowX: "auto" }}>
-                <div className="ui stackable grid">
-                    {fields.map(field => (
-                        <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
-                            <strong>{field.label}:</strong> {data?.[field.name] || '—'}
-                        </div>
-                    ))}
-                </div>
+                <BuildDetail fields={fields} data={data} />
             </div>
         </div>
     );

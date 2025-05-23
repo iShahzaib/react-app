@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from 'react-select';
 import Swal from "sweetalert2";
 import api from "../api/server";
+import { ArrayInput, ChipsInput } from "./controllers";
 
 // export const checkEmailUnique = async (email, collection) => {
 //     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${collection}?email=${email}`);
@@ -130,41 +131,6 @@ export const FieldCard = ({ self, field }) => {
         }
     };
 
-    const handleArrayItemChange = (index, newValue) => {
-        // const updated = [...(fieldData || [])];
-        const updated = [...fieldData];
-        updated[index] = newValue;
-        self.handleChange({
-            target: {
-                name: field.name,
-                value: updated
-            }
-        });
-    };
-
-    const addArrayItem = () => {
-        // const updated = [...(fieldData || []), ''];
-        const updated = [...fieldData, ''];
-        self.handleChange({
-            target: {
-                name: field.name,
-                value: updated
-            }
-        });
-    };
-
-    const removeArrayItem = (index) => {
-        // const updated = [...(fieldData || [])];
-        const updated = [...fieldData];
-        updated.splice(index, 1);
-        self.handleChange({
-            target: {
-                name: field.name,
-                value: updated
-            }
-        });
-    };
-
     switch (field.type) {
         case 'select':
             return (
@@ -222,54 +188,12 @@ export const FieldCard = ({ self, field }) => {
 
         case 'array':
             if (field.subtype === 'text') {
-                return (
-                    <div>
-                        <label style={{ marginRight: "0.5rem" }}>{field.label}</label>
-                        {(fieldData || []).map((item, index) => (
-                            <div key={index} className="subtype-field">
-                                <input
-                                    type="text"
-                                    value={item}
-                                    onChange={(e) => handleArrayItemChange(index, e.target.value)}
-                                    placeholder={field.placeholder || ''}
-                                    style={{ flex: 1 }}
-                                />
-                                <button
-                                    type="button"
-                                    className="ui negative basic button remove-subtype-field"
-                                    onClick={() => removeArrayItem(index)}
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        ))}
-                        <button
-                            type="button"
-                            className="ui positive basic button add-subtype-field"
-                            onClick={addArrayItem}
-                        >
-                            Add Item
-                        </button>
-                    </div>
-                );
+                return <ArrayInput field={field} self={self} />;
             }
             break;
 
         case 'chips':
-            return (
-                <ChipsInput
-                    field={field}
-                    fieldData={fieldData}
-                    onChange={(newChips) => {
-                        self.handleChange({
-                            target: {
-                                name: field.name,
-                                value: newChips
-                            }
-                        });
-                    }}
-                />
-            );
+            return <ChipsInput field={field} self={self} />;
 
         case 'checkbox':
             return (
@@ -320,19 +244,40 @@ export const FieldCard = ({ self, field }) => {
             );
 
         default:
-            return (
-                <input
-                    id={field.name}
-                    type={field.type}
-                    name={field.name}
-                    required={field.required}
-                    placeholder={field.placeholder}
-                    value={fieldData}
-                    onChange={self.handleChange}
-                />
-            );
+            break;
     }
+
+    return (
+        <input
+            id={field.name}
+            type={field.type}
+            name={field.name}
+            required={field.required}
+            placeholder={field.placeholder}
+            value={fieldData}
+            onChange={self.handleChange}
+        />
+    );
 };
+
+export const BuildDetail = ({ fields, data }) => {
+    return (
+        <div className="ui stackable grid">
+            {fields.map(field => {
+                const fieldValue = displayLabel(field, data);
+
+                return (
+                    <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
+                        <strong>{field.label}:</strong> {fieldValue || '—'}
+                    </div>
+                )
+            })}
+            <div key={'createdAt'} className={`column sixteen wide`} style={{ marginBottom: "1rem", wordWrap: "break-word", color: "#2185d0" }}>
+                <strong>Created At:</strong> {displayLabel({ name: 'createdAt', type: 'datetime' }, data) || '—'}
+            </div>
+        </div>
+    );
+}
 
 export const displayLabel = (field, data) => {
     if (!data) return '';
@@ -345,6 +290,8 @@ export const displayLabel = (field, data) => {
                 : field.options?.find(opt => opt.value === fieldData))?.label;
 
         case 'array':
+            return fieldData ? fieldData.join(', ') : ''
+
         case 'chips':
             return Array.isArray(fieldData) ? (
                 <div className="chip-display-container">
@@ -393,56 +340,4 @@ export const formatDateTime = (timestamp, includeTime) => {
     hours = String(hours).padStart(2, '0');
 
     return `${day}-${month}-${year} ${includeTime ? `${hours}:${minutes} ${ampm}` : ``}`;
-};
-
-const ChipsInput = ({ field, fieldData = [], onChange }) => {
-    const [input, setInput] = React.useState('');
-    const [chips, setChips] = React.useState(fieldData);
-
-    const addChip = () => {
-        const trimmed = input.trim();
-        if (trimmed && !chips.includes(trimmed)) {
-            const newChips = [...chips, trimmed];
-            setChips(newChips);
-            onChange(newChips);
-        }
-        setInput('');
-    };
-
-    const removeChip = (index) => {
-        const newChips = chips.filter((_, i) => i !== index);
-        setChips(newChips);
-        onChange(newChips);
-    };
-
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter' || e.key === ',') {
-            e.preventDefault();
-            addChip();
-        }
-    };
-
-    return (
-        <div className="chips-container">
-            {chips.map((chip, index) => (
-                <div key={index} className="chip-removable-container">
-                    {chip}
-                    <button
-                        type="button"
-                        className="remove-chip"
-                        onClick={() => removeChip(index)}
-                    >
-                        &times;
-                    </button>
-                </div>
-            ))}
-            <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder={field.placeholder || 'Add tag and press Enter'}
-            />
-        </div>
-    );
 };

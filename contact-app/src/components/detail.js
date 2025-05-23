@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import { defaultFields } from "../constant";
-import { displayLabel, sentenceCase } from "../contexts/common";
+import { BuildDetail, sentenceCase } from "../contexts/common";
 import BuildList from "./build-list";
 import { useSchema } from "../contexts/SchemaContext";
 
@@ -104,20 +104,7 @@ const Detail = () => {
                 <div className="tab-content" style={{ borderTop: "2px solid #22242626", paddingTop: "1rem" }}>
                     {activeTab === 'detail'
                         ? (<div className="detail-tab" style={{ minHeight: "450px" }}>
-                            <div className="ui stackable grid">
-                                {fields.map(field => {
-                                    const fieldValue = displayLabel(field, data);
-
-                                    return (
-                                        <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} style={{ marginBottom: "1rem", wordWrap: "break-word" }}>
-                                            <strong>{field.label}:</strong> {fieldValue || '—'}
-                                        </div>
-                                    )
-                                })}
-                                <div key={'createdAt'} className={`column sixteen wide`} style={{ marginBottom: "1rem", wordWrap: "break-word", color: "#2185d0" }}>
-                                    <strong>Created At:</strong> {displayLabel({ name: 'createdAt', type: 'datetime' }, data) || '—'}
-                                </div>
-                            </div>
+                            <BuildDetail fields={fields} data={data} />
                         </div>)
                         : <BuildList type={activeTab} origin="detail" />
                     }

@@ -813,7 +813,8 @@
 .chip-display {
   background-color: #e0f7fa;
   color: #00796b;
-  padding: 0.3rem 0.7rem;
+  padding: 0.3rem 0.7rem 0.3rem 0.3rem;
   border-radius: 6px;
   font-size: 1em;
+  border: 1px solid #4dd0e1;
 }
