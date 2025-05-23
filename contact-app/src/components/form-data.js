@@ -22,6 +22,8 @@ class FormDataClass extends React.Component {
                 initialState[`${f.name}_RefFields`] = existingData[`${f.name}_RefFields`] ?? '';
             } else if (f.type === 'date' && mode === 'add') {
                 initialState[f.name] = getLocalToday();
+            } else if (f.type === 'number') {
+                initialState[f.name] = existingData[f.name] ? parseInt(existingData[f.name]) : 0;
             }
         });
 
@@ -43,8 +45,11 @@ class FormDataClass extends React.Component {
     };
 
     handleChange = (e) => {
-        const { name, value, refName, refValue } = e.target;
-        this.setState({ [name]: value });
+        const { name, type, checked, value, refName, refValue } = e.target;
+
+        const finalValue = type === "checkbox" ? checked : value;
+
+        this.setState({ [name]: finalValue });
 
         if (refName) {
             this.setState({ [refName]: refValue });

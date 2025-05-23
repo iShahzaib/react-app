@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from 'react-select';
 import Swal from "sweetalert2";
 import api from "../api/server";
@@ -93,7 +93,7 @@ export const RenderForm = ({ title, buttonLabel, self }) => {
 
 export const FieldCard = ({ self, field }) => {
     const [refOptions, setRefOptions] = useState([]);
-    const fieldData = self.state[field.name];
+    const fieldData = self.state[field.name] || undefined;
 
     const refFieldData = (field.type === 'select' && field.ref && fieldData && self.state[`${field.name}_RefFields`])
         ? self.state[`${field.name}_RefFields`]
@@ -206,6 +206,7 @@ export const FieldCard = ({ self, field }) => {
                         ))}
                     </select>
             );
+
         case 'textarea':
             return (
                 <textarea
@@ -218,6 +219,7 @@ export const FieldCard = ({ self, field }) => {
                     style={{ height: "8em" }}
                 />
             );
+
         case 'array':
             if (field.subtype === 'text') {
                 return (
@@ -252,9 +254,26 @@ export const FieldCard = ({ self, field }) => {
                 );
             }
             break;
+
+        case 'chips':
+            return (
+                <ChipsInput
+                    field={field}
+                    fieldData={fieldData}
+                    onChange={(newChips) => {
+                        self.handleChange({
+                            target: {
+                                name: field.name,
+                                value: newChips
+                            }
+                        });
+                    }}
+                />
+            );
+
         case 'checkbox':
             return (
-                <div>
+                <div className="ui checkbox">
                     <input
                         id={field.name}
                         type="checkbox"
@@ -266,6 +285,7 @@ export const FieldCard = ({ self, field }) => {
                     <label htmlFor={field.name}>{field.label}</label>
                 </div>
             );
+
         case 'radio':
             return (
                 <div>
@@ -285,6 +305,7 @@ export const FieldCard = ({ self, field }) => {
                     ))}
                 </div>
             );
+
         case 'date':
             return (
                 <input
@@ -297,6 +318,7 @@ export const FieldCard = ({ self, field }) => {
                     onChange={self.handleChange}
                 />
             );
+
         default:
             return (
                 <input
@@ -323,14 +345,24 @@ export const displayLabel = (field, data) => {
                 : field.options?.find(opt => opt.value === fieldData))?.label;
 
         case 'array':
-            return fieldData ? fieldData.join(', ') : ''
+        case 'chips':
+            return Array.isArray(fieldData) ? (
+                <div className="chip-display-container">
+                    {fieldData.map((chip, index) => (
+                        <span key={index} className="chip-display">{chip}</span>
+                    ))}
+                </div>
+            ) : '';
+
+        case 'checkbox':
+            return fieldData ? '✅ Yes' : '❌ No';
 
         case 'date':
         case 'datetime':
             return formatDateTime(fieldData, field.type === 'datetime');
 
         default:
-            return fieldData;
+            return fieldData ?? '';
     }
 };
 
@@ -355,5 +387,50 @@ export const formatDateTime = (timestamp, includeTime) => {
     hours = String(hours).padStart(2, '0');
 
     return `${day}-${month}-${year} ${includeTime ? `${hours}:${minutes} ${ampm}` : ``}`;
-}
+};
 
+const ChipsInput = ({ field, fieldData = [], onChange }) => {
+    const [input, setInput] = React.useState('');
+    const [chips, setChips] = React.useState(fieldData);
+
+    const addChip = () => {
+        const trimmed = input.trim();
+        if (trimmed && !chips.includes(trimmed)) {
+            const newChips = [...chips, trimmed];
+            setChips(newChips);
+            onChange(newChips);
+        }
+        setInput('');
+    };
+
+    const removeChip = (index) => {
+        const newChips = chips.filter((_, i) => i !== index);
+        setChips(newChips);
+        onChange(newChips);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            addChip();
+        }
+    };
+
+    return (
+        <div className="chips-container">
+            {chips.map((chip, index) => (
+                <div key={index} className="chip">
+                    {chip}
+                    <span className="remove-chip" onClick={() => removeChip(index)}>×</span>
+                </div>
+            ))}
+            <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={field.placeholder || 'Add tag and press Enter'}
+            />
+        </div>
+    );
+};

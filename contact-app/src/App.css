@@ -202,7 +202,12 @@
   margin-top: 0.5rem !important;
 }
 
-.parent-container .tab-content .table-wrapper tbody tr td:not(.grid-row-checkbox, .grid-row-action-buttons) {
+.parent-container
+  .tab-content
+  .table-wrapper
+  tbody
+  tr
+  td:not(.grid-row-checkbox, .grid-row-action-buttons) {
   pointer-events: none;
 }
 
@@ -242,7 +247,8 @@
   margin: 0 0 auto auto;
 }
 
-[required], .required {
+[required],
+.required {
   border-left: 0.1rem solid red !important;
   border-radius: 0.28571429rem !important;
 }
@@ -761,4 +767,47 @@
 
 .add-subtype-field {
   padding: 0.75rem;
+}
+
+/* Chip field type css */
+
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.chip {
+  background-color: #e9e9e9;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.remove-chip {
+  margin-left: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.detail-tab .chip-display-container {
+  margin-top: 0.5rem;
+}
+
+.chip-display-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip-display {
+  background-color: #e0f7fa;
+  color: #00796b;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
 }
