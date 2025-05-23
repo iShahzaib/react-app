@@ -64,4 +64,12 @@ const MyProfile = () => {
     );
 };
 
+export const ManageTags = () => {
+    return (
+        <div className="ui inline fallback-loader">
+            <div className="ui text active loader">Work In Progress...</div>
+        </div>
+    );
+};
+
 export default MyProfile;
