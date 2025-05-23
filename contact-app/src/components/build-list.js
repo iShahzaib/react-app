@@ -8,6 +8,7 @@ import { useSchema } from "../contexts/SchemaContext";
 const BuildList = React.memo(({ type, origin }) => {
     const { state } = useLocation();  // Access location object to get state
     type = state?.collection?.toLowerCase() || type;
+    const { schemaList } = useSchema();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
@@ -49,10 +50,22 @@ const BuildList = React.memo(({ type, origin }) => {
         return <Navigate to="/" replace />;  // <-- This will redirect without remount issues
     }
 
+    const schema = schemaList[type];
+
     const filteredData = listData.filter(data =>
-        Object.values(data).some(value =>
-            value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-        )
+        schema?.fields.some(field => {
+            const value = data[field.name];
+
+            if (typeof value === 'boolean') {
+                const boolText = value ? 'yes' : 'no';
+                return boolText.includes(searchTerm.toLowerCase());
+            }
+            if (Array.isArray(value)) {
+                return value.join(' ').toLowerCase().includes(searchTerm.toLowerCase());
+            }
+
+            return value?.toString().toLowerCase().includes(searchTerm.toLowerCase());
+        })
     );
 
     const deleteObjects = async (_ids) => {
@@ -81,12 +94,14 @@ const BuildList = React.memo(({ type, origin }) => {
         <div className="ui main container">
             <HeaderNav
                 type={type}
+                tab={schema}
                 filteredData={filteredData}
                 loggedInUsername={loggedInUsername}
                 origin={origin}
             />
             <SearchBar
                 type={type}
+                tab={schema}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 selectedIds={selectedIds}
@@ -141,9 +156,7 @@ const GridTable = (props) => {
     )
 };
 
-const HeaderNav = ({ type, filteredData, loggedInUsername, origin }) => {
-    const { schemaList } = useSchema();
-    const tab = schemaList[type];
+const HeaderNav = ({ type, tab, filteredData, loggedInUsername, origin }) => {
     const tableHeader = tab?.tableName || `${sentenceCase(type)} List`;
 
     return (
@@ -171,11 +184,9 @@ const HeaderNav = ({ type, filteredData, loggedInUsername, origin }) => {
 };
 
 const SearchBar = (props) => {
-    const { schemaList } = useSchema();
-    const { type, searchTerm, setSearchTerm, selectedIds, setSelectedIds, retrieveData, deleteObjects } = props;
+    const { type, tab, searchTerm, setSearchTerm, selectedIds, setSelectedIds, retrieveData, deleteObjects } = props;
 
     const inputSearch = useRef('');
-    const tab = schemaList[type];
 
     const handleRefresh = () => {
         setSelectedIds([]);
