@@ -58,7 +58,14 @@ const ListCard = (props) => {
                 const fieldValue = displayLabel(field, rowData);
 
                 return (
-                    <td key={field.name} style={{ width: field.columnWidth || '150px' }}>
+                    <td
+                        key={field.name}
+                        style={{
+                            width: field.columnWidth || '150px',
+                            minWidth: field.columnWidth || '150px',
+                            maxWidth: field.columnWidth || '150px'
+                        }}
+                    >
                         <span style={{ display: field.type === 'checkbox' ? 'flex' : 'inline' }} title={fieldValue || ''}>{fieldValue || '—'}</span>
                     </td>
                 )
@@ -96,7 +103,14 @@ export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
                     if (field.ispicture || field.notshowongrid) return null;
 
                     return (
-                        <th key={field.name} style={{ width: field.columnWidth || '150px' }}>
+                        <th
+                            key={field.name}
+                            style={{
+                                width: field.columnWidth || '150px',
+                                minWidth: field.columnWidth || '150px',
+                                maxWidth: field.columnWidth || '150px'
+                            }}
+                        >
                             {field.label}
                         </th>
                     )

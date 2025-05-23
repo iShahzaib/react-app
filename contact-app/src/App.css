@@ -511,12 +511,11 @@
 }
 
 .table-wrapper table {
-  width: max-content !important;
-  table-layout: fixed !important;
   min-width: 100%;
-  width: 100%;
   border-collapse: collapse !important;
   border-spacing: 0;
+  width: max-content;
+  table-layout: fixed;
 }
 
 .table-wrapper thead th {
@@ -757,7 +756,7 @@
   background-color: #e0f7fa;
   padding: 0.3rem 0.7rem;
   border-radius: 6px;
-  display: inline-block;
+  display: inline-flex;
   align-items: center;
   color: #006064;
   border: 1px solid #4dd0e1;
