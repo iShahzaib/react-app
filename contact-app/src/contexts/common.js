@@ -197,7 +197,7 @@ export const FieldCard = ({ self, field }) => {
 
         case 'checkbox':
             return (
-                <div className="ui checkbox">
+                <div className="ui fitted checkbox">
                     <input
                         id={field.name}
                         type="checkbox"
@@ -206,7 +206,7 @@ export const FieldCard = ({ self, field }) => {
                         checked={fieldData}
                         onChange={self.handleChange}
                     />
-                    <label htmlFor={field.name}>{field.label}</label>
+                    <label htmlFor={field.name}></label>
                 </div>
             );
 
@@ -316,7 +316,7 @@ export const displayLabel = (field, data) => {
 
         case 'checkbox':
             // return fieldData ? '✅ Yes' : '❌ No';
-            return fieldData ? <><i className="check square icon large green"></i>Yes</> : <><i className="square outline icon large grey"></i>No</>;
+            return fieldData ? <i className="check square icon large green"></i> : <i className="square outline icon large grey"></i>;
 
         case 'date':
         case 'datetime':
