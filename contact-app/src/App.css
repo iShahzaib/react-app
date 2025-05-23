@@ -154,10 +154,6 @@
     min-width: 600px !important;
   }
 
-  .table-wrapper tbody tr {
-    height: 40px !important;
-  }
-
   .table-wrapper tbody td {
     max-width: 300px !important;
   }
@@ -567,19 +563,15 @@
   border-top: 1px solid rgba(34, 36, 38, 0.15);
   border-bottom: 1px solid rgba(34, 36, 38, 0.15);
   cursor: pointer;
-  height: 42px;
+  height: 43px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .table-wrapper img.ui.avatar.image {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-}
-
-.ui.table tbody tr {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  cursor: pointer;
 }
 
 .grid-row-action-buttons {
