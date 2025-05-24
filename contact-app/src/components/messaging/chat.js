@@ -1,10 +1,202 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
-import { Link, Navigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import user from '../../images/nouser.jpg';
 import socketClient from '../../api/socket';
 import api from '../../api/server';
 import MessageContainer, { ChatInput } from './message-container';
-import { showError, showSuccess } from '../../contexts/common';
+import { displayLabel, sentenceCase, showError, showSuccess } from '../../contexts/common';
+import { useSchema } from '../../contexts/SchemaContext';
+import { defaultFields } from '../../constant';
+import { HeaderNav } from '../build-list';
+
+export const BuildChatList = React.memo(({ type, origin }) => {
+    const { state } = useLocation();  // Access location object to get state
+    type = state?.collection?.toLowerCase() || type;
+    const { schemaList } = useSchema();
+
+    const [searchTerm, setSearchTerm] = useState("");
+    const [redirect, setRedirect] = useState(false);
+
+    const [listData, setListData] = useState([]);
+
+    const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+
+    const retrieveData = useCallback(async () => {
+        try {
+            const response = await api.get(`/api/getdocdata?collection=${type === 'chat' ? 'User' : sentenceCase(type)}`);
+
+            const getData = response.data || [];
+            const sortedData = getData.sort((a, b) =>
+                new Date(b.createdAt || parseInt(b._id.toString().substring(0, 8), 16) * 1000) -
+                new Date(a.createdAt || parseInt(a._id.toString().substring(0, 8), 16) * 1000)
+            );
+
+            setListData(sortedData);
+
+        } catch (err) {
+            console.error("Error fetching data:", err);
+        }
+    }, [type, setListData]);
+
+    useEffect(() => {
+        !loggedInUsername ? setRedirect(true) : retrieveData();
+    }, [loggedInUsername, retrieveData]);
+
+    // If redirect is true, navigate to login
+    if (redirect) {
+        return <Navigate to="/" replace />;  // <-- This will redirect without remount issues
+    }
+
+    const schema = schemaList[type];
+    const fields = schema?.fields || defaultFields;
+
+    const filteredData = listData.filter(rowData =>
+        fields.some(field => {
+            if (field.ispicture || field.notshowongrid) return false;
+            const value = rowData[field.name];
+
+            if (typeof value === 'boolean') {
+                const boolText = value ? 'yes' : 'no';
+                return boolText.includes(searchTerm.toLowerCase());
+            }
+            if (Array.isArray(value)) {
+                return value.join(' ').toLowerCase().includes(searchTerm.toLowerCase());
+            }
+
+            return value?.toString().toLowerCase().includes(searchTerm.toLowerCase());
+        })
+    );
+
+    return (
+        <div className="ui main container">
+            <HeaderNav
+                type={type}
+                tab={schema}
+                filteredData={filteredData}
+                loggedInUsername={loggedInUsername}
+                origin={origin}
+            />
+            <ChatSearchBar
+                type={type}
+                tab={schema}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                retrieveData={retrieveData}
+            />
+            <ChatList
+                type={type}
+                filteredData={filteredData}
+                loggedInUsername={loggedInUsername}
+            />
+        </div >
+    );
+});
+
+const ChatList = (props) => {
+    const { type, filteredData, loggedInUsername } = props;
+
+    const { schemaList } = useSchema();
+    const tab = schemaList[type];
+    const fields = tab?.fields || defaultFields;
+
+    return (
+        <div className="chat-list-wrapper">
+            <ul className="chat-list">
+                {filteredData.length > 0
+                    ? filteredData.map((c) => (
+                        <ChatListCard
+                            key={c._id}
+                            fields={fields}
+                            rowData={c}
+                            type={type}
+                            loggedInUsername={loggedInUsername}
+                        />
+                    ))
+                    : <div className="no-data">No entry found</div>
+                }
+            </ul>
+        </div>
+    )
+};
+
+const ChatSearchBar = (props) => {
+    const { type, searchTerm, setSearchTerm, retrieveData } = props;
+
+    const inputSearch = useRef('');
+
+    const handleRefresh = () => {
+        setSearchTerm('');
+        inputSearch.current.value = '';
+        retrieveData();
+    }
+
+    return (
+        <div className="ui search search-container">
+            <div className="ui icon input search-input">
+                <input
+                    ref={inputSearch}
+                    type="text"
+                    placeholder={`Search ${sentenceCase(type)}s`}
+                    className="prompt"
+                    value={searchTerm}
+                    onChange={() => setSearchTerm(inputSearch.current.value)}
+                />
+                {searchTerm
+                    ? (<i
+                        className="close icon"
+                        style={{ cursor: 'pointer', pointerEvents: 'auto' }}
+                        onClick={() => {
+                            setSearchTerm('');
+                            inputSearch.current.value = '';
+                        }}
+                    />)
+                    : (<i className="search icon"></i>)
+                }
+            </div>
+
+            <button
+                className="prompt refresh-button"
+                onClick={handleRefresh}
+                style={{ padding: ".67857143em 0.76em", color: "#00000080" }}
+            >
+                <i className="refresh icon" style={{ margin: 0 }}></i>
+            </button>
+        </div>
+    )
+};
+
+export const ChatListCard = (props) => {
+    const { fields, rowData, type, loggedInUsername } = props;
+    const { _id, username, email, profilepicture } = rowData;
+    const navigate = useNavigate();
+
+    const state = type !== 'chat' ? { data: props.rowData, loggedInUsername } : { _id, username, email, profilepicture, loggedInUsername };
+    const linkPath = type !== 'chat' ? `/detail/${type}/${_id}` : '/chat';
+
+    return (
+        <li className="chat-item">
+            <div className="chat-card" onDoubleClick={() => navigate(linkPath, { state })}>
+                {fields.some(field => field.ispicture) &&
+                    <div className="chat-avatar">
+                        <img className="ui avatar image" src={profilepicture || user} alt="user" />
+                    </div>
+                }
+                <div className="chat-details">
+                    {fields.map(field => {
+                        if (field.ispicture || field.notshowongrid) return null;
+                        const fieldValue = displayLabel(field, rowData);
+
+                        return (
+                            <div key={field.name} className="chat-field" title={fieldValue || ''}>
+                                <h3>{fieldValue || '—'}</h3>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+        </li>
+    );
+};
 
 const ChatComponent = () => {
     const { state } = useLocation();
@@ -88,7 +280,7 @@ const ChatComponent = () => {
         <div className="ui container chat-container">
             <div className="chat-header">
                 <div className="avatar-container">
-                    <img className="chat-avatar" src={profilepicture || user} alt="user" />
+                    <img className="chat-avatar-box" src={profilepicture || user} alt="user" />
                     <span className="status-dot online"></span>
                 </div>
                 <h2 className="chat-username">{username}</h2>

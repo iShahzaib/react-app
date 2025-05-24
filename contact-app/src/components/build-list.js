@@ -56,6 +56,7 @@ const BuildList = React.memo(({ type, origin }) => {
 
     const filteredData = listData.filter(rowData =>
         fields.some(field => {
+            if (field.ispicture || field.notshowongrid) return false;
             const value = rowData[field.name];
 
             if (typeof value === 'boolean') {
