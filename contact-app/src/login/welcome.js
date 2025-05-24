@@ -6,7 +6,7 @@ import logo from '../images/logo.png';
 import socketClient from '../api/socket';
 import { showWarning } from "../contexts/common";
 import { useSchema } from "../contexts/SchemaContext";
-import { BuildChatList } from "../components/build-list";
+import { BuildChatList } from "../components/messaging/chat";
 
 const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
     const { username: authenticatedUser } = useParams();
