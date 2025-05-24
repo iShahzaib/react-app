@@ -18,7 +18,7 @@ const Detail = () => {
 
     // const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
     // const linkPath = type !== 'user' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
-    const backPath = type === 'user' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
+    const backPath = type === 'chat' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
 
     const [activeTab, setActiveTab] = useState('detail');
     const setDataInParams = (tabName) => {

@@ -30,8 +30,8 @@ const ListCard = (props) => {
         });
     };
 
-    const state = type !== 'user' ? { data: props.rowData, loggedInUsername } : { _id, username, email, profilepicture, loggedInUsername };
-    const linkPath = type !== 'user' ? `/detail/${type}/${_id}` : '/chat';
+    const state = type !== 'chat' ? { data: props.rowData, loggedInUsername } : { _id, username, email, profilepicture, loggedInUsername };
+    const linkPath = type !== 'chat' ? `/detail/${type}/${_id}` : '/chat';
 
     return (
         <tr className={`${isSelected ? 'selected' : ''}`} onDoubleClick={() => navigate(linkPath, { state })}>
