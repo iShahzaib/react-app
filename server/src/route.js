@@ -56,8 +56,10 @@ router.post('/updatedocdata', async (req, res) => {
         delete data.createdAt;
 
         data['updatedAt'] = new Date();
-        const result = await db.collection(collection).updateOne({ _id: documentID }, { $set: data });
+        const result = await db.collection(collection).findOneAndUpdate({ _id: documentID }, { $set: data }, { returnDocument: 'after' });
 
+        delete result.password;
+    
         res.status(201).json(result);
     } catch (err) {
         console.error("Error in update api:", err);

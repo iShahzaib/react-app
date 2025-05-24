@@ -5,9 +5,8 @@ import api from "../api/server";
 import { useSchema } from "../contexts/SchemaContext";
 import FormDataClass from "./form-data";
 
-const AddData = (props) => {
+const AddData = () => {
     const { state } = useLocation();  // Access location object to get state
-    const { records, setRecords } = props;
     const { location, loggedInUsername: username, type } = state ?? {};
 
     const { schemaList } = useSchema();
@@ -16,13 +15,11 @@ const AddData = (props) => {
         const response = await api.post(`/api/adddocdata`, { data, collection: type });
 
         if (response?.data?.insertedId) {
-            setRecords([...records, data]);
-
             showSuccess(`${type} has been added successfully.`);
-            return 'success';
+            return { res: 'success' };
         } else {
             showError('This email already exists.');
-            return 'failed';
+            return { res: 'failed' };
         }
     };
 

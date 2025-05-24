@@ -14,10 +14,10 @@ class UpdateUserClass extends React.Component {
         this.setState({ _id, username, email, profilepicture });
     }
 
-    update = (e) => {
+    update = async (e) => {
         e.preventDefault();
 
-        const { _id, username, email } = this.state;
+        const { _id, username, email, profilepicture } = this.state;
         const { updateUserHandler, state, navigate } = this.props;
 
         if (!username || !email) {
@@ -25,15 +25,23 @@ class UpdateUserClass extends React.Component {
             return;
         }
 
-        const updatedData = { ...state.data, username, email };
-        updateUserHandler(updatedData);
+        const updatedData = { ...state.data, username, email, profilepicture };
+        const response = await updateUserHandler(updatedData);
+
+        let newState = {};
+        if (response.res === 'success' && response.entry) {
+            newState = { ...response.entry };
+        }
 
         this.setState({ username: '', email: '', profilepicture: '' });
 
-        const { _id: loggedInUserID, username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+        const loggedInUser = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
-        if (_id === loggedInUserID) {
-            navigate(`/myprofile/${loggedInUsername}`);
+        if (_id === loggedInUser._id) {
+            const newUser = { ...loggedInUser, ...newState };
+            localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+
+            navigate(`/myprofile/${newUser.username}`, { state: { newUser } });
         } else {
             navigate('/getalldata/User', { state: { collection: 'User' } });
         }

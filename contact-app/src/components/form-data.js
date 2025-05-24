@@ -35,7 +35,10 @@ class FormDataClass extends React.Component {
 
     redirectToPreviousPage = (data) => {
         const { state, navigate, mode } = this.props;
-        const navState = { type: state.type, data, collection: `${sentenceCase(state.type)}` };
+        const navState = {
+            type: state.type, data,
+            ...(mode === 'update' && state.location ? {} : { collection: `${sentenceCase(state.type)}` })
+        };
 
         const path = mode === 'update' && state.location
             ? `/detail/${state.type}/${state.data._id}`
@@ -80,20 +83,23 @@ class FormDataClass extends React.Component {
             }
         });
 
+        let newState = {};
         if (mode === 'add') {
             const response = await addDataHandler(dataToSave, sentenceCase(state.type));
 
-            if (response === 'success') {
-                const clearedState = {};
-                this.fields.forEach(f => clearedState[f.name] = '');
-                this.setState(clearedState);
-                this.redirectToPreviousPage();
+            if (response.res === 'success') {
+                this.fields.forEach(f => newState[f.name] = '');
             }
         } else {
             const updatedData = { ...state.data, ...dataToSave };
-            updateDataHandler(updatedData);
-            this.redirectToPreviousPage(updatedData);
+            const response = await updateDataHandler(updatedData);
+
+            if (response.res === 'success' && response.entry) {
+                newState = { ...response.entry };
+            }
         }
+        this.setState(newState);
+        this.redirectToPreviousPage(newState);
     };
 
     render() {

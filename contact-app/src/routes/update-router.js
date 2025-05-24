@@ -2,35 +2,21 @@ import { useParams } from "react-router-dom";
 import UpdateData from '../components/update-data';
 import api from '../api/server';
 import UpdateUser from "../components/update-user";
-import { sentenceCase, showSuccess } from "../contexts/common";
+import { sentenceCase, showError, showSuccess } from "../contexts/common";
 
-export default function UpdateRouter({ records, setRecords, users, setUsers }) {
+export default function UpdateRouter() {
     const { type } = useParams();
 
-    const updateHandler = (updatedData) => {
-        const updatedtList = type !== 'user'
-            ? records.map((c) => c._id === updatedData._id ? updatedData : c)
-            : users.map((u) => u._id === updatedData._id ? updatedData : u);
+    const updateHandler = async (updatedData) => {
+        const response = await api.post(`/api/updatedocdata`, { data: updatedData, collection: sentenceCase(type) });
 
-        if (type === 'user') {
-            setUsers(updatedtList);
-
-            const { _id } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
-            if (_id === updatedData._id) {
-                localStorage.setItem('loggedInUser', JSON.stringify(updatedData));
-            }
+        if (response?.status === 201 && response.data) {
+            showSuccess(`${sentenceCase(type)} has been updated successfully.`);
+            return { res: 'success', entry: response.data };
         } else {
-            setRecords(updatedtList);
+            showError('Error while updating record.');
+            return { res: 'failed', entry: response.data };
         }
-        showSuccess(`${sentenceCase(type)} has been updated successfully.`);
-
-        // delete updatedData.email;
-        // api.put(`/${type}/${updatedData._id}`, updatedData);
-        // api.patch(`/${type}/${updatedData._id}`, updatedData);   // Only update the name field
-        api.post(`/api/updatedocdata`, {
-            data: updatedData,
-            collection: sentenceCase(type)
-        });
     };
 
     switch (type) {
