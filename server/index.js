@@ -38,20 +38,24 @@ const authenticateToken = (req, res, next) => {
 
 // const playDoc = async (data) => {
 //     const db = await getDBConnection('MSH_CONTACTAPP');
-//     db.collection('Schema').updateOne({ key: 'contact' }, {
-//         $set: {
-//             tabItems: [
-//                 {
-//                     "name": "Employee",
-//                     "icon": "fa-solid fa-user",
-//                     "schemaName": "employee"
-//                 },
-//                 {
-//                     "name": "Student",
-//                     "icon": "fa-solid fa-user-graduate",
-//                     "schemaName": "student"
-//                 }
-//             ]
+//     db.collection('Schema').updateMany({ tabItems: { $exists: true } }, {
+//         $addToSet: {
+//             tabItems: {
+//                 $each: [
+//                     {
+//                         name: "Documents",
+//                         icon: "file alternate outline",
+//                         tabColor: "#3c4184",
+//                         schemaName: "document"
+//                     },
+//                     {
+//                         name: "Notes",
+//                         icon: "sticky note outline",
+//                         tabColor: "#e1bd50",
+//                         schemaName: "note"
+//                     }
+//                 ]
+//             }
 //         }
 //     });
 // };

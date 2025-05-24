@@ -67,16 +67,13 @@ const MyProfile = () => {
 
 export const ManageTags = () => {
     return (
-        <div className="ui inline fallback-loader">
-            <div className="ui text active loader">Work In Progress...</div>
-        </div>
-        // <BuildList type="note" origin="welcome" />
+        <BuildList type="tags" origin="userdropdown" />
     );
 };
 
 export const ManageUsers = () => {
     return (
-        <BuildList type="user" origin="welcome" />
+        <BuildList type="user" origin="userdropdown" />
     );
 };
 

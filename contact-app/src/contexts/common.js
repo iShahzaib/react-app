@@ -62,7 +62,7 @@ export const RenderForm = ({ title, buttonLabel, self }) => {
     const fields = self.fields;
 
     if (!title && self.state?._id) {
-        title = 'Edit ' + (displayLabel(fields.find(f => f.isTitle), self.state) || self.state?.name || '');
+        title = 'Edit ' + (fields.map(fld => (fld.isTitle && displayLabel(fld, self.state)) || '').join(' ') || self.state?.name || '');
     }
 
     return (

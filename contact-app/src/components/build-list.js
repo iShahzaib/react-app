@@ -4,6 +4,7 @@ import ListCard, { ListCardHead } from "./list-card";
 import { confirmDelete, sentenceCase, showSuccess, showWarning } from "../contexts/common";
 import api from "../api/server";
 import { useSchema } from "../contexts/SchemaContext";
+import { defaultFields } from "../constant";
 
 const BuildList = React.memo(({ type, origin }) => {
     const { state } = useLocation();  // Access location object to get state
@@ -51,9 +52,10 @@ const BuildList = React.memo(({ type, origin }) => {
     }
 
     const schema = schemaList[type];
+    const fields = schema?.fields || defaultFields;
 
     const filteredData = listData.filter(rowData =>
-        schema?.fields.some(field => {
+        fields.some(field => {
             const value = rowData[field.name];
 
             if (typeof value === 'boolean') {
@@ -168,7 +170,7 @@ const HeaderNav = ({ type, tab, filteredData, loggedInUsername, origin }) => {
                 </div>
             </h2>
             <div className="grid-button">
-                {type !== 'user' && (
+                {type !== 'chat' && (
                     <Link to="/add" state={{ loggedInUsername, type }}>
                         <button className="ui button blue">Add {sentenceCase(type)}</button>
                     </Link>

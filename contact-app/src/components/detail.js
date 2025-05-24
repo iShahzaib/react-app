@@ -32,7 +32,7 @@ const Detail = () => {
             const value = data?.[key];
             return value !== undefined && value !== null ? value : '';
         })
-        : displayLabel(fields.find(f => f.isTitle), data) || data?.name;
+        : fields.map(fld => (fld.isTitle && displayLabel(fld, data)) || '').join(' ') || data?.name;
 
     return (
         <div className="ui main container">
