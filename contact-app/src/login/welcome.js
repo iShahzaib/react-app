@@ -193,6 +193,10 @@ const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
                 <Link to={`/managetags/${username}`} onClick={closeDropdown}>
                     <i className="tags icon"></i> Manage Tags
                 </Link>
+                <div style={{ marginTop: "0.5rem" }}></div>
+                <Link to={`/manageusers/${username}`} onClick={closeDropdown}>
+                    <i className="users icon"></i> Users
+                </Link>
                 <div className="dropdown-popup"></div>
                 <Link to='/' onClick={onLogout}>
                     <i className="logout icon"></i> Sign Out
