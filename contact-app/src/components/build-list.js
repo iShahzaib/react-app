@@ -125,14 +125,137 @@ const BuildList = React.memo(({ type, origin }) => {
     );
 });
 
+export const BuildChatList = React.memo(({ type, origin }) => {
+    const { state } = useLocation();  // Access location object to get state
+    type = state?.collection?.toLowerCase() || type;
+    const { schemaList } = useSchema();
+
+    const [searchTerm, setSearchTerm] = useState("");
+    const [redirect, setRedirect] = useState(false);
+
+    const [listData, setListData] = useState([]);
+    const [selectedIds, setSelectedIds] = useState([]);
+
+    const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+
+    const retrieveData = useCallback(async () => {
+        try {
+            setSelectedIds([]);
+            // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+            const response = await api.get(`/api/getdocdata?collection=${type === 'chat' ? 'User' : sentenceCase(type)}`);
+
+            const getData = response.data || [];
+            const sortedData = getData.sort((a, b) =>
+                new Date(b.createdAt || parseInt(b._id.toString().substring(0, 8), 16) * 1000) -
+                new Date(a.createdAt || parseInt(a._id.toString().substring(0, 8), 16) * 1000)
+            );
+
+            setListData(sortedData);
+
+        } catch (err) {
+            console.error("Error fetching data:", err);
+        }
+    }, [type, setListData]);
+
+    useEffect(() => {
+        setSelectedIds([]); // Clear selections on search term change
+    }, [searchTerm]);
+
+    useEffect(() => {
+        !loggedInUsername ? setRedirect(true) : retrieveData();
+    }, [loggedInUsername, retrieveData]);
+
+    // If redirect is true, navigate to login
+    if (redirect) {
+        return <Navigate to="/" replace />;  // <-- This will redirect without remount issues
+    }
+
+    const schema = schemaList[type];
+    const fields = schema?.fields || defaultFields;
+
+    const filteredData = listData.filter(rowData =>
+        fields.some(field => {
+            const value = rowData[field.name];
+
+            if (typeof value === 'boolean') {
+                const boolText = value ? 'yes' : 'no';
+                return boolText.includes(searchTerm.toLowerCase());
+            }
+            if (Array.isArray(value)) {
+                return value.join(' ').toLowerCase().includes(searchTerm.toLowerCase());
+            }
+
+            return value?.toString().toLowerCase().includes(searchTerm.toLowerCase());
+        })
+    );
+
+    const deleteObjects = async (_ids) => {
+        setListData(prev => prev.filter(item => !_ids.includes(item._id)));
+        try {
+            await api.post(`/api/deletedocdata`, { data: { _ids }, collection: sentenceCase(type) });
+        } catch (err) {
+            console.error("Error deleting objects:", err);
+        }
+    };
+
+    const allIds = filteredData.map(item => item._id);
+    const isAllSelected = selectedIds.length === allIds.length && allIds.length > 0;
+
+    const toggleSelectAll = () => {
+        isAllSelected ? setSelectedIds([]) : setSelectedIds(allIds);
+    };
+
+    const toggleSelectOne = (id) => {
+        setSelectedIds(prev =>
+            prev.includes(id) ? prev.filter(_id => _id !== id) : [...prev, id]
+        );
+    };
+
+    return (
+        <div className="ui main container">
+            <HeaderNav
+                type={type}
+                tab={schema}
+                filteredData={filteredData}
+                loggedInUsername={loggedInUsername}
+                origin={origin}
+            />
+            <SearchBar
+                type={type}
+                tab={schema}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                selectedIds={selectedIds}
+                setSelectedIds={setSelectedIds}
+                retrieveData={retrieveData}
+                deleteObjects={deleteObjects}
+            />
+            <GridTable
+                type={type}
+                filteredData={filteredData}
+                loggedInUsername={loggedInUsername}
+                deleteObjects={deleteObjects}
+                isAllSelected={isAllSelected}
+                toggleSelectAll={toggleSelectAll}
+                toggleSelectOne={toggleSelectOne}
+                selectedIds={selectedIds}
+            />
+        </div >
+    );
+});
+
 const GridTable = (props) => {
     const { type, filteredData, loggedInUsername, deleteObjects, isAllSelected, toggleSelectAll, toggleSelectOne, selectedIds } = props;
+
+    const { schemaList } = useSchema();
+    const tab = schemaList[type];
+    const fields = tab?.fields || defaultFields;
 
     return (
         <div className="table-wrapper">
             <table className="ui unstackable table" style={{ border: "unset" }}>
                 <ListCardHead
-                    type={type}
+                    fields={fields}
                     isAllSelected={isAllSelected}
                     toggleSelectAll={toggleSelectAll}
                 />
@@ -141,6 +264,7 @@ const GridTable = (props) => {
                         ? filteredData.map(c => (
                             <ListCard
                                 key={c._id}
+                                fields={fields}
                                 rowData={c}
                                 type={type}
                                 loggedInUsername={loggedInUsername}
@@ -150,7 +274,7 @@ const GridTable = (props) => {
                             />
 
                         ))
-                        : (<tr><td colSpan="100%" style={{ textAlign: "center" }}>No entry found</td></tr>)
+                        : (<tr><td colSpan={`${fields.filter(fld => !fld.notshowongrid).length + 2}`} style={{ textAlign: "center" }}>No entry found</td></tr>)
                     }
                 </tbody>
             </table>

@@ -2,12 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import { confirmDelete, displayLabel, sentenceCase, showError, showSuccess } from "../contexts/common";
-import { defaultFields } from "../constant";
-import { useSchema } from "../contexts/SchemaContext";
 
 const ListCard = (props) => {
-    const { schemaList } = useSchema();
-    const { rowData, type, loggedInUsername, isSelected, toggleSelectOne } = props;
+    const { fields, rowData, type, loggedInUsername, isSelected, toggleSelectOne } = props;
     const { _id, username, email, profilepicture } = rowData;
     const navigate = useNavigate();
 
@@ -35,10 +32,6 @@ const ListCard = (props) => {
 
     const state = type !== 'user' ? { data: props.rowData, loggedInUsername } : { _id, username, email, profilepicture, loggedInUsername };
     const linkPath = type !== 'user' ? `/detail/${type}/${_id}` : '/chat';
-
-    // Get field config based on type
-    const tab = schemaList[type];
-    const fields = tab?.fields || defaultFields;
 
     return (
         <tr className={`${isSelected ? 'selected' : ''}`} onDoubleClick={() => navigate(linkPath, { state })}>
@@ -80,11 +73,7 @@ const ListCard = (props) => {
     );
 };
 
-export const ListCardHead = ({ type, isAllSelected, toggleSelectAll }) => {
-    const { schemaList } = useSchema();
-    const tab = schemaList[type];
-    const fields = tab?.fields || defaultFields;
-
+export const ListCardHead = ({ fields, isAllSelected, toggleSelectAll }) => {
     return (
         <thead>
             <tr>
@@ -127,7 +116,7 @@ const ActionButtons = ({ state, parentProps, handleDelete }) => {
 
     return (
         <td className="grid-row-action-buttons" style={{ width: '120px' }}>
-            {type !== 'user' && (
+            {type !== 'chat' && (
                 <i
                     className="edit blue alternate outline icon"
                     title="Edit"

@@ -6,7 +6,7 @@ import logo from '../images/logo.png';
 import socketClient from '../api/socket';
 import { showWarning } from "../contexts/common";
 import { useSchema } from "../contexts/SchemaContext";
-import BuildList from "../components/build-list";
+import { BuildChatList } from "../components/build-list";
 
 const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
     const { username: authenticatedUser } = useParams();
@@ -218,7 +218,7 @@ export const Welcome = ({ username }) => (
         </div>
 
         <div className="ui segment" style={{ marginTop: '2rem' }}>
-            <BuildList type="user" origin="welcome" />
+            <BuildChatList type="chat" origin="welcome" />
         </div>
     </>
 );
