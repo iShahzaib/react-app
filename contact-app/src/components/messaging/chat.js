@@ -86,14 +86,13 @@ export const BuildChatList = React.memo(({ type, origin }) => {
             <ChatList
                 type={type}
                 filteredData={filteredData}
-                loggedInUsername={loggedInUsername}
             />
         </div >
     );
 });
 
 const ChatList = (props) => {
-    const { type, filteredData, loggedInUsername } = props;
+    const { type, filteredData } = props;
 
     const { schemaList } = useSchema();
     const tab = schemaList[type];
@@ -109,7 +108,6 @@ const ChatList = (props) => {
                             fields={fields}
                             rowData={c}
                             type={type}
-                            loggedInUsername={loggedInUsername}
                         />
                     ))
                     : <div className="no-data">No entry found</div>
@@ -166,11 +164,13 @@ const ChatSearchBar = (props) => {
 };
 
 export const ChatListCard = (props) => {
-    const { fields, rowData, type, loggedInUsername } = props;
-    const { _id, username, email, profilepicture } = rowData;
+    const { fields, rowData, type } = props;
+    const { _id, profilepicture } = rowData;
     const navigate = useNavigate();
 
-    const state = type !== 'chat' ? { data: props.rowData, loggedInUsername } : { _id, username, email, profilepicture, loggedInUsername };
+    const loggedInUser = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
+
+    const state = type !== 'chat' ? { data: rowData, loggedInUsername: loggedInUser.username } : { receiverInfo: rowData, senderInfo: loggedInUser };
     const linkPath = type !== 'chat' ? `/detail/${type}/${_id}` : '/chat';
 
     return (
@@ -202,7 +202,9 @@ export const ChatListCard = (props) => {
 
 const ChatComponent = () => {
     const { state } = useLocation();
-    const { username, loggedInUsername, profilepicture } = state || {};
+    const { receiverInfo, senderInfo } = state || {};
+    const { username: loggedInUsername } = senderInfo;
+    const { username, profilepicture } = receiverInfo;
 
     const [message, setMessage] = useState('');
     const [chat, setChat] = useState([]);
