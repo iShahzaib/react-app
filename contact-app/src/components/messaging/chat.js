@@ -175,24 +175,26 @@ export const ChatListCard = (props) => {
 
     return (
         <li className="chat-item">
-            <div className="chat-card" onDoubleClick={() => navigate(linkPath, { state })}>
+            <div className="chat-card">
                 {fields.some(field => field.ispicture) &&
                     <div className="chat-avatar">
                         <img className="ui avatar image" src={profilepicture || user} alt="user" />
                     </div>
                 }
-                <div className="chat-details">
-                    {fields.map(field => {
-                        if (field.ispicture || field.notshowongrid) return null;
-                        const fieldValue = displayLabel(field, rowData);
+                {fields.map(field => {
+                    if (field.ispicture || field.notshowongrid) return null;
+                    const fieldValue = displayLabel(field, rowData);
 
-                        return (
-                            <div key={field.name} className="chat-field" title={fieldValue || ''}>
-                                <h3>{fieldValue || '—'}</h3>
+                    return (
+                        <div className="chat-details" onClick={() => navigate(linkPath, { state })}>
+                            <div className='chat-list-header' key={field.name} style={{ display: "flex" }} title={fieldValue || ''}>
+                                <div className='chat-user'>{fieldValue || '—'}</div>
+                                <div className='chat-last-time'>Yesterday</div>
                             </div>
-                        )
-                    })}
-                </div>
+                            <div className='chat-last-text'>The quick brown fox jumps over the lazy dog.</div>
+                        </div>
+                    )
+                })}
             </div>
         </li>
     );

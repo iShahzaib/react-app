@@ -481,7 +481,7 @@
 .chat-card {
   display: flex;
   align-items: center;
-  padding: 12px;
+  padding: 0.85em 0;
   border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
   transition: background 0.2s;
@@ -506,20 +506,31 @@
 
 .chat-details {
   flex: 1;
-  margin-left: 12px;
+  margin: 0 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.chat-field h3 {
+.chat-list-header .chat-user {
   margin: 0;
-  /* font-size: 16px; */
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 600;
   color: #333;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.chat-last-time {
+  margin-left: auto;
+}
+
+.chat-last-text,
+.chat-last-time {
+  font-size: 0.9rem;
+  color: rgb(118, 118, 118);
+  font-weight: 500;
 }
 
 .no-data {
