@@ -7,7 +7,6 @@ import MessageContainer, { ChatInput } from './message-container';
 import { displayLabel, sentenceCase, showError, showSuccess } from '../../contexts/common';
 import { useSchema } from '../../contexts/SchemaContext';
 import { defaultFields } from '../../constant';
-import { HeaderNav } from '../build-list';
 
 export const BuildChatList = React.memo(({ type, origin }) => {
     const { state } = useLocation();  // Access location object to get state
@@ -69,7 +68,7 @@ export const BuildChatList = React.memo(({ type, origin }) => {
 
     return (
         <div className="ui main container">
-            <HeaderNav
+            <ChatHeaderNav
                 type={type}
                 tab={schema}
                 filteredData={filteredData}
@@ -90,6 +89,33 @@ export const BuildChatList = React.memo(({ type, origin }) => {
         </div >
     );
 });
+
+export const ChatHeaderNav = ({ type, tab, filteredData, loggedInUsername, origin }) => {
+    const tableHeader = tab?.tableName || `${sentenceCase(type)} List`;
+
+    return (
+        <div className={`responsive-header ${origin === 'welcome' ? 'form-header' : ''}`}>
+            <h1 style={{ marginBottom: "0.5rem" }}>
+                {tableHeader}
+                <div style={{ fontSize: "0.9rem", color: "#555", fontWeight: "500" }}>
+                    {filteredData.length > 0 ? `${filteredData.length} Entr${filteredData.length > 1 ? "ies" : "y"}` : "No entry found"}
+                </div>
+            </h1>
+            <div className="grid-button">
+                {type !== 'chat' && (
+                    <Link to="/add" state={{ loggedInUsername, type }}>
+                        <button className="ui button blue">Add {sentenceCase(type)}</button>
+                    </Link>
+                )}
+                {origin !== 'welcome' && origin !== 'detail' && (
+                    <Link to={`/welcome/${loggedInUsername}`}>
+                        <button className="ui button close-btn"><i className="close icon red" /></button>
+                    </Link>
+                )}
+            </div>
+        </div>
+    )
+};
 
 const ChatList = (props) => {
     const { type, filteredData } = props;
