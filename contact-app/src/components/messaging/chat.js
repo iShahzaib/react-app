@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import user from '../../images/nouser.jpg';
 import socketClient from '../../api/socket';
 import api from '../../api/server';
@@ -209,6 +209,7 @@ const ChatComponent = () => {
     const [message, setMessage] = useState('');
     const [chat, setChat] = useState([]);
 
+    const navigate = useNavigate();
     const chatBoxRef = useRef(null);
 
     useEffect(() => {
@@ -289,9 +290,12 @@ const ChatComponent = () => {
                 </div>
                 <h2 className="chat-username">{username}</h2>
                 <div className="responsive-button">
-                    <Link to={`/welcome/${loggedInUsername}`}>
+                    {/* <Link to={`/welcome/${loggedInUsername}`}>
                         <button className="ui button close-btn"><i className="close icon red" /></button>
-                    </Link>
+                    </Link> */}
+                    <button className="ui button close-btn" onClick={() => navigate(-1)}>
+                        <i className="close icon red" />
+                    </button>
                 </div>
             </div>
             <div className="chat-box" ref={chatBoxRef}>

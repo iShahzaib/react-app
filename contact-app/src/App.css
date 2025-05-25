@@ -460,9 +460,6 @@
 
 .chat-list-wrapper {
   margin: 1em 0;
-  border-top: 1px solid #e0e0e0;
-  /* border: 1px solid #ddd; */
-  /* border-radius: 6px; */
   overflow-y: auto;
   max-height: 500px;
   background: #fff;
@@ -481,8 +478,6 @@
 .chat-card {
   display: flex;
   align-items: center;
-  padding: 0.85em 0;
-  border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -504,12 +499,18 @@
   object-fit: cover;
 }
 
+.chat-list .chat-item:first-child .chat-details {
+  border-top: 1px solid #e0e0e0;
+}
+
 .chat-details {
   flex: 1;
   margin: 0 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding: 0.85em 0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .chat-list-header .chat-user {
