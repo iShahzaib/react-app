@@ -460,8 +460,8 @@
 
 .chat-list-wrapper {
   margin: 1em 0;
-  overflow-y: auto;
-  max-height: 500px;
+  /* overflow-y: auto;
+  max-height: 500px; */
   background: #fff;
 }
 
