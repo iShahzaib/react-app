@@ -131,8 +131,8 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                 <div className="sidebar-user">
                     <img src={profilepicture || user} alt="User" className="user-profile" />
                     <div className="sidebar-user-info">
-                        <div style={{ fontWeight: "600", fontSize: "1.5rem" }}>{username}</div>
-                        <div style={{ fontSize: "1.2rem" }}>{email}</div>
+                        <div style={{ fontWeight: "600", fontSize: "1.4rem" }}>{username}</div>
+                        <div style={{ color: "#fffc" }}>{email}</div>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                 <div className="sidebar-menu">
                     <Link to={`/welcome/${username}`} className="sidebar-menu-item" onClick={closeSidebar}>
                         <i className="home icon"></i>
-                        <span style={{ marginLeft: "0.5rem" }}>Home</span>
+                        <span style={{ marginLeft: "0.75rem" }}>Home</span>
                     </Link>
                     {Object.values(schemaList).map(({ key, collection, icon, label, notInMenu }) => collection && !notInMenu && (
                         <div
@@ -157,7 +157,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                             }}
                         >
                             <i className={`${icon} icon`}></i>
-                            <span style={{ marginLeft: "0.5rem" }}>{label}</span>
+                            <span style={{ marginLeft: "0.75rem" }}>{label}</span>
                         </div>
                     ))}
                 </div>
@@ -166,7 +166,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                     <div className="sidebar-divider"></div>
                     <div className="sidebar-logout" onClick={onLogout}>
                         <i className="logout icon"></i>
-                        <span style={{ marginLeft: "0.5rem" }}>Sign Out</span>
+                        <span style={{ marginLeft: "0.75rem" }}>Sign Out</span>
                     </div>
                 </div>
             </div>
