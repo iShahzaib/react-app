@@ -21,7 +21,10 @@ const AuthRoutes = () => {
     const [tabs, setTabs] = useState([
         {
             tab: 'Welcome',
-            component: <Welcome username={username} />,
+            component:
+                <div className="custom-tab-content">
+                    <Welcome username={username} />
+                </div>,
             id: 'welcome',
             closeable: false
         }
@@ -61,7 +64,10 @@ const AuthRoutes = () => {
 
         const newTab = {
             tab: label,
-            component: <BuildList type={key} origin="welcome" />,
+            component:
+                <div className="custom-tab-content">
+                    <BuildList type={key} origin="welcome" />
+                </div>,
             id,
             closeable: true
         };

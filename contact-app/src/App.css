@@ -792,12 +792,13 @@
 /* Tab style.css */
 .custom-tab-wrapper {
   .tab {
-    display: inline-block;
+    display: inline-block !important;
     background-color: #2185d0 !important;
     color: #fff;
     padding: 8px 16px;
     margin-right: 4px;
-    border: 1px solid #ddd;
+    margin-top: 4px;
+    border: 1px solid #ddd !important;
     border-radius: 4px 4px 0 0;
     cursor: pointer;
     font-size: 16px;
@@ -810,7 +811,7 @@
 
   .tab.active {
     background-color: white !important;
-    border-bottom: 1px solid white;
+    border-bottom: 2px solid #00f !important;
     font-weight: bold;
     color: #2185d0 !important;
 
@@ -837,6 +838,18 @@
   .closeTab:hover {
     background: none !important;
   }
+}
+
+.custom-tab-wrapper > div {
+  margin: 0;
+}
+
+.custom-tab-wrapper div:has(> .custom-tab-content) {
+  padding: 8px 2px 0 !important;
+}
+
+.custom-tab-wrapper div:has(> .tab) {
+  padding: 4px 8px 0;
 }
 
 .subtype-field {
