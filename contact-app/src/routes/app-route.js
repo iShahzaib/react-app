@@ -50,6 +50,25 @@ const AuthRoutes = () => {
         </div>);
     }
 
+    const handleAddTab = (label, key) => {
+        const id = `${key}`;
+        const existingTab = tabs.find(tab => tab.id === id);
+
+        if (existingTab) {
+            setActiveIndex(tabs.findIndex(tab => tab.id === id));
+            return;
+        }
+
+        const newTab = {
+            tab: label,
+            component: <BuildList type={key} origin="welcome" />,
+            id,
+            closeable: true
+        };
+        setTabs(prev => [...prev, newTab]);
+        setActiveIndex(tabs.length);
+    };
+
     const handleCloseTab = (id) => {
         const tabIndexToClose = tabs.findIndex(tab => tab.id === id);
         if (tabIndexToClose < 0) return;
@@ -74,13 +93,7 @@ const AuthRoutes = () => {
 
     return (
         <Routes>
-            <Route element={
-                <PrivateLayout
-                    tabs={tabs}
-                    setTabs={setTabs}
-                    setActiveIndex={setActiveIndex}
-                />
-            }>
+            <Route element={<PrivateLayout handleAddTab={handleAddTab} />}>
                 <Route path='/myprofile/:username' element={<MyProfile />} />
                 <Route path='/managetags/:username' element={<ManageTags />} />
                 <Route path='/manageusers/:username' element={<ManageUsers />} />
@@ -105,29 +118,10 @@ const AuthRoutes = () => {
     )
 };
 
-const PrivateLayout = ({ tabs, setTabs, setActiveIndex }) => {
-    const handleAddTab = (label, key) => {
-        const id = `${key}`;
-        const existingTab = tabs.find(tab => tab.id === id);
-
-        if (existingTab) {
-            setActiveIndex(tabs.findIndex(tab => tab.id === id));
-            return;
-        }
-
-        const newTab = {
-            tab: label,
-            component: <BuildList type={key} origin="welcome" />,
-            id,
-            closeable: true
-        };
-        setTabs(prev => [...prev, newTab]);
-        setActiveIndex(tabs.length);
-    };
-
+const PrivateLayout = (props) => {
     return (
         <>
-            <HomePageHeader handleAddTab={handleAddTab} />
+            <HomePageHeader {...props} />
             <Outlet />
         </>
     );
