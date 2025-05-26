@@ -131,8 +131,8 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                 <div className="sidebar-user">
                     <img src={profilepicture || user} alt="User" className="user-profile" />
                     <div className="sidebar-user-info">
-                        <div style={{ fontWeight: "600", fontSize: "1.25rem" }}>{username}</div>
-                        <div style={{ fontSize: "1rem" }}>{email}</div>
+                        <div style={{ fontWeight: "600", fontSize: "1.5rem" }}>{username}</div>
+                        <div style={{ fontSize: "1.2rem" }}>{email}</div>
                     </div>
                 </div>
             </div>
