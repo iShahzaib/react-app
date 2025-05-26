@@ -7,6 +7,7 @@ import socketClient from '../api/socket';
 import { showWarning } from "../contexts/common";
 import { useSchema } from "../contexts/SchemaContext";
 import { BuildChatList } from "../components/messaging/chat";
+import { menuItems } from "../constant";
 
 const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
     const { username: authenticatedUser } = useParams();
@@ -175,13 +176,6 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
 });
 
 const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
-    const menuItems = [
-        { label: "Home", icon: "home", path: "/welcome/" },
-        { label: "My Profile", icon: "user", path: "/myprofile/" },
-        { label: "Manage Tags", icon: "tags", path: "/managetags/" },
-        { label: "Users", icon: "users", path: "/manageusers/" },
-        { label: "Sign Out", icon: "logout", action: "logout" }
-    ];
     return (
         <div className="dropdown-popup">
             <div className="dropdown-popup-header">

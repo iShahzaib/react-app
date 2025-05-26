@@ -94,6 +94,7 @@ export const ListCardHead = ({ fields, isAllSelected, toggleSelectAll }) => {
                     return (
                         <th
                             key={field.name}
+                            field-uid={field.name}
                             style={{
                                 width: field.columnWidth || '150px',
                                 minWidth: field.columnWidth || '150px',

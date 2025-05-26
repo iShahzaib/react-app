@@ -65,3 +65,16 @@ export const defaultFields = [
     { "name": "email", "label": "Email", "type": "email", "placeholder": "Email", "required": true, "disabled": true },
     { "name": "profilepicture", "label": "Profile Picture", "type": "text", "placeholder": "Link", "ispicture": true }
 ];
+
+export const systemFields = [
+    { name: 'createdAt', label: 'Created At', type: 'datetime' },
+    { name: 'updatedAt', label: 'Updated At', type: 'datetime' }
+];
+
+export const menuItems = [
+    { label: "Home", icon: "home", path: "/welcome/" },
+    { label: "My Profile", icon: "user", path: "/myprofile/" },
+    { label: "Manage Tags", icon: "tags", path: "/managetags/" },
+    { label: "Users", icon: "users", path: "/manageusers/" },
+    { label: "Sign Out", icon: "logout", action: "logout" }
+];

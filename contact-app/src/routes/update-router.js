@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import UpdateData from '../components/update-data';
+import { BuildFormData } from "../components/form-data";
 import api from '../api/server';
 import UpdateUser from "../components/update-user";
 import { sentenceCase, showError, showSuccess } from "../contexts/common";
 
-export default function UpdateRouter() {
+export default function UpdateRouter(props) {
     const { type } = useParams();
 
     const updateHandler = async (updatedData) => {
@@ -21,9 +21,9 @@ export default function UpdateRouter() {
 
     switch (type) {
         case 'user':
-            return <UpdateUser updateUserHandler={updateHandler} />;
+            return <UpdateUser {...props} updateUserHandler={updateHandler} />;
 
         default:
-            return <UpdateData updateDataHandler={updateHandler} />;
+            return <BuildFormData {...props} updateDataHandler={updateHandler} />;
     }
 }

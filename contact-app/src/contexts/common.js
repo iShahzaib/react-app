@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import api from "../api/server";
 import { ArrayInput, ChipsInput } from "./controllers";
 import { useNavigate } from "react-router-dom";
+import { systemFields } from "../constant";
 
 // export const checkEmailUnique = async (email, collection) => {
 //     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${collection}?email=${email}`);
@@ -76,7 +77,7 @@ export const RenderForm = ({ title, buttonLabel, self }) => {
             <form className="ui form" style={{ marginTop: "0.5rem" }} onSubmit={self.handleSave}>
                 <div className="ui stackable grid">
                     {fields.map(field => (
-                        <div className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} key={field.name}>
+                        <div className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide`} key={field.name} field-uid={field.name}>
                             <div className="field">
                                 <label>{field.label}</label>
                                 <FieldCard self={self} field={field} />
@@ -269,16 +270,15 @@ export const BuildDetail = ({ fields, data }) => {
                 const fieldValue = displayLabel(field, data);
 
                 return (
-                    <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
+                    <div field-uid={field.name} key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
                         <strong>{field.label}:</strong> {fieldValue || '—'}
                     </div>
                 )
             })}
             <div className={`column sixteen wide`} style={{ marginBottom: "1rem", wordWrap: "break-word", color: "#2185d0" }}>
                 <div className="ui stackable grid">
-                    {[{ name: 'createdAt', label: 'Created At', type: 'datetime' },
-                    { name: 'updatedAt', label: 'Updated At', type: 'datetime' }].map(field => (
-                        <div key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
+                    {systemFields.map(field => (
+                        <div field-uid={field.name} key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
                             <strong>{field.label}:</strong> {displayLabel(field, data) || '—'}
                         </div>
                     ))}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import HomePage, { HomePageHeader, Welcome } from '../login/welcome';
-import AddData from '../components/add-data';
+import { BuildFormData } from '../components/form-data';
 import Detail from '../components/detail';
 import BuildList from '../components/build-list';
 // import DeletePopup from '../components/delete-popup';
@@ -14,9 +14,6 @@ import { useSchema } from '../contexts/SchemaContext';
 const AuthRoutes = () => {
     const { setSchemaList } = useSchema();
     const [loading, setLoading] = useState(true);
-
-    const [records, setRecords] = useState([]);
-    const [users, setUsers] = useState([]);
 
     const { username } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
@@ -98,9 +95,9 @@ const AuthRoutes = () => {
                 <Route path="/chat" element={<ChatComponent />} />
                 {/* <Route path='/delete/:id' element={<DeletePopup deleteContact={deleteContact} />} /> */}
                 <Route path='/getalldata/:collection' element={<BuildList />} />
-                <Route path='/add' element={<AddData records={records} setRecords={setRecords} />} />
+                <Route path='/add' element={<BuildFormData mode="add" />} />
                 <Route path='/detail/:type/:_id' element={<Detail />} />
-                <Route path="/update/:type/:_id" element={<UpdateRouter records={records} setRecords={setRecords} users={users} setUsers={setUsers} />} />
+                <Route path="/update/:type/:_id" element={<UpdateRouter mode="update" />} />
 
                 <Route path="*" element={<Navigate to="/login" replace />} />
             </Route>
