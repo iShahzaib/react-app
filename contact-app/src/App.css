@@ -170,6 +170,11 @@
   .add-subtype-field {
     margin-top: 8px !important;
   }
+
+  .sidebar-logout,
+  .sidebar-menu-item {
+    font-size: 1.3rem !important;
+  }
 }
 
 .parent-container .fluid {
@@ -558,7 +563,7 @@
   margin: 0 auto;
 }
 
-.dropdown-popup-header {
+.dropdown-popup {
   position: absolute;
   top: 45px;
   right: 0;
@@ -570,7 +575,8 @@
   z-index: 10;
 }
 
-.dropdown-popup {
+.dropdown-popup-header,
+.dropdown-popup-splitbar {
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #eee;
   margin-bottom: 0.5rem;

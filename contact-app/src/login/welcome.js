@@ -175,32 +175,36 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
 });
 
 const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
+    const menuItems = [
+        { label: "Home", icon: "home", path: "/welcome/" },
+        { label: "My Profile", icon: "user", path: "/myprofile/" },
+        { label: "Manage Tags", icon: "tags", path: "/managetags/" },
+        { label: "Users", icon: "users", path: "/manageusers/" },
+        { label: "Sign Out", icon: "logout", action: "logout" }
+    ];
     return (
-        <div className="dropdown-popup-header">
-            <div className="dropdown-popup">
+        <div className="dropdown-popup">
+            <div className="dropdown-popup-header">
                 <div style={{ fontWeight: "600", fontSize: "1.25rem", color: "#333" }}>{username}</div>
                 <div style={{ fontSize: "1rem", color: "#666" }}>{email}</div>
             </div>
-            <div style={{ marginTop: "0.5rem" }}>
-                <Link to={`/welcome/${username}`} onClick={closeDropdown}>
-                    <i className="home icon"></i> Home
-                </Link>
-                <div style={{ marginTop: "0.5rem" }}></div>
-                <Link to={`/myprofile/${username}`} onClick={closeDropdown}>
-                    <i className="user icon"></i> My Profile
-                </Link>
-                <div style={{ marginTop: "0.5rem" }}></div>
-                <Link to={`/managetags/${username}`} onClick={closeDropdown}>
-                    <i className="tags icon"></i> Manage Tags
-                </Link>
-                <div style={{ marginTop: "0.5rem" }}></div>
-                <Link to={`/manageusers/${username}`} onClick={closeDropdown}>
-                    <i className="users icon"></i> Users
-                </Link>
-                <div className="dropdown-popup"></div>
-                <Link to='/' onClick={onLogout}>
-                    <i className="logout icon"></i> Sign Out
-                </Link>
+            <div className="dropdown-popup-menu">
+                {menuItems.map(({ label, icon, path, action }, index) => (
+                    <div key={label + index} style={{ marginTop: index === 0 || index === menuItems.length - 1 ? "0" : "0.75rem" }}>
+                        {action === "logout" ? (
+                            <>
+                                <div className="dropdown-popup-splitbar"></div>
+                                <Link to="/" onClick={onLogout} style={{ display: "block" }}>
+                                    <i className={`${icon} icon`}></i> {label}
+                                </Link>
+                            </>
+                        ) : (
+                            <Link to={`${path}${username}`} style={{ display: "block" }} onClick={closeDropdown}>
+                                <i className={`${icon} icon`}></i> {label}
+                            </Link>
+                        )}
+                    </div>
+                ))}
             </div>
         </div>
     );
