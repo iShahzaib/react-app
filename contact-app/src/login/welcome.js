@@ -107,7 +107,7 @@ export const HomePageHeader = ({ handleAddTab }) => {
                 <div style={{ flexShrink: 0, display: "flex", alignItems: "center", position: "relative" }}>
                     <div
                         ref={dropdownRef}
-                        style={{ position: "relative", marginRight: "0.5rem", cursor: "pointer" }}
+                        style={{ position: "relative", marginRight: "0.5rem" }}
                         title={username}
                     >
                         <img src={profilepicture || user} alt="User" className="user-profile" onClick={toggleDropdown} />
