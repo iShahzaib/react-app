@@ -130,11 +130,11 @@ const ActionButtons = ({ state, parentProps, handleDelete }) => {
                 />
             )}
             <i
-                className="trash red alternate outline icon"
+                className="trash icon red alternate outline"
                 title={type === 'user' && loggedInUsername === username ? `You cannot delete your own ${type}.` : 'Delete'}
                 style={{
                     cursor: type === 'user' && loggedInUsername === username ? 'not-allowed' : 'pointer',
-                    opacity: type === 'user' && loggedInUsername === username ? 0.5 : 1,
+                    opacity: type === 'user' && loggedInUsername === username ? 0.5 : 0.9,
                     fontSize: "1.2rem"
                 }}
                 onClick={handleDelete}

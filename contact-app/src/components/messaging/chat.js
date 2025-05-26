@@ -173,7 +173,7 @@ const ChatListCard = (props) => {
                     const fieldValue = displayLabel(field, rowData);
 
                     return (
-                        <div className="chat-details" onClick={() => navigate(linkPath, { state })}>
+                        <div key={field.name} className="chat-details" onClick={() => navigate(linkPath, { state })}>
                             <div className='chat-list-header' key={field.name} style={{ display: "flex" }} title={fieldValue || ''}>
                                 <div className='chat-user'>{fieldValue || '—'}</div>
                                 <div className='chat-last-time'>Yesterday</div>

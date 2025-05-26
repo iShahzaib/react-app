@@ -253,7 +253,7 @@ const SearchBar = (props) => {
                 onClick={handleBulkDelete}
                 style={{ padding: ".67857143em 0.76em", color: "#00000080" }}
             >
-                <i className="trash icon red" style={{ margin: 0 }}></i>
+                <i className="trash icon red" style={{ margin: 0, opacity: "0.9" }}></i>
             </button>)}
         </div>
     )
