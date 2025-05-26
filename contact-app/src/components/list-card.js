@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import user from '../images/nouser.jpg';
-import { confirmDelete, displayLabel, sentenceCase, showError, showSuccess } from "../contexts/common";
+import { confirmDelete, displayLabel, showError, showSuccess } from "../contexts/common";
 
 const ListCard = (props) => {
     const { fields, rowData, type, loggedInUsername, isSelected, toggleSelectOne } = props;
@@ -22,10 +22,10 @@ const ListCard = (props) => {
                 props.deleteHandler([_id]);
 
                 showSuccess(`The ${type} has been deleted successfully.`, 'Deleted!');
-                navigate(
-                    `/getalldata/${sentenceCase(type)}`,
-                    { state: { ...props.rowData, loggedInUsername, type, collection: `${sentenceCase(type)}` } }
-                );
+                // navigate(
+                //     `/getalldata/${sentenceCase(type)}`,
+                //     { state: { ...props.rowData, loggedInUsername, type, collection: `${sentenceCase(type)}` } }
+                // );
             }
         });
     };
