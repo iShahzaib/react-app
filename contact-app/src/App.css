@@ -793,14 +793,14 @@
 .custom-tab-wrapper {
   .tab {
     display: inline-block;
-    background-color: #f2f2f2;
-    color: #333;
+    background-color: #2185d0 !important;
+    color: #fff;
     padding: 8px 16px;
     margin-right: 4px;
     border: 1px solid #ddd;
     border-radius: 4px 4px 0 0;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     transition: background 0.3s ease;
   }
 
@@ -809,28 +809,33 @@
   }
 
   .tab.active {
-    background-color: white;
+    background-color: white !important;
     border-bottom: 1px solid white;
     font-weight: bold;
+    color: #2185d0 !important;
+
+    .closeTab {
+      opacity: 0.7 !important;
+    }
+
+    .closeTab:after,
+    .closeTab:before {
+      background: #db2828 !important;
+    }
   }
 
   .closeTab {
-    margin-left: 8px;
-    font-weight: bold;
-    color: #999;
-    cursor: pointer;
-    padding: 2px 6px;
-    border-radius: 50%;
-    background-color: #eee;
-    transition: background 0.3s;
+    opacity: 0.9 !important;
+    transition: background 0.3s ease;
+  }
+
+  .closeTab:after,
+  .closeTab:before {
+    background: #fff !important;
   }
 
   .closeTab:hover {
-    background-color: #ccc;
-  }
-
-  .tab {
-    font-size: 16px;
+    background: none !important;
   }
 }
 

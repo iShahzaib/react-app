@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-// import CloseableTabs from 'react-closeable-tabs';
+import { Link, Navigate, useParams } from "react-router-dom";
+import CloseableTabs from 'react-closeable-tabs';
 import user from '../images/nouser.jpg';
 import logo from '../images/logo.png';
 import socketClient from '../api/socket';
@@ -34,8 +34,8 @@ const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
 
     return (
         <div className="ui container parent-container" style={{ paddingBottom: '1rem' }}>
-            <Welcome username={username} />
-            {/* <div className="custom-tab-wrapper">
+            {/* <Welcome username={username} /> */}
+            <div className="custom-tab-wrapper">
                 <CloseableTabs
                     data={tabs}
                     activeIndex={activeIndex}
@@ -47,7 +47,7 @@ const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
                     // )}
                     closeTitle="Close this tab"
                 />
-            </div> */}
+            </div>
         </div>
     );
 };
@@ -122,7 +122,6 @@ export const HomePageHeader = ({ handleAddTab }) => {
 
 const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, onLogout }, sidebarRef) => {
     const { schemaList } = useSchema();
-    const navigate = useNavigate();
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     return (
@@ -152,8 +151,8 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                             className="sidebar-menu-item"
                             style={{ cursor: "pointer" }}
                             onClick={() => {
-                                // handleAddTab(label, key);
-                                navigate(`/getalldata/${collection}`, { state: { collection } });
+                                handleAddTab(label, key);
+                                // navigate(`/getalldata/${collection}`, { state: { collection } });
                                 closeSidebar();
                             }}
                         >
