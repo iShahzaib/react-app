@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import user from '../images/nouser.jpg';
+import documentIcon from '../images/document-icon-round.png';
 import { confirmDelete, displayLabel, showError, showSuccess } from "../contexts/common";
 
 const ListCard = (props) => {
@@ -45,7 +45,7 @@ const ListCard = (props) => {
                     <label></label>
                 </div>
             </td>
-            {fields.some(field => field.ispicture) && <td style={{ width: '55px', textOverflow: "unset" }}><img className="ui avatar image" src={profilepicture || user} alt="user" /></td>}
+            {fields.some(field => field.ispicture) && <td style={{ width: '55px', textOverflow: "unset" }}><img className="ui avatar image" src={profilepicture || documentIcon} alt="document" /></td>}
             {fields.map(field => {
                 if (field.ispicture || field.notshowongrid) return null;
                 const fieldValue = displayLabel(field, rowData);

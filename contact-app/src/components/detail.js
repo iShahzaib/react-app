@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import user from '../images/nouser.jpg';
+import documentIcon from '../images/document-icon.png';
 import { defaultFields } from "../constant";
 import { BuildDetail, displayLabel, sentenceCase } from "../contexts/common";
 import BuildList from "./build-list";
@@ -40,7 +40,7 @@ const Detail = () => {
                 {/* Image Card */}
                 <div className="ui card" style={{ padding: '1rem', width: "100%", backgroundColor: "#f3f7ff" }}>
                     <div style={{ display: "flex" }}>
-                        <img src={profilepicture || user} alt="user" style={{ width: '80px' }} />
+                        <img src={profilepicture || documentIcon} alt="document" style={{ width: '80px' }} />
                         <div style={{ marginLeft: '1rem', maxWidth: "65%" }}>
                             <h4>{title}</h4>
                         </div>
