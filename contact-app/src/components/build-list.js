@@ -114,6 +114,7 @@ const BuildList = React.memo(({ type, origin }) => {
             />
             <GridTable
                 type={type}
+                fields={fields}
                 filteredData={filteredData}
                 loggedInUsername={loggedInUsername}
                 deleteObjects={deleteObjects}
@@ -122,16 +123,12 @@ const BuildList = React.memo(({ type, origin }) => {
                 toggleSelectOne={toggleSelectOne}
                 selectedIds={selectedIds}
             />
-        </div >
+        </div>
     );
 });
 
 const GridTable = (props) => {
-    const { type, filteredData, loggedInUsername, deleteObjects, isAllSelected, toggleSelectAll, toggleSelectOne, selectedIds } = props;
-
-    const { schemaList } = useSchema();
-    const tab = schemaList[type];
-    const fields = tab?.fields || defaultFields;
+    const { type, fields, filteredData, loggedInUsername, deleteObjects, isAllSelected, toggleSelectAll, toggleSelectOne, selectedIds } = props;
 
     return (
         <div className="table-wrapper">

@@ -3,6 +3,7 @@ import Select from 'react-select';
 import Swal from "sweetalert2";
 import api from "../api/server";
 import { ArrayInput, ChipsInput } from "./controllers";
+import { useNavigate } from "react-router-dom";
 
 // export const checkEmailUnique = async (email, collection) => {
 //     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${collection}?email=${email}`);
@@ -59,6 +60,7 @@ export const confirmDelete = (detail = '', extraParam) => {
 }
 
 export const RenderForm = ({ title, buttonLabel, self }) => {
+    const navigate = useNavigate();
     const fields = self.fields;
 
     if (!title && self.state?._id) {
@@ -85,7 +87,7 @@ export const RenderForm = ({ title, buttonLabel, self }) => {
 
                 <div className="responsive-form-button" style={{ marginTop: "1rem" }}>
                     <button className="ui button blue" type="submit">{buttonLabel}</button>
-                    <button className="ui button" type="button" onClick={self.handleCancel}>Cancel</button>
+                    <button className="ui button" type="button" onClick={() => navigate(-1)}>Cancel</button>
                 </div>
             </form>
         </div>

@@ -12,25 +12,24 @@ class FormDataClass extends React.Component {
 
         const initialState = {};
 
-        this.fields.forEach(f => {
+        this.fields.forEach(fld => {
+            const { name, ref, refFields, type } = fld;
             const isUpdate = mode === 'update';
             const existingData = isUpdate ? state.data : {};
 
-            initialState[f.name] = existingData[f.name] ?? '';
+            initialState[name] = existingData[name] ?? '';
 
-            if (f.type === 'select' && f.ref && f.refFields?.length) {
-                initialState[`${f.name}_RefFields`] = existingData[`${f.name}_RefFields`] ?? '';
-            } else if (f.type === 'date' && mode === 'add') {
-                initialState[f.name] = getLocalToday();
-            } else if (f.type === 'number') {
-                initialState[f.name] = existingData[f.name] ? parseInt(existingData[f.name]) : 0;
+            if (type === 'select' && ref && refFields?.length) {
+                initialState[`${name}_RefFields`] = existingData[`${name}_RefFields`] ?? '';
+            } else if (type === 'date' && mode === 'add') {
+                initialState[name] = getLocalToday();
+            } else if (type === 'number') {
+                initialState[name] = existingData[name] ? parseInt(existingData[name]) : 0;
             }
         });
 
-        this.state = {
-            ...initialState,
-            ...(mode === 'update' ? { _id: state.data._id } : {})
-        };
+        this.state = { ...initialState, ...(mode === 'update' ? { _id: state.data._id } : {}) };
+        this.originalData = { ...initialState, ...(mode === 'update' ? { _id: state.data._id } : {}) };
     }
 
     redirectToPreviousPage = (data) => {
@@ -45,6 +44,7 @@ class FormDataClass extends React.Component {
             : `/getalldata/${sentenceCase(state.type)}`;
 
         navigate(path, { state: navState });
+        // this.props.navigate(-1);
     };
 
     handleChange = (e) => {
@@ -60,7 +60,7 @@ class FormDataClass extends React.Component {
     };
 
     handleCancel = () => {
-        this.redirectToPreviousPage(this.state);
+        this.redirectToPreviousPage(this.originalData);
     };
 
     handleSave = async (e) => {

@@ -34,7 +34,9 @@ const AuthRoutes = () => {
         (async () => {
             try {
                 const response = await api.get(`/api/getdocdata?collection=Schema`);
-                const schemaObj = Object.fromEntries(response.data?.map(item => [item.key, item]));
+                const sortedData = response.data?.sort((a, b) => a.label.localeCompare(b.label));
+
+                const schemaObj = Object.fromEntries(sortedData?.map(item => [item.key, item]));
                 setSchemaList(schemaObj);
                 window['schemaList'] = schemaObj;
             } catch (err) {

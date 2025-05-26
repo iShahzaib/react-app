@@ -68,13 +68,15 @@ export const BuildChatList = React.memo(({ type, origin }) => {
 
     return (
         <div className="ui main container">
-            <ChatHeaderNav
-                type={type}
-                tab={schema}
-                filteredData={filteredData}
-                loggedInUsername={loggedInUsername}
-                origin={origin}
-            />
+            <div className={`responsive-header ${origin === 'welcome' ? 'form-header' : ''}`}>
+                <h1 style={{ marginBottom: "0.5rem" }}>
+                    {schema?.tableName || `${sentenceCase(type)} List`}
+                    <div style={{ fontSize: "0.9rem", color: "#555", fontWeight: "500" }}>
+                        {filteredData.length > 0 ? `${filteredData.length} Entr${filteredData.length > 1 ? "ies" : "y"}` : "No entry found"}
+                    </div>
+                </h1>
+            </div>
+
             <ChatSearchBar
                 type={type}
                 tab={schema}
@@ -82,54 +84,25 @@ export const BuildChatList = React.memo(({ type, origin }) => {
                 setSearchTerm={setSearchTerm}
                 retrieveData={retrieveData}
             />
-            <ChatList
-                type={type}
-                filteredData={filteredData}
-            />
-        </div >
+
+            <div className="chat-list-wrapper">
+                <ul className="chat-list">
+                    {filteredData.length > 0
+                        ? filteredData.map((c) => (
+                            <ChatListCard
+                                key={c._id}
+                                fields={fields}
+                                rowData={c}
+                                type={type}
+                            />
+                        ))
+                        : <div className="no-data">No entry found</div>
+                    }
+                </ul>
+            </div>
+        </div>
     );
 });
-
-export const ChatHeaderNav = ({ type, tab, filteredData, loggedInUsername, origin }) => {
-    const tableHeader = tab?.tableName || `${sentenceCase(type)} List`;
-
-    return (
-        <div className={`responsive-header ${origin === 'welcome' ? 'form-header' : ''}`}>
-            <h1 style={{ marginBottom: "0.5rem" }}>
-                {tableHeader}
-                <div style={{ fontSize: "0.9rem", color: "#555", fontWeight: "500" }}>
-                    {filteredData.length > 0 ? `${filteredData.length} Entr${filteredData.length > 1 ? "ies" : "y"}` : "No entry found"}
-                </div>
-            </h1>
-        </div>
-    )
-};
-
-const ChatList = (props) => {
-    const { type, filteredData } = props;
-
-    const { schemaList } = useSchema();
-    const tab = schemaList[type];
-    const fields = tab?.fields || defaultFields;
-
-    return (
-        <div className="chat-list-wrapper">
-            <ul className="chat-list">
-                {filteredData.length > 0
-                    ? filteredData.map((c) => (
-                        <ChatListCard
-                            key={c._id}
-                            fields={fields}
-                            rowData={c}
-                            type={type}
-                        />
-                    ))
-                    : <div className="no-data">No entry found</div>
-                }
-            </ul>
-        </div>
-    )
-};
 
 const ChatSearchBar = (props) => {
     const { type, searchTerm, setSearchTerm, retrieveData } = props;
@@ -177,7 +150,7 @@ const ChatSearchBar = (props) => {
     )
 };
 
-export const ChatListCard = (props) => {
+const ChatListCard = (props) => {
     const { fields, rowData, type } = props;
     const { _id, profilepicture } = rowData;
     const navigate = useNavigate();
