@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import user from '../../images/nouser.jpg';
 import socketClient from '../../api/socket';
 import api from '../../api/server';
@@ -101,18 +101,6 @@ export const ChatHeaderNav = ({ type, tab, filteredData, loggedInUsername, origi
                     {filteredData.length > 0 ? `${filteredData.length} Entr${filteredData.length > 1 ? "ies" : "y"}` : "No entry found"}
                 </div>
             </h1>
-            <div className="grid-button">
-                {type !== 'chat' && (
-                    <Link to="/add" state={{ loggedInUsername, type }}>
-                        <button className="ui button blue">Add {sentenceCase(type)}</button>
-                    </Link>
-                )}
-                {origin !== 'welcome' && origin !== 'detail' && (
-                    <Link to={`/welcome/${loggedInUsername}`}>
-                        <button className="ui button close-btn"><i className="close icon red" /></button>
-                    </Link>
-                )}
-            </div>
         </div>
     )
 };

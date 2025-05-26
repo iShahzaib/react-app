@@ -210,7 +210,7 @@ export const Welcome = ({ username }) => (
     <>
         <div className="ui card fluid">
             <div className="content">
-                <h1 className="ui header" style={{ color: '#1b1c1d' }}>
+                <h1 className="ui header" style={{ color: '#1b1c1d', marginBottom: "0.5rem" }}>
                     Welcome back, {username}!
                 </h1>
                 <p>Here is your user dashboard. You can view, manage, and explore records as needed.</p>
