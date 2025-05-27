@@ -203,15 +203,17 @@ const UserDropdown = ({ username, email, onLogout, handleAddTab, closeDropdown }
                         {action === "logout" ? (
                             <>
                                 <div className="dropdown-popup-splitbar"></div>
-                                <Link to="/" onClick={onLogout} style={{ display: "block" }}>
+                                <Link to="/" style={{ display: "block" }} onClick={onLogout}>
                                     <i className={`${icon} icon`}></i> {label}
                                 </Link>
                             </>
                         ) : action === "home" ? (
                             <Link
+                                to={`/welcome/${username}`}
                                 style={{ display: "block" }}
                                 onClick={() => {
                                     handleAddTab('Welcome', 'welcome');
+                                    closeDropdown();
                                 }}
                             >
                                 <i className={`${icon} icon`}></i> {label}
