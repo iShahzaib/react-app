@@ -150,9 +150,9 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
 
             <div className="sidebar-scrollable">
                 <div className="sidebar-menu">
-                    <div
+                    <Link
+                        to={`/welcome/${username}`}
                         className="sidebar-menu-item"
-                        style={{ cursor: "pointer" }}
                         onClick={() => {
                             handleAddTab('Welcome', 'welcome');
                             closeSidebar();
@@ -160,12 +160,12 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                     >
                         <i className="home icon"></i>
                         <span style={{ marginLeft: "0.75rem" }}>Home</span>
-                    </div>
+                    </Link>
                     {Object.values(schemaList).map(({ key, collection, icon, label, notInMenu }) => collection && !notInMenu && (
-                        <div
+                        <Link
                             key={label}
+                            to={`/welcome/${username}`}
                             className="sidebar-menu-item"
-                            style={{ cursor: "pointer" }}
                             onClick={() => {
                                 handleAddTab(label, key);
                                 // navigate(`/getalldata/${collection}`, { state: { collection } });
@@ -174,7 +174,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                         >
                             <i className={`${icon} icon`}></i>
                             <span style={{ marginLeft: "0.75rem" }}>{label}</span>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 
