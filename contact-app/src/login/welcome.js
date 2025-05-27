@@ -4,7 +4,7 @@ import CloseableTabs from 'react-closeable-tabs';
 import user from '../images/nouser.jpg';
 import logo from '../images/logo.png';
 import socketClient from '../api/socket';
-import { showWarning } from "../contexts/common";
+import { showError, showWarning } from "../contexts/common";
 import { useSchema } from "../contexts/SchemaContext";
 import { BuildChatList } from "../components/messaging/chat";
 import { menuItems } from "../constant";
@@ -27,7 +27,8 @@ const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
     }, []);
 
     if (isAuthenticated !== 'true' || authenticatedUser !== username) {
-        console.log('Something went wrong!');
+        showError('Something went wrong!');
+        console.error('Authentication mismatch:', { isAuthenticated, authenticatedUser, username });
         isAuthenticated !== 'true' && showWarning('Please login first');
         return <Navigate to="/login" replace />;  // <-- This will redirect without remount issues
     }

@@ -9,7 +9,7 @@ import { useSchema } from '../../contexts/SchemaContext';
 import { defaultFields } from '../../constant';
 
 export const BuildChatList = React.memo(({ type, origin }) => {
-    const { state } = useLocation();  // Access location object to get state
+    const { state } = useLocation();
     type = state?.collection?.toLowerCase() || type;
     const { schemaList } = useSchema();
 

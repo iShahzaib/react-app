@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import documentIcon from '../images/document-icon.png';
 import { defaultFields } from "../constant";
-import { BuildDetail, displayLabel, sentenceCase } from "../contexts/common";
+import { BuildDetail, displayLabel } from "../contexts/common";
 import BuildList from "./build-list";
 import { useSchema } from "../contexts/SchemaContext";
 
 const Detail = () => {
     const { type } = useParams();
-    const { state } = useLocation();  // Access location object to get state
-    const { data, loggedInUsername } = state || {};
+    const { state } = useLocation();
+    const { data } = state || {};
+    const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
     const { _id, profilepicture } = data || {};
 
     const { schemaList } = useSchema();
@@ -18,7 +19,7 @@ const Detail = () => {
 
     // const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
     // const linkPath = type !== 'user' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
-    const backPath = type === 'chat' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
+    // const backPath = type === 'chat' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
 
     const [activeTab, setActiveTab] = useState('detail');
     const setDataInParams = (tabName) => {
@@ -54,7 +55,7 @@ const Detail = () => {
                                 <button className="ui button blue">Edit</button>
                                 {/* onClick={() => props.updateDataHandler(_id)} */}
                             </Link>
-                            <Link to={backPath} state={{ type, collection: sentenceCase(type) }}>
+                            <Link to={`/welcome/${loggedInUsername}`}>
                                 <button className="ui button close-btn"><i className="close icon red" /></button>
                             </Link>
                         </div>

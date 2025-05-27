@@ -103,7 +103,7 @@ class UpdateUserClass extends React.Component {
 
 // Functional wrapper that uses `useNavigate`
 const UpdateUser = (props) => {
-    const { state } = useLocation();  // Access location object to get state
+    const { state } = useLocation();
 
     return <UpdateUserClass {...props} navigate={useNavigate()} state={{ data: state.data, username: state.loggedInUsername, type: state.type }} />;
 };

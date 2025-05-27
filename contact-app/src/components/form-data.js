@@ -44,7 +44,8 @@ class FormDataClass extends React.Component {
 
         const path = mode === 'update' && state.location
             ? `/detail/${state.type}/${state.data._id}`
-            : `/getalldata/${sentenceCase(state.type)}`;
+            : `/welcome/${state.loggedInUsername}`;
+            // : `/getalldata/${sentenceCase(state.type)}`;
 
         navigate(path, { state: navState });
         // this.props.navigate(-1);
@@ -118,7 +119,8 @@ class FormDataClass extends React.Component {
 
 export const BuildFormData = (props) => {
     const { state } = useLocation();  // Access location object to get state
-    const { data, location, loggedInUsername: username, type } = state ?? {};
+    const { data, location, type } = state ?? {};
+    const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const { schemaList } = useSchema();
 
@@ -134,7 +136,7 @@ export const BuildFormData = (props) => {
         }
     };
 
-    return <FormDataClass {...props} addDataHandler={addDataHandler} schemaList={schemaList} navigate={useNavigate()} state={{ data, username, location, type }} />;
+    return <FormDataClass {...props} addDataHandler={addDataHandler} schemaList={schemaList} navigate={useNavigate()} state={{ data, loggedInUsername, location, type }} />;
 };
 
 export default FormDataClass;

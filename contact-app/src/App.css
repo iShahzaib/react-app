@@ -795,7 +795,7 @@
     display: inline-block !important;
     background-color: #2185d0 !important;
     color: #fff;
-    padding: 8px 16px;
+    padding: 5px 11px 3px !important;
     margin-right: 4px;
     margin-top: 4px;
     border: 1px solid #ddd !important;
@@ -827,6 +827,7 @@
 
   .closeTab {
     opacity: 0.9 !important;
+    margin-right: -3px;
     transition: background 0.3s ease;
   }
 
