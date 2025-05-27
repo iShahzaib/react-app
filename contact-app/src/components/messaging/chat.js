@@ -67,7 +67,7 @@ export const BuildChatList = React.memo(({ type, origin }) => {
     );
 
     return (
-        <div className="ui main container">
+        <>
             <div className={`responsive-header ${origin === 'welcome' ? 'form-header' : ''}`}>
                 <h1 style={{ marginBottom: "0.5rem" }}>
                     {schema?.tableName || `${sentenceCase(type)} List`}
@@ -100,7 +100,7 @@ export const BuildChatList = React.memo(({ type, origin }) => {
                     }
                 </ul>
             </div>
-        </div>
+        </>
     );
 });
 

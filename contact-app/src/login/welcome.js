@@ -205,7 +205,7 @@ const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
 };
 
 export const Welcome = ({ username }) => (
-    <>
+    <div className="ui main container">
         <div className="ui card fluid">
             <div className="content">
                 <h1 className="ui header" style={{ color: '#1b1c1d', marginBottom: "0.5rem" }}>
@@ -215,10 +215,10 @@ export const Welcome = ({ username }) => (
             </div>
         </div>
 
-        <div className="ui segment" style={{ marginTop: '2rem' }}>
+        <div className="ui segment" style={{ marginTop: '1.5rem', padding: '1.25rem' }}>
             <BuildChatList type="chat" origin="welcome" />
         </div>
-    </>
+    </div>
 );
 
 export default HomePage;

@@ -845,8 +845,8 @@
   margin: 0;
 }
 
-.custom-tab-wrapper div:has(> .custom-tab-content) {
-  padding: 8px 2px 0 !important;
+.custom-tab-wrapper div:has(> .ui.main.container) {
+  padding: 0.5rem 0 0 !important;
 }
 
 .custom-tab-wrapper div:has(> .tab) {
