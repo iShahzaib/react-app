@@ -72,7 +72,7 @@ export const systemFields = [
 ];
 
 export const menuItems = [
-    { label: "Home", icon: "home", path: "/welcome/" },
+    { label: "Home", icon: "home", action: "home" },
     { label: "My Profile", icon: "user", path: "/myprofile/" },
     { label: "Manage Tags", icon: "tags", path: "/managetags/" },
     { label: "Users", icon: "users", path: "/manageusers/" },

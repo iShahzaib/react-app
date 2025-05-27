@@ -113,7 +113,15 @@ export const HomePageHeader = ({ handleAddTab }) => {
                         title={username}
                     >
                         <img src={profilepicture || user} alt="User" className="user-profile" onClick={toggleDropdown} />
-                        {dropdownOpen && (<UserDropdown username={username} email={email} onLogout={handleLogout} closeDropdown={closeDropdown} />)}
+                        {dropdownOpen && (
+                            <UserDropdown
+                                username={username}
+                                email={email}
+                                handleAddTab={handleAddTab}
+                                onLogout={handleLogout}
+                                closeDropdown={closeDropdown}
+                            />
+                        )}
                     </div>
                 </div>
             </div>
@@ -142,10 +150,17 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
 
             <div className="sidebar-scrollable">
                 <div className="sidebar-menu">
-                    <Link to={`/welcome/${username}`} className="sidebar-menu-item" onClick={closeSidebar}>
+                    <div
+                        className="sidebar-menu-item"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                            handleAddTab('Welcome', 'welcome');
+                            closeSidebar();
+                        }}
+                    >
                         <i className="home icon"></i>
                         <span style={{ marginLeft: "0.75rem" }}>Home</span>
-                    </Link>
+                    </div>
                     {Object.values(schemaList).map(({ key, collection, icon, label, notInMenu }) => collection && !notInMenu && (
                         <div
                             key={label}
@@ -175,7 +190,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
     );
 });
 
-const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
+const UserDropdown = ({ username, email, onLogout, handleAddTab, closeDropdown }) => {
     return (
         <div className="dropdown-popup">
             <div className="dropdown-popup-header">
@@ -192,6 +207,15 @@ const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
                                     <i className={`${icon} icon`}></i> {label}
                                 </Link>
                             </>
+                        ) : action === "home" ? (
+                            <Link
+                                style={{ display: "block" }}
+                                onClick={() => {
+                                    handleAddTab('Welcome', 'welcome');
+                                }}
+                            >
+                                <i className={`${icon} icon`}></i> {label}
+                            </Link>
                         ) : (
                             <Link to={`${path}${username}`} style={{ display: "block" }} onClick={closeDropdown}>
                                 <i className={`${icon} icon`}></i> {label}
