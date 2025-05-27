@@ -108,7 +108,7 @@ const AuthRoutes = () => {
                 <Route path="/chat" element={<ChatComponent />} />
                 {/* <Route path='/delete/:id' element={<DeletePopup deleteContact={deleteContact} />} /> */}
                 <Route path='/getalldata/:collection' element={<BuildList />} />
-                <Route path='/add' element={<BuildFormData mode="add" />} />
+                <Route path='/add/:type' element={<BuildFormData mode="add" />} />
                 <Route path='/detail/:type/:_id' element={<Detail />} />
                 <Route path="/update/:type/:_id" element={<UpdateRouter mode="update" />} />
 

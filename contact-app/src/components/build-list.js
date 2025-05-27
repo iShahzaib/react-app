@@ -174,7 +174,7 @@ export const HeaderNav = ({ type, tab, filteredData, loggedInUsername, origin })
             </h2>
             <div className="grid-button">
                 {type !== 'chat' && (
-                    <Link to="/add" state={{ loggedInUsername, type }}>
+                    <Link to={`/add/${type}`} state={{ loggedInUsername, type }}>
                         <button className="ui button blue">Add {sentenceCase(type)}</button>
                     </Link>
                 )}
