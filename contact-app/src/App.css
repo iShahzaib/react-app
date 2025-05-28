@@ -7,6 +7,20 @@
   pointer-events: none;
 }
 
+:root {
+  /* --primary: #7e57c2;
+  --primary-hover: #5e35b1; */
+  --primary: #2185d0;
+  --primary-dark: #075da8;
+  --accent: #ec407a;
+  --background: #f3e5f5;
+  --text-primary: #333333;
+  --text-muted: #888888;
+  --border-color: #d1c4e9;
+  --card-bg: #ffffff;
+  --card-bg-light: #fffc;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -29,7 +43,7 @@
 }
 
 .main-header {
-  background: #2185d0 !important;
+  background: var(--primary) !important;
   padding: 0.8rem 1rem !important;
   width: 100% !important;
   z-index: 1000 !important;
@@ -199,7 +213,7 @@
 .sticky-header {
   position: sticky;
   z-index: 1000;
-  background-color: #2185d0; /* Or your preferred header color */
+  background-color: var(--primary); /* Or your preferred header color */
   border-bottom: 1px solid #ccc;
   top: 0;
   left: 0;
@@ -284,7 +298,7 @@
 } */
 
 .tab-button.active {
-  background: #2185d0 !important;
+  background: var(--primary) !important;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 20px;
 }
 
@@ -376,7 +390,7 @@
 
 .send-button {
   padding: 0.6rem 1.2rem;
-  background-color: #2185d0;
+  background-color: var(--primary);
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -620,7 +634,7 @@
   position: sticky;
   top: 0;
   z-index: 2;
-  color: #075da8 !important;
+  color: var(--primary-dark) !important;
   text-align: left;
   padding: 5px 10px !important;
   border: none !important;
@@ -680,7 +694,7 @@
 }
 
 .ui.checkbox input:checked ~ label::after {
-  color: #075da8 !important;
+  color: var(--primary-dark) !important;
 }
 
 .ui.checkbox {
@@ -700,7 +714,7 @@
   left: -250px;
   width: 250px;
   height: 100dvh;
-  background-color: #075da8;
+  background-color: var(--primary-dark);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -742,7 +756,7 @@
 }
 
 .sidebar-menu-item {
-  color: #fffc;
+  color: var(--card-bg-light);
   margin: 0.5rem 0;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -793,7 +807,7 @@
 .custom-tab-wrapper {
   .tab {
     display: inline-block !important;
-    background-color: #2185d0 !important;
+    background-color: var(--primary) !important;
     color: #fff;
     padding: 5px 11px 3px !important;
     margin-right: 4px;
@@ -811,9 +825,9 @@
 
   .tab.active {
     background-color: white !important;
-    border-bottom: 2px solid #075da8 !important;
+    border-bottom: 2px solid var(--primary-dark) !important;
     font-weight: bold;
-    color: #2185d0 !important;
+    color: var(--primary) !important;
 
     .closeTab {
       opacity: 0.7 !important;
