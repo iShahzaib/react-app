@@ -16,13 +16,13 @@ const BuildList = React.memo(({ type, origin }) => {
 
     const [listData, setListData] = useState([]);
     const [selectedIds, setSelectedIds] = useState([]);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const retrieveData = useCallback(async () => {
         try {
-            setLoading(true);
+            // setLoading(true);
             setSelectedIds([]);
             // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
             const response = await api.get(`/api/getdocdata?collection=${sentenceCase(type)}`);
@@ -38,7 +38,7 @@ const BuildList = React.memo(({ type, origin }) => {
         } catch (err) {
             console.error("Error fetching data:", err);
         } finally {
-            setLoading(false);
+            // setLoading(false);
         }
     }, [type, setListData]);
 
@@ -99,12 +99,12 @@ const BuildList = React.memo(({ type, origin }) => {
 
     return (
         <div className="ui main container">
-            {loading ? (
+            {/* {loading ? (
                 <div className="ui inline fallback-loader">
                     <div className="ui text active loader small">Loading...</div>
                 </div>
             ) : (
-                <>
+                <> */}
                     <HeaderNav
                         type={type}
                         tab={schema}
@@ -133,8 +133,8 @@ const BuildList = React.memo(({ type, origin }) => {
                         toggleSelectOne={toggleSelectOne}
                         selectedIds={selectedIds}
                     />
-                </>
-            )}
+                {/* </>
+            )} */}
         </div>
     );
 });
