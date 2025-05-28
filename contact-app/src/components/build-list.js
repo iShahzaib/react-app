@@ -106,14 +106,14 @@ const BuildList = React.memo(({ type, origin }) => {
             ) : (
                 <>
                     <HeaderNav
-                        type={resolvedType}
+                        type={type}
                         tab={schema}
                         filteredData={filteredData}
                         loggedInUsername={loggedInUsername}
                         origin={origin}
                     />
                     <SearchBar
-                        type={resolvedType}
+                        type={type}
                         tab={schema}
                         searchTerm={searchTerm}
                         setSearchTerm={setSearchTerm}
@@ -123,7 +123,7 @@ const BuildList = React.memo(({ type, origin }) => {
                         deleteObjects={deleteObjects}
                     />
                     <GridTable
-                        type={resolvedType}
+                        type={type}
                         fields={fields}
                         filteredData={filteredData}
                         loggedInUsername={loggedInUsername}
