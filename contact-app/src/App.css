@@ -10,6 +10,7 @@
 :root {
   /* --primary: #7e57c2;
   --primary-hover: #5e35b1; */
+  /* --primary: #3b82f680; */
   --primary: #2185d0;
   --primary-dark: #075da8;
   --accent: #ec407a;
@@ -17,7 +18,7 @@
   --text-primary: #333333;
   --text-muted: #888888;
   --border-color: #d1c4e9;
-  --card-bg: #ffffff;
+  --card-bg: #fff;
   --card-bg-light: #fffc;
 }
 
@@ -73,7 +74,7 @@
 }
 
 .main-page {
-  height: 98.8dvh;
+  height: calc(-98px + 100dvh);
   background: linear-gradient(to right, #6a11cb, #2575fc);
   display: flex !important;
   justify-content: center;
