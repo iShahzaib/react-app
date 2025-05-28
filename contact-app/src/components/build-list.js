@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import ListCard, { ListCardHead } from "./list-card";
 import { confirmDelete, sentenceCase, showSuccess, showWarning } from "../contexts/common";
 import api from "../api/server";
@@ -16,12 +18,15 @@ const BuildList = React.memo(({ type, origin }) => {
 
     const [listData, setListData] = useState([]);
     const [selectedIds, setSelectedIds] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const retrieveData = useCallback(async () => {
         try {
+            setLoading(true);
             setSelectedIds([]);
+            setListData([]);
             // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
             const response = await api.get(`/api/getdocdata?collection=${sentenceCase(type)}`);
 
@@ -35,6 +40,8 @@ const BuildList = React.memo(({ type, origin }) => {
 
         } catch (err) {
             console.error("Error fetching data:", err);
+        } finally {
+            setLoading(false);
         }
     }, [type, setListData]);
 
@@ -122,13 +129,14 @@ const BuildList = React.memo(({ type, origin }) => {
                 toggleSelectAll={toggleSelectAll}
                 toggleSelectOne={toggleSelectOne}
                 selectedIds={selectedIds}
+                loading={loading}
             />
         </div>
     );
 });
 
 const GridTable = (props) => {
-    const { type, fields, filteredData, loggedInUsername, deleteObjects, isAllSelected, toggleSelectAll, toggleSelectOne, selectedIds } = props;
+    const { type, fields, filteredData, loggedInUsername, deleteObjects, isAllSelected, toggleSelectAll, toggleSelectOne, selectedIds, loading } = props;
 
     return (
         <div className="table-wrapper">
@@ -139,21 +147,22 @@ const GridTable = (props) => {
                     toggleSelectAll={toggleSelectAll}
                 />
                 <tbody>
-                    {filteredData.length > 0
-                        ? filteredData.map(c => (
-                            <ListCard
-                                key={c._id}
-                                fields={fields}
-                                rowData={c}
-                                type={type}
-                                loggedInUsername={loggedInUsername}
-                                isSelected={selectedIds.includes(c._id)}
-                                toggleSelectOne={() => toggleSelectOne(c._id)}
-                                deleteHandler={deleteObjects}
-                            />
-
-                        ))
-                        : (<tr><td colSpan={`${fields.filter(fld => !fld.notshowongrid).length + 2}`} style={{ textAlign: "center" }}>No entry found</td></tr>)
+                    {loading
+                        ? Array.from({ length: 10 }).map((_, rowIndex) => <SkeletonListCard key={rowIndex} fields={fields} />)
+                        : filteredData.length > 0
+                            ? filteredData.map(c => (
+                                <ListCard
+                                    key={c._id}
+                                    fields={fields}
+                                    rowData={c}
+                                    type={type}
+                                    loggedInUsername={loggedInUsername}
+                                    isSelected={selectedIds.includes(c._id)}
+                                    toggleSelectOne={() => toggleSelectOne(c._id)}
+                                    deleteHandler={deleteObjects}
+                                />
+                            ))
+                            : (<tr><td colSpan={`${fields.filter(fld => !fld.notshowongrid).length + 2}`} style={{ textAlign: "center" }}>No entry found</td></tr>)
                     }
                 </tbody>
             </table>
@@ -257,6 +266,20 @@ const SearchBar = (props) => {
             </button>)}
         </div>
     )
+};
+
+const SkeletonListCard = ({ fields }) => {
+    const visibleFields = fields.filter(field => !field.notshowongrid && !field.ispicture);
+    const showPicture = fields.some(field => field.ispicture);
+
+    return (
+        <tr>
+            <td><Skeleton height={20} /></td>
+            {showPicture && <td><Skeleton height={20} /></td>}
+            {visibleFields.map(field => <td key={field.name}><Skeleton height={20} /></td>)}
+            <td><Skeleton height={20} /></td>
+        </tr>
+    );
 };
 
 export default BuildList;
