@@ -148,7 +148,7 @@ const GridTable = (props) => {
                 />
                 <tbody>
                     {loading
-                        ? Array.from({ length: 10 }).map((_, rowIndex) => <SkeletonListCard key={rowIndex} fields={fields} />)
+                        ? Array.from({ length: 5 }).map((_, rowIndex) => <SkeletonListCard key={rowIndex} fields={fields} />)
                         : filteredData.length > 0
                             ? filteredData.map(c => (
                                 <ListCard
