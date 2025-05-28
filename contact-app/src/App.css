@@ -82,6 +82,12 @@
   flex-direction: column;
   color: #fff;
   text-align: center;
+  padding: 1rem;
+}
+
+.main-page h1 {
+  font-size: 3.8rem;
+  margin-bottom: 1rem;
 }
 
 .fallback-loader {

@@ -36,7 +36,7 @@ export const MainPage = () => {
         <>
             <Header />
             <div className="ui main-page container">
-                <h1 style={{ fontSize: "4rem", marginBottom: "1rem" }}>Welcome to MySH Manager</h1>
+                <h1>Welcome to MySH Manager</h1>
                 <p style={{ fontSize: "1.5rem" }}>Manage Everything. The MySH Way. Your Smart Business Hub.</p>
                 <Link to="/login">
                     <button className="ui massive inverted button" style={{ marginTop: "2rem" }}>
