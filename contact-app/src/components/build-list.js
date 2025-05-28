@@ -16,11 +16,13 @@ const BuildList = React.memo(({ type, origin }) => {
 
     const [listData, setListData] = useState([]);
     const [selectedIds, setSelectedIds] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const retrieveData = useCallback(async () => {
         try {
+            setLoading(true);
             setSelectedIds([]);
             // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
             const response = await api.get(`/api/getdocdata?collection=${sentenceCase(type)}`);
@@ -35,6 +37,8 @@ const BuildList = React.memo(({ type, origin }) => {
 
         } catch (err) {
             console.error("Error fetching data:", err);
+        } finally {
+            setLoading(false);
         }
     }, [type, setListData]);
 
@@ -95,34 +99,42 @@ const BuildList = React.memo(({ type, origin }) => {
 
     return (
         <div className="ui main container">
-            <HeaderNav
-                type={type}
-                tab={schema}
-                filteredData={filteredData}
-                loggedInUsername={loggedInUsername}
-                origin={origin}
-            />
-            <SearchBar
-                type={type}
-                tab={schema}
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                selectedIds={selectedIds}
-                setSelectedIds={setSelectedIds}
-                retrieveData={retrieveData}
-                deleteObjects={deleteObjects}
-            />
-            <GridTable
-                type={type}
-                fields={fields}
-                filteredData={filteredData}
-                loggedInUsername={loggedInUsername}
-                deleteObjects={deleteObjects}
-                isAllSelected={isAllSelected}
-                toggleSelectAll={toggleSelectAll}
-                toggleSelectOne={toggleSelectOne}
-                selectedIds={selectedIds}
-            />
+            {loading ? (
+                <div className="ui inline fallback-loader">
+                    <div className="ui text active loader small">Loading...</div>
+                </div>
+            ) : (
+                <>
+                    <HeaderNav
+                        type={resolvedType}
+                        tab={schema}
+                        filteredData={filteredData}
+                        loggedInUsername={loggedInUsername}
+                        origin={origin}
+                    />
+                    <SearchBar
+                        type={resolvedType}
+                        tab={schema}
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        selectedIds={selectedIds}
+                        setSelectedIds={setSelectedIds}
+                        retrieveData={retrieveData}
+                        deleteObjects={deleteObjects}
+                    />
+                    <GridTable
+                        type={resolvedType}
+                        fields={fields}
+                        filteredData={filteredData}
+                        loggedInUsername={loggedInUsername}
+                        deleteObjects={deleteObjects}
+                        isAllSelected={isAllSelected}
+                        toggleSelectAll={toggleSelectAll}
+                        toggleSelectOne={toggleSelectOne}
+                        selectedIds={selectedIds}
+                    />
+                </>
+            )}
         </div>
     );
 });
