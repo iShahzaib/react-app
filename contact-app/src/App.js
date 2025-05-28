@@ -50,7 +50,7 @@ const App = () => {
         showSuccess(`Login successful!`);
         setTimeout(() => {
           window.location.href = `/welcome/${username}`;
-        }, 150);
+        }, 200);
       } else {
         showWarning(res.message || 'Invalid username or password.');
       }
