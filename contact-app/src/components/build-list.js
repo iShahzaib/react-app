@@ -16,15 +16,12 @@ const BuildList = React.memo(({ type, origin }) => {
 
     const [listData, setListData] = useState([]);
     const [selectedIds, setSelectedIds] = useState([]);
-    const [loading, setLoading] = useState(false);
 
     const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const retrieveData = useCallback(async () => {
         try {
-            setLoading(true);
             setSelectedIds([]);
-            setListData([]);
             // const getData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
             const response = await api.get(`/api/getdocdata?collection=${sentenceCase(type)}`);
 
@@ -38,8 +35,6 @@ const BuildList = React.memo(({ type, origin }) => {
 
         } catch (err) {
             console.error("Error fetching data:", err);
-        } finally {
-            setLoading(false);
         }
     }, [type, setListData]);
 
@@ -117,23 +112,17 @@ const BuildList = React.memo(({ type, origin }) => {
                 retrieveData={retrieveData}
                 deleteObjects={deleteObjects}
             />
-            {loading ? (
-                <div className="ui inline fallback-loader">
-                    <div className="ui text active loader small">Loading...</div>
-                </div>
-            ) : (
-                <GridTable
-                    type={type}
-                    fields={fields}
-                    filteredData={filteredData}
-                    loggedInUsername={loggedInUsername}
-                    deleteObjects={deleteObjects}
-                    isAllSelected={isAllSelected}
-                    toggleSelectAll={toggleSelectAll}
-                    toggleSelectOne={toggleSelectOne}
-                    selectedIds={selectedIds}
-                />
-            )}
+            <GridTable
+                type={type}
+                fields={fields}
+                filteredData={filteredData}
+                loggedInUsername={loggedInUsername}
+                deleteObjects={deleteObjects}
+                isAllSelected={isAllSelected}
+                toggleSelectAll={toggleSelectAll}
+                toggleSelectOne={toggleSelectOne}
+                selectedIds={selectedIds}
+            />
         </div>
     );
 });
