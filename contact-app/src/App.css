@@ -8,25 +8,22 @@
 }
 
 :root {
-  /* --primary: #7e57c2;
-  --primary-hover: #5e35b1; */
-  /* --primary: #3b82f680; */
-  --primary: #2185d0;
-  --primary-dark: #075da8;
+  --primary: #155380;
+  --primary-dark: #01305a;
   --accent: #ec407a;
   --background: #f3e5f5;
 
-  --button-primary: #2185d0;
+  --button-primary: #155380;
   --button-primary-text: #ffffff;
 
-  --text-primary: #2185d0;
-  --text-hover: #075da8;
+  --text-primary: #155380;
+  --text-hover: #01305a;
   --text-muted: #888888;
 
   --border-color: #d1c4e9;
   --card-bg: #fff;
   --card-bg-light: #fffc;
-  --highlight: #2f73ad;
+  --primary-hover: #314c63;
 }
 
 :root_backup {
@@ -822,7 +819,7 @@
 }
 
 .sidebar-menu-item:hover {
-  background-color: var(--highlight);
+  background-color: var(--primary-hover);
   color: #fff;
 }
 
