@@ -15,9 +15,14 @@
   --primary-dark: #075da8;
   --accent: #ec407a;
   --background: #f3e5f5;
+
+  --button-primary: #2185d0;
+  --button-primary-text: #ffffff;
+
   --text-primary: #2185d0;
   --text-hover: #075da8;
   --text-muted: #888888;
+
   --border-color: #d1c4e9;
   --card-bg: #fff;
   --card-bg-light: #fffc;
