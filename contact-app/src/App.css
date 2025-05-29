@@ -15,11 +15,42 @@
   --primary-dark: #075da8;
   --accent: #ec407a;
   --background: #f3e5f5;
-  --text-primary: #333333;
+  --text-primary: #2185d0;
+  --text-hover: #075da8;
   --text-muted: #888888;
   --border-color: #d1c4e9;
   --card-bg: #fff;
   --card-bg-light: #fffc;
+  --highlight: #2f73ad;
+}
+
+:root_backup {
+  --primary: #00897b; /* Teal */
+  --primary-dark: #00695c; /* Deep Teal */
+  --accent: #26c6da; /* Vibrant Cyan Accent */
+
+  --background: #f1fdfc; /* Soft Teal Tint */
+  --background-light: #ffffff;
+  --surface: #e0f2f1; /* Pale Teal Surface */
+
+  --text-primary: #1a1a1a; /* High contrast text */
+  --text-secondary: #333333;
+  --text-muted: #607d8b; /* Cool grey-blue for subtleties */
+
+  --border-color: #b2dfdb; /* Light teal-grey for soft separation */
+  --card-bg: #ffffff;
+  --card-bg-light: rgba(255, 255, 255, 0.94);
+
+  --shadow-sm: 0 2px 5px rgba(0, 137, 123, 0.1);
+  --shadow-md: 0 6px 14px rgba(0, 137, 123, 0.2);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+
+  --button-primary: #00897b;
+  --button-primary-text: #ffffff;
+
+  --highlight: #00acc1; /* Blue-teal highlight for actions */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -54,6 +85,10 @@
 
 .ui.main {
   padding: 0.25rem 0.25rem 0.75rem;
+}
+
+.ui.button.blue {
+  background: var(--button-primary) !important;
 }
 
 .center-header {
@@ -608,6 +643,16 @@
   font-size: 1.1rem;
 }
 
+.dropdown-popup-menu a {
+  color: var(--text-primary);
+  border-radius: 4px;
+}
+
+.dropdown-popup-menu a:hover {
+  color: var(--text-hover);
+  /* background-color: var(--border-color); */
+}
+
 .ui.list .item .image {
   vertical-align: top;
 }
@@ -772,7 +817,7 @@
 }
 
 .sidebar-menu-item:hover {
-  background-color: #2f73ad;
+  background-color: var(--highlight);
   color: #fff;
 }
 
