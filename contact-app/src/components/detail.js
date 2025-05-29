@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import documentIcon from '../images/document-icon.png';
 import { defaultFields } from "../constant";
-import { BuildDetail, displayLabel } from "../contexts/common";
+import { BuildDetail, displayLabel, sentenceCase } from "../contexts/common";
 import BuildList from "./build-list";
 import { useSchema } from "../contexts/SchemaContext";
 
@@ -14,8 +14,8 @@ const Detail = () => {
     const { _id, profilepicture } = data || {};
 
     const { schemaList } = useSchema();
-    const tab = schemaList[type];
-    const fields = tab?.fields || defaultFields;
+    const schema = schemaList[type];
+    const fields = schema.fields || defaultFields;
 
     // const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
     // const linkPath = type !== 'user' ? `/welcome/${loggedInUsername}` : `/getalldata/${sentenceCase(type)}`;
@@ -28,12 +28,12 @@ const Detail = () => {
         }
     };
 
-    const title = tab.isMainTitle
-        ? tab.isMainTitle.replace(/\$\{(\w+)\}/g, (_, key) => {
+    const title = schema.isMainTitle
+        ? schema.isMainTitle.replace(/\$\{(\w+)\}/g, (_, key) => {
             const value = data?.[key];
             return value !== undefined && value !== null ? value : '';
         })
-        : fields.map(fld => (fld.isTitle && displayLabel(fld, data)) || '').join(' ') || data?.name;
+        : fields.map(fld => (fld.isTitle && displayLabel(fld, data)) || '').join(' ').trim() || `${sentenceCase(type)} Detail`;
 
     return (
         <div className="ui main container">
@@ -78,7 +78,7 @@ const Detail = () => {
                             Details
                         </Link>
                     </li>
-                    {tab?.tabItems?.map(({ name, icon, tabColor, schemaName }) => {
+                    {schema.tabItems?.map(({ name, icon, tabColor, schemaName }) => {
                         const schemaData = schemaList[schemaName] || {};
                         const { key, icon: mainIcon, className } = schemaData;
 

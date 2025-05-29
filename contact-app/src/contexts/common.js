@@ -270,7 +270,7 @@ export const BuildDetail = ({ fields, data }) => {
                 const fieldValue = displayLabel(field, data);
 
                 return (
-                    <div field-uid={field.name} key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
+                    <div key={field.name} field-uid={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
                         <strong>{field.label}:</strong> {fieldValue || '—'}
                     </div>
                 )
@@ -278,7 +278,7 @@ export const BuildDetail = ({ fields, data }) => {
             <div className={`column sixteen wide`} style={{ marginBottom: "1rem", wordWrap: "break-word", color: "#2185d0" }}>
                 <div className="ui stackable grid">
                     {systemFields.map(field => (
-                        <div field-uid={field.name} key={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
+                        <div key={field.name} field-uid={field.name} className={`column ${field.fullWidth ? 'sixteen' : 'eight'} wide field-summary`}>
                             <strong>{field.label}:</strong> {displayLabel(field, data) || '—'}
                         </div>
                     ))}

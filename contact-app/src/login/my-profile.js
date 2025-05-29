@@ -33,8 +33,8 @@ const MyProfile = () => {
         return <Navigate to="/login" replace />;  // <-- This will redirect without remount issues
     }
 
-    const tab = schemaList['user'];
-    const fields = tab?.fields || defaultFields;
+    const schema = schemaList['user'];
+    const fields = schema.fields || defaultFields;
 
     return (
         <div className="ui main container">

@@ -104,14 +104,14 @@ const BuildList = React.memo(({ type, origin }) => {
         <div className="ui main container">
             <HeaderNav
                 type={type}
-                tab={schema}
+                schema={schema}
                 filteredData={filteredData}
                 loggedInUsername={loggedInUsername}
                 origin={origin}
             />
             <SearchBar
                 type={type}
-                tab={schema}
+                schema={schema}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 selectedIds={selectedIds}
@@ -170,8 +170,8 @@ const GridTable = (props) => {
     )
 };
 
-export const HeaderNav = ({ type, tab, filteredData, loggedInUsername, origin }) => {
-    const tableHeader = tab?.tableName || `${sentenceCase(type)} List`;
+export const HeaderNav = ({ type, schema, filteredData, loggedInUsername, origin }) => {
+    const tableHeader = schema.tableName || `${sentenceCase(type)} List`;
 
     return (
         <div className={`responsive-header ${origin === 'welcome' ? 'form-header' : ''}`}>
@@ -198,7 +198,7 @@ export const HeaderNav = ({ type, tab, filteredData, loggedInUsername, origin })
 };
 
 const SearchBar = (props) => {
-    const { type, tab, searchTerm, setSearchTerm, selectedIds, setSelectedIds, retrieveData, deleteObjects } = props;
+    const { type, schema, searchTerm, setSearchTerm, selectedIds, setSelectedIds, retrieveData, deleteObjects } = props;
 
     const inputSearch = useRef('');
 
@@ -257,7 +257,7 @@ const SearchBar = (props) => {
                 <i className="refresh icon" style={{ margin: 0 }}></i>
             </button>
 
-            {!tab?.IsShowActionButtons && (<button
+            {!schema.IsShowActionButtons && (<button
                 className="prompt delete-button"
                 onClick={handleBulkDelete}
                 style={{ padding: ".67857143em 0.76em", color: "#00000080" }}

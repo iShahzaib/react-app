@@ -79,7 +79,6 @@ export const BuildChatList = React.memo(({ type, origin }) => {
 
             <ChatSearchBar
                 type={type}
-                tab={schema}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 retrieveData={retrieveData}
