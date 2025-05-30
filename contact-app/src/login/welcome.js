@@ -105,7 +105,7 @@ export const HomePageHeader = ({ handleAddTab }) => {
                     onClick={toggleSidebar}
                 />
                 <img src={logo} alt="user" className="image-logo" />
-                <h2 className="child-header" style={{ marginLeft: "0.5rem" }}>MySH Manager</h2>
+                <h2 className="child-header" style={{ marginLeft: "0.5rem" }}>Contact Manager</h2>
                 <div style={{ flexShrink: 0, display: "flex", alignItems: "center", position: "relative" }}>
                     <div
                         ref={dropdownRef}

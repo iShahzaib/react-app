@@ -13,7 +13,7 @@ const Header = () => {
         <div className="ui menu main-header sticky-header">
             <div className="center-header">
                 <img src={logo} alt="user" className="image-logo" />
-                <h2 className="child-header" style={{ marginLeft: "0.5rem" }}>MySH Manager</h2>
+                <h2 className="child-header" style={{ marginLeft: "0.5rem" }}>Contact Manager</h2>
                 <div style={{ flexShrink: 0, display: "flex", alignItems: "center", position: "relative" }}>
                     {isLoginPage ? (
                         <Link to='/register'>
@@ -36,8 +36,8 @@ export const MainPage = () => {
         <>
             <Header />
             <div className="ui main-page container">
-                <h1>Welcome to MySH Manager</h1>
-                <p style={{ fontSize: "1.5rem" }}>Manage Everything. The MySH Way. Your Smart Business Hub.</p>
+                <h1>Welcome to Contact Manager</h1>
+                <p style={{ fontSize: "1.5rem" }}>Manage Everything | Your Smart Business Hub.</p>
                 <Link to="/login">
                     <button className="ui massive inverted button" style={{ marginTop: "2rem" }}>
                         Get Started
