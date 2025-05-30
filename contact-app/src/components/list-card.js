@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import documentIcon from '../images/document-icon-round.png';
+import documentIcon from '../images/nouser.jpg';
 import { confirmDelete, displayLabel, showError, showSuccess } from "../contexts/common";
 
 const ListCard = (props) => {

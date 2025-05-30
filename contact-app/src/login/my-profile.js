@@ -3,13 +3,10 @@ import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import user from '../images/nouser.jpg';
 import socketClient from '../api/socket';
 import { BuildDetail, showWarning } from "../contexts/common";
-import { defaultFields } from "../constant";
-import { useSchema } from "../contexts/SchemaContext";
-import BuildList from "../components/build-list";
+import { defaultFields, schemaList } from "../constant";
 
 const MyProfile = () => {
     const { state } = useLocation();
-    const { schemaList } = useSchema()
     const { username: authenticatedUser } = useParams();
     const data = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
@@ -33,7 +30,7 @@ const MyProfile = () => {
         return <Navigate to="/login" replace />;  // <-- This will redirect without remount issues
     }
 
-    const schema = schemaList['user'];
+    const schema = schemaList.find(sch => sch.key === 'user');
     const fields = schema.fields || defaultFields;
 
     return (
@@ -62,18 +59,6 @@ const MyProfile = () => {
                 <BuildDetail fields={fields} data={data} />
             </div>
         </div>
-    );
-};
-
-export const ManageTags = () => {
-    return (
-        <BuildList type="tags" origin="userdropdown" />
-    );
-};
-
-export const ManageUsers = () => {
-    return (
-        <BuildList type="user" origin="userdropdown" />
     );
 };
 

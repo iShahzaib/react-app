@@ -5,13 +5,11 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import ListCard, { ListCardHead } from "./list-card";
 import { confirmDelete, sentenceCase, showSuccess, showWarning } from "../contexts/common";
 import api from "../api/server";
-import { useSchema } from "../contexts/SchemaContext";
-import { defaultFields } from "../constant";
+import { defaultFields, schemaList } from "../constant";
 
 const BuildList = React.memo(({ type, origin }) => {
     const { state } = useLocation();  // Access location object to get state
     type = state?.collection?.toLowerCase() || type;
-    const { schemaList } = useSchema();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
@@ -58,7 +56,7 @@ const BuildList = React.memo(({ type, origin }) => {
         return <Navigate to="/" replace />;  // <-- This will redirect without remount issues
     }
 
-    const schema = schemaList[type];
+    const schema = schemaList.find(sch => sch.key === type);
     const fields = schema?.fields || defaultFields;
 
     const filteredData = listData.filter(rowData =>

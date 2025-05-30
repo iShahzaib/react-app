@@ -4,14 +4,12 @@ import user from '../../images/nouser.jpg';
 import socketClient from '../../api/socket';
 import api from '../../api/server';
 import MessageContainer, { ChatInput } from './message-container';
-import { displayLabel, sentenceCase, showError, showSuccess } from '../../contexts/common';
-import { useSchema } from '../../contexts/SchemaContext';
-import { defaultFields } from '../../constant';
+import { sentenceCase, showError, showSuccess } from '../../contexts/common';
+import { defaultFields, schemaList } from '../../constant';
 
 export const BuildChatList = React.memo(({ type, origin }) => {
     const { state } = useLocation();
     type = state?.collection?.toLowerCase() || type;
-    const { schemaList } = useSchema();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [redirect, setRedirect] = useState(false);
@@ -46,7 +44,7 @@ export const BuildChatList = React.memo(({ type, origin }) => {
         return <Navigate to="/" replace />;  // <-- This will redirect without remount issues
     }
 
-    const schema = schemaList[type];
+    const schema = schemaList.find(sch => sch.key === type);
     const fields = schema?.fields || defaultFields;
 
     const filteredData = listData.filter(rowData =>
@@ -150,8 +148,8 @@ const ChatSearchBar = (props) => {
 };
 
 const ChatListCard = (props) => {
-    const { fields, rowData, type } = props;
-    const { _id, profilepicture } = rowData;
+    const { rowData, type } = props;
+    const { _id, username, profilepicture } = rowData;
     const navigate = useNavigate();
 
     const loggedInUser = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
@@ -162,25 +160,16 @@ const ChatListCard = (props) => {
     return (
         <li className="chat-item">
             <div className="chat-card">
-                {fields.some(field => field.ispicture) &&
-                    <div className="chat-avatar">
-                        <img className="ui avatar image" src={profilepicture || user} alt="user" />
+                <div className="chat-avatar">
+                    <img className="ui avatar image" src={profilepicture || user} alt="user" />
+                </div>
+                <div className="chat-details" onClick={() => navigate(linkPath, { state })}>
+                    <div className='chat-list-header' style={{ display: "flex" }} title={username || ''}>
+                        <div className='chat-user'>{username || '—'}</div>
+                        <div className='chat-last-time'>Yesterday</div>
                     </div>
-                }
-                {fields.map(field => {
-                    if (field.ispicture || field.notshowongrid) return null;
-                    const fieldValue = displayLabel(field, rowData);
-
-                    return (
-                        <div key={field.name} className="chat-details" onClick={() => navigate(linkPath, { state })}>
-                            <div className='chat-list-header' key={field.name} style={{ display: "flex" }} title={fieldValue || ''}>
-                                <div className='chat-user'>{fieldValue || '—'}</div>
-                                <div className='chat-last-time'>Yesterday</div>
-                            </div>
-                            <div className='chat-last-text'>The quick brown fox jumps over the lazy dog.</div>
-                        </div>
-                    )
-                })}
+                    <div className='chat-last-text'>The quick brown fox jumps over the lazy dog.</div>
+                </div>
             </div>
         </li>
     );

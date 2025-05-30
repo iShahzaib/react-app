@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import CloseableTabs from 'react-closeable-tabs';
 import user from '../images/nouser.jpg';
-import logo from '../images/logo.png';
+import logo from '../images/nouser.jpg';
 import socketClient from '../api/socket';
 import { showError, showWarning } from "../contexts/common";
-import { useSchema } from "../contexts/SchemaContext";
 import { BuildChatList } from "../components/messaging/chat";
-import { menuItems } from "../constant";
+import { menuItems, schemaList } from "../constant";
 
 const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
     const { username: authenticatedUser } = useParams();
@@ -35,25 +33,12 @@ const HomePage = ({ tabs, activeIndex, handleClickTab, handleCloseTab }) => {
 
     return (
         <div className="ui container parent-container" style={{ paddingBottom: '1rem' }}>
-            {/* <Welcome username={username} /> */}
-            <div className="custom-tab-wrapper">
-                <CloseableTabs
-                    data={tabs}
-                    activeIndex={activeIndex}
-                    onCloseTab={handleCloseTab}
-                    onTabClick={handleClickTab}
-                    // tabPanelColor="#f9f9f9"
-                    // renderClose={() => (
-                    //     <span className="close-btn" title="Close this tab">&times;</span>
-                    // )}
-                    closeTitle="Close this tab"
-                />
-            </div>
+            <Welcome username={username} />
         </div>
     );
 };
 
-export const HomePageHeader = ({ handleAddTab }) => {
+export const HomePageHeader = () => {
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -95,7 +80,6 @@ export const HomePageHeader = ({ handleAddTab }) => {
                 ref={sidebarRef}
                 sidebarVisible={sidebarVisible}
                 closeSidebar={closeSidebar}
-                handleAddTab={handleAddTab}
                 onLogout={handleLogout}
             />
             <div className="center-header">
@@ -117,7 +101,6 @@ export const HomePageHeader = ({ handleAddTab }) => {
                             <UserDropdown
                                 username={username}
                                 email={email}
-                                handleAddTab={handleAddTab}
                                 onLogout={handleLogout}
                                 closeDropdown={closeDropdown}
                             />
@@ -129,8 +112,7 @@ export const HomePageHeader = ({ handleAddTab }) => {
     );
 };
 
-const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, onLogout }, sidebarRef) => {
-    const { schemaList } = useSchema();
+const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, onLogout }, sidebarRef) => {
     const { username, email, profilepicture } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
 
     return (
@@ -154,20 +136,19 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
                         to={`/welcome/${username}`}
                         className="sidebar-menu-item"
                         onClick={() => {
-                            handleAddTab('Welcome', 'welcome');
                             closeSidebar();
                         }}
                     >
                         <i className="home icon"></i>
                         <span style={{ marginLeft: "0.75rem" }}>Home</span>
                     </Link>
-                    {Object.values(schemaList).map(({ key, collection, icon, label, notInMenu }) => collection && !notInMenu && (
+                    {schemaList.map(({ key, collection, icon, label }) => collection && (
                         <Link
                             key={label}
-                            to={`/welcome/${username}`}
+                            to={`/getalldata/${collection}`}
+                            state={{ collection }}
                             className="sidebar-menu-item"
                             onClick={() => {
-                                handleAddTab(label, key);
                                 // navigate(`/getalldata/${collection}`, { state: { collection } });
                                 closeSidebar();
                             }}
@@ -190,7 +171,7 @@ const SideBar = React.forwardRef(({ sidebarVisible, closeSidebar, handleAddTab, 
     );
 });
 
-const UserDropdown = ({ username, email, onLogout, handleAddTab, closeDropdown }) => {
+const UserDropdown = ({ username, email, onLogout, closeDropdown }) => {
     return (
         <div className="dropdown-popup">
             <div className="dropdown-popup-header">
@@ -212,7 +193,6 @@ const UserDropdown = ({ username, email, onLogout, handleAddTab, closeDropdown }
                                 to={`/welcome/${username}`}
                                 style={{ display: "block" }}
                                 onClick={() => {
-                                    handleAddTab('Welcome', 'welcome');
                                     closeDropdown();
                                 }}
                             >

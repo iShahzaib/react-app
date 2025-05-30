@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import documentIcon from '../images/document-icon.png';
-import { defaultFields } from "../constant";
+import documentIcon from '../images/nouser.jpg';
+import { defaultFields, schemaList } from "../constant";
 import { BuildDetail, displayLabel, sentenceCase } from "../contexts/common";
 import BuildList from "./build-list";
-import { useSchema } from "../contexts/SchemaContext";
 
 const Detail = () => {
     const { type } = useParams();
@@ -13,8 +12,7 @@ const Detail = () => {
     const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
     const { _id, profilepicture } = data || {};
 
-    const { schemaList } = useSchema();
-    const schema = schemaList[type];
+    const schema = schemaList.find(sch => sch.key === type);
     const fields = schema.fields || defaultFields;
 
     // const state = type !== 'user' ? { data: props.data } : { _id, username, email, profilepicture, loggedInUsername };
@@ -28,12 +26,7 @@ const Detail = () => {
         }
     };
 
-    const title = schema.isMainTitle
-        ? schema.isMainTitle.replace(/\$\{(\w+)\}/g, (_, key) => {
-            const value = data?.[key];
-            return value !== undefined && value !== null ? value : '';
-        })
-        : fields.map(fld => (fld.isTitle && displayLabel(fld, data)) || '').join(' ').trim() || `${sentenceCase(type)} Detail`;
+    const title = fields.map(fld => (fld.isTitle && displayLabel(fld, data)) || '').join(' ').trim() || `${sentenceCase(type)} Detail`;
 
     return (
         <div className="ui main container">
@@ -79,7 +72,7 @@ const Detail = () => {
                         </Link>
                     </li>
                     {schema.tabItems?.map(({ name, icon, tabColor, schemaName }) => {
-                        const schemaData = schemaList[schemaName] || {};
+                        const schemaData = schemaList.find(sch => sch.key === schemaName) || {};
                         const { key, icon: mainIcon, className } = schemaData;
 
                         return (

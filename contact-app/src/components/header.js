@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from '../images/logo.png';
+import logo from '../images/nouser.jpg';
 // import { useAuth } from "../contexts/AuthContext"; // adjust path
 
 // Header Component

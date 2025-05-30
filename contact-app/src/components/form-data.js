@@ -1,16 +1,15 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getLocalToday, RenderForm, sentenceCase, showError, showSuccess, showWarning } from "../contexts/common";
-import { defaultFields } from "../constant";
+import { defaultFields, schemaList } from "../constant";
 import api from "../api/server";
-import { useSchema } from "../contexts/SchemaContext";
 
 class FormDataClass extends React.Component {
     constructor(props) {
         super(props);
 
         const { state, schemaList, mode } = props;
-        this.tabItem = schemaList[state.type];
+        this.tabItem = schemaList.find(sch => sch.key === state.type);
         this.fields = this.tabItem?.fields || defaultFields;
 
         const initialState = {};
@@ -45,7 +44,7 @@ class FormDataClass extends React.Component {
         const path = mode === 'update' && state.location
             ? `/detail/${state.type}/${state.data._id}`
             : `/welcome/${state.loggedInUsername}`;
-            // : `/getalldata/${sentenceCase(state.type)}`;
+        // : `/getalldata/${sentenceCase(state.type)}`;
 
         navigate(path, { state: navState });
         // this.props.navigate(-1);
@@ -121,8 +120,6 @@ export const BuildFormData = (props) => {
     const { state } = useLocation();  // Access location object to get state
     const { data, location, type } = state ?? {};
     const { username: loggedInUsername } = localStorage.getItem("loggedInUser") ? JSON.parse(localStorage.getItem("loggedInUser")) : {};
-
-    const { schemaList } = useSchema();
 
     const addDataHandler = async (data, type) => {
         const response = await api.post(`/api/adddocdata`, { data, collection: type });
